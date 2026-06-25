@@ -75,7 +75,9 @@ Interests:
 
 <p align="center">
 <img height="180em" src="https://github-readme-stats.vercel.app/api?username=ChinmayGawad&show_icons=true&theme=nightowl"/>
-<img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=ChinmayGawad&theme=nightowl&langs_count=8&hide=html,css" />
+<br>
+<br>
+<img height="270em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=ChinmayGawad&theme=nightowl&langs_count=8&hide=html,css" />
 </p>
 
 ---
