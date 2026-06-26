@@ -116,9 +116,9 @@ Interests:
 
 📧 Email: chinmaygawad86@gmail.com
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin)](linkedin.com/in/chinmay-gawad-7b3172256)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/chinmay-gawad-7b3172256)
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=github)](https://chinmaygawad.github.io/Chinmay_Portfolio.io/)
+[![Portfolio](https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=github)](https://chinmaygawad.github.io/Portfolio/)
 
 ---
 
