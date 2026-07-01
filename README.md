@@ -74,10 +74,10 @@ Interests:
 ## 📊 GitHub Statistics
 
 <p align="center">
-<img height="180em" src="https://github-readme-stats.vercel.app/api?username=ChinmayGawad&show_icons=true&theme=nightowl"/>
+<img height="180em" src="https://github-stats-extended.vercel.app/api?username=ChinmayGawad&theme=radical&show_icons=true&theme=nightowl"/>
 <br>
 <br>
-<img height="270em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=ChinmayGawad&theme=nightowl&langs_count=8&hide=html,css" />
+<img height="270em" src="https://github-stats-extended.vercel.app/api/top-langs/?username=ChinmayGawad&theme=nightowl&langs_count=6&hide=html,css" />
 </p>
 
 ---
@@ -89,9 +89,6 @@ Interests:
 </p>
 
 ---
-
-
-
 
 ---
 
