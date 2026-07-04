@@ -90,12 +90,20 @@ Interests:
 
 ---
 
+## 🐍 Contribution Snake
+
+<p align="center">
+<img data-importer="snake" src="https://raw.githubusercontent.com/ChinmayGawad/ChinmayGawad/snake-output/snake.svg" alt="Snake animation" />
+</p>
+
+---
+
 ---
 
 ## 📈 Activity Graph
 
 <p align="center">
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=ChinmayGawad&theme=nightowl"/>
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=ChinmayGawad&bg_color=011627&color=c792ea&line=c792ea&point=ffeb95&area=true&hide_border=true)](https://github.com/ashutosh00710/github-readme-activity-graph)"/>
 </p>
 
 ---
