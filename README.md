@@ -48,7 +48,7 @@ I'm a **Computer Engineering student** passionate about **Android Development**,
 
 <p align="center">
   <img height="180em" src="https://github-stats-extended.vercel.app/api?username=ChinmayGawad&theme=nightowl&show_icons=true" />
-  <img height="180em" src="https://github-stats-extended.vercel.app/api/top-langs/?username=ChinmayGawad&theme=nightowl&langs_count=6&hide=html,css" />
+  <img height="180em" src="https://github-stats-extended.vercel.app/api/top-langs/?username=ChinmayGawad&theme=nightowl&langs_count=6&hide=html,css,c,Assembly,Perl,SmPL,Yacc,Roff" />
 </p>
 
 <p align="center">
