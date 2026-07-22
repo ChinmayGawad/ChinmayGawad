@@ -37,7 +37,7 @@ I'm a **Computer Engineering student** passionate about **Android Development**,
 <p align="center">
   <img src="https://img.shields.io/badge/Android%20Studio-3DDC84?style=for-the-badge&logo=androidstudio&logoColor=white" />
   <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white" />
-  <!-- <img src="https://img.shields.io/badge/Jetpack%20Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white" /> -->
+  <img src="https://img.shields.io/badge/Jetpack%20Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white" />
   <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
   <img src="https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" />
 </p>
@@ -47,8 +47,8 @@ I'm a **Computer Engineering student** passionate about **Android Development**,
 ## 📊 GitHub Stats
 
 <p align="center">
-  <img height="180em" src="https://github-stats-extended.vercel.app/api?username=ChinmayGawad&theme=nightowl&show_icons=true" />
-  <img height="180em" src="https://github-stats-extended.vercel.app/api/top-langs/?username=ChinmayGawad&theme=nightowl&langs_count=6&hide=html,css,c,Assembly,Perl,SmPL,Yacc,Roff,Shell,F#" />
+  <img width="50%"  src="https://gh-readme-stats.vercel.app/api?username=ChinmayGawad&theme=nightowl&show_icons=true&hide_border=true&count_private=true&include_all_commits=true" />
+  <img width="48%" src="https://gh-readme-stats.vercel.app/api/top-langs?username=ChinmayGawad&theme=nightowl&hide_border=true&langs_count=6&hide=c,assembly,html,css,smpl,perl,makefile,yacc,&layout=compact" />
 </p>
 
 <p align="center">
@@ -56,7 +56,11 @@ I'm a **Computer Engineering student** passionate about **Android Development**,
 </p>
 
 <p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=ChinmayGawad&theme=nightowl&hide_border=true&area=true" alt="Activity Graph" />
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=ChinmayGawad&theme=nightowl&hide_border=true&area=true&custom_title=Contribution%20Graph" alt="Activity Graph" />
+</p>
+
+<p align="center">
+  <img src="https://github-trophies.vercel.app/?username=ChinmayGawad&theme=nightowl&no-frame=true&no-bg=true&column=7" alt="Trophies" />
 </p>
 
 ---
@@ -64,15 +68,19 @@ I'm a **Computer Engineering student** passionate about **Android Development**,
 ## 🌟 Featured Projects
 
 ### 🏠 Student Room Sharing App
+
 Android app to help students find compatible roommates and secure shared accommodations. Built with **Kotlin** & **Firebase**.
 
 ### 🎵 AudioPlayer
+
 Modern, lightweight Android music player built with **Kotlin**, **Jetpack Media3**, and **Material Design**. Features background playback and notification controls.
 
 ### 📒 Notes
+
 Android notes app using **Kotlin**, **Room**, and **MVVM** architecture. Features real-time search, swipe-to-delete with undo, and Jetpack components.
 
 ### 🥗 NutriVision
+
 Food recognition and nutrition estimation powered by a custom-trained **YOLOv8** model. Built with **Python**, **FastAPI**, and **Deep Learning**.
 
 ---
@@ -114,6 +122,13 @@ Food recognition and nutrition estimation powered by a custom-trained **YOLOv8**
 
 ### ⭐ Thanks for Visiting ⭐
 
-![](https://komarev.com/ghpvc/?username=ChinmayGawad&label=Profile+Views&color=blueviolet&style=flat)
+---
+
+## 🏆 Achievements
+
+<p align="center">
+  <img src="https://img.shields.io/github/followers/ChinmayGawad?style=for-the-badge&color=blueviolet&label=Followers" />
+  <img src="https://komarev.com/ghpvc/?username=ChinmayGawad&label=Profile+Views&color=blueviolet&style=for-the-badge" />
+</p>
 
 </div>
