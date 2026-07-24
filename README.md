@@ -47,8 +47,8 @@ I'm a **Computer Engineering student** passionate about **Android Development**,
 ## 📊 GitHub Stats
 
 <p align="center">
-  <img width="50%"  src="https://github-stats-extended-backend-84dedgagn-destroyer2.vercel.app/api?username=ChinmayGawad&theme=nightowl&show_icons=true&hide_border=true&count_private=true&include_all_commits=true" />
-  <img width="48%" src="https://github-stats-extended-backend-84dedgagn-destroyer2.vercel.app/api/top-langs?username=ChinmayGawad&theme=nightowl&hide_border=true&langs_count=6&hide=c,assembly,html,css,smpl,perl,makefile,yacc,&layout=compact" />
+  <img width="50%"  src="https://github-stats-extended-backend-84dedgagn-destroyer2.vercel.app/api?username=ChinmayGawad&theme=nightowl&show_icons=true&hide_border=true&count_private=true&include_all_commits=true&v=2" />
+  <img width="48%" src="https://github-stats-extended-backend-84dedgagn-destroyer2.vercel.app/api/top-langs?username=ChinmayGawad&theme=nightowl&hide_border=true&langs_count=6&hide=c,assembly,html,css,smpl,perl,makefile,yacc,&layout=compact&v=2" />
 </p>
 
 <p align="center">
