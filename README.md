@@ -47,12 +47,12 @@ I'm a **Computer Engineering student** passionate about **Android Development**,
 ## 📊 GitHub Stats
 
 <p align="center">
-  <img width="50%"  src="https://gh-readme-stats.vercel.app/api?username=ChinmayGawad&theme=nightowl&show_icons=true&hide_border=true&count_private=true&include_all_commits=true" />
-  <img width="48%" src="https://gh-readme-stats.vercel.app/api/top-langs?username=ChinmayGawad&theme=nightowl&hide_border=true&langs_count=6&hide=c,assembly,html,css,smpl,perl,makefile,yacc,&layout=compact" />
+  <img width="50%"  src="https://github-stats-extended-backend-84dedgagn-destroyer2.vercel.app/api?username=ChinmayGawad&theme=nightowl&show_icons=true&hide_border=true&count_private=true&include_all_commits=true" />
+  <img width="48%" src="https://github-stats-extended-backend-84dedgagn-destroyer2.vercel.app/api/top-langs?username=ChinmayGawad&theme=nightowl&hide_border=true&langs_count=6&hide=c,assembly,html,css,smpl,perl,makefile,yacc,&layout=compact" />
 </p>
 
 <p align="center">
-  <img src="https://streak-stats.demolab.com?user=ChinmayGawad&theme=nightowl&hide_border=true" />
+  <img src="https://streak-stats.demolab.com?user=ChinmayGawad&theme=nightowl&hide_border=true&cache_sec=300" />
 </p>
 
 <p align="center">
@@ -60,7 +60,7 @@ I'm a **Computer Engineering student** passionate about **Android Development**,
 </p>
 
 <p align="center">
-  <img src="https://github-trophies.vercel.app/?username=ChinmayGawad&theme=nightowl&no-frame=true&no-bg=true&column=7" alt="Trophies" />
+  <img src="https://github-trophies.vercel.app/?username=ChinmayGawad&theme=flat&no-frame=true&no-bg=true&column=7" alt="Trophies" />
 </p>
 
 ---
@@ -71,17 +71,25 @@ I'm a **Computer Engineering student** passionate about **Android Development**,
 
 Android app to help students find compatible roommates and secure shared accommodations. Built with **Kotlin** & **Firebase**.
 
-### 🎵 AudioPlayer
-
-Modern, lightweight Android music player built with **Kotlin**, **Jetpack Media3**, and **Material Design**. Features background playback and notification controls.
-
-### 📒 Notes
-
-Android notes app using **Kotlin**, **Room**, and **MVVM** architecture. Features real-time search, swipe-to-delete with undo, and Jetpack components.
-
-### 🥗 NutriVision
+### 🥗 NutriVision AI
 
 Food recognition and nutrition estimation powered by a custom-trained **YOLOv8** model. Built with **Python**, **FastAPI**, and **Deep Learning**.
+
+### 🔍 Log Analysis & Intrusion Detection
+
+A web-based log analysis tool built with **Python** and **Flask** to monitor system events, identify anomalous behavior, and detect security threats.
+
+### 🔧 OnePlus8 Kernel
+
+Custom kernel development for **OnePlus 8** (SM8250). Built with **C**, **Makefile**, and **Shell** for performance optimization.
+
+### 🎣 Automated Phishing URL Detection
+
+ML-powered tool for detecting phishing URLs using **Python** and **Machine Learning**.
+
+### ✈️ Travel Expense Splitter
+
+**C#/.NET** tool that simplifies group travel budgets by logging shared expenses and automatically calculating who owes whom.
 
 ---
 
