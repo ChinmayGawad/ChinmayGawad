@@ -60,7 +60,7 @@ I'm a **Computer Engineering student** passionate about **Android Development**,
 </p>
 
 <p align="center">
-  <img src="https://github-trophies.vercel.app/?username=ChinmayGawad&theme=flat&no-frame=true&no-bg=true&column=7" alt="Trophies" />
+  <img src="https://github-trophies.vercel.app/?username=ChinmayGawad&theme=nightowl&no-frame=true&no-bg=true&column=7" alt="Trophies" />
 </p>
 
 ---
