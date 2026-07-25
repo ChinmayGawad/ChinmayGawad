@@ -47,8 +47,8 @@ I'm a **Computer Engineering student** passionate about **Android Development**,
 ## 📊 GitHub Stats
 
 <p align="center">
-  <img width="50%"  src="https://github-stats-extended-backend-84dedgagn-destroyer2.vercel.app/api?username=ChinmayGawad&theme=nightowl&show_icons=true&hide_border=true&count_private=true&include_all_commits=true&v=2" />
-  <img width="48%" src="https://github-stats-extended-backend-84dedgagn-destroyer2.vercel.app/api/top-langs?username=ChinmayGawad&theme=nightowl&hide_border=true&langs_count=6&hide=c,assembly,html,css,smpl,perl,makefile,yacc,&layout=compact&v=2" />
+  <img width="50%"  src="https://github-stats-extended-backend-inky.vercel.app/api?username=ChinmayGawad&theme=nightowl&show_icons=true&hide_border=true&count_private=true&include_all_commits=true&show=reviews,prs_merged&v=2" />
+  <img width="48%" src="https://github-stats-extended-backend-inky.vercel.app/api/top-langs?username=ChinmayGawad&theme=nightowl&hide_border=true&langs_count=6&hide=c,assembly,html,css,smpl,perl,makefile,yacc&layout=compact&v=2" />
 </p>
 
 <p align="center">
@@ -67,29 +67,44 @@ I'm a **Computer Engineering student** passionate about **Android Development**,
 
 ## 🌟 Featured Projects
 
-### 🏠 Student Room Sharing App
-
-Android app to help students find compatible roommates and secure shared accommodations. Built with **Kotlin** & **Firebase**.
-
-### 🥗 NutriVision AI
-
-Food recognition and nutrition estimation powered by a custom-trained **YOLOv8** model. Built with **Python**, **FastAPI**, and **Deep Learning**.
-
-### 🔍 Log Analysis & Intrusion Detection
-
-A web-based log analysis tool built with **Python** and **Flask** to monitor system events, identify anomalous behavior, and detect security threats.
-
-### 🔧 OnePlus8 Kernel
-
-Custom kernel development for **OnePlus 8** (SM8250). Built with **C**, **Makefile**, and **Shell** for performance optimization.
-
-### 🎣 Automated Phishing URL Detection
-
-ML-powered tool for detecting phishing URLs using **Python** and **Machine Learning**.
-
-### ✈️ Travel Expense Splitter
-
-**C#/.NET** tool that simplifies group travel budgets by logging shared expenses and automatically calculating who owes whom.
+<table align="center">
+  <tr>
+    <td width="50%">
+      <a href="https://github.com/ChinmayGawad/Student_Room_Sharing_App">
+        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/pin?username=ChinmayGawad&repo=Student_Room_Sharing_App&theme=nightowl&hide_border=true" alt="Student Room Sharing App" />
+      </a>
+    </td>
+    <td width="50%">
+      <a href="https://github.com/ChinmayGawad/nutrivision-capstone">
+        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/pin?username=ChinmayGawad&repo=nutrivision-capstone&theme=nightowl&hide_border=true" alt="NutriVision AI" />
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <a href="https://github.com/ChinmayGawad/Log-Analysis-Intrusion-Detection">
+        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/pin?username=ChinmayGawad&repo=Log-Analysis-Intrusion-Detection&theme=nightowl&hide_border=true" alt="Log Analysis Card" />
+      </a>
+    </td>
+    <td width="50%">
+      <a href="https://github.com/ChinmayGawad/OnePlus8-Kernel">
+        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/pin?username=ChinmayGawad&repo=OnePlus8-Kernel&theme=nightowl&hide_border=true" alt="OnePlus8 Kernel Card" />
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <a href="https://github.com/ChinmayGawad/Automated-Phishing-URL-Detection">
+        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/pin?username=ChinmayGawad&repo=Automated-Phishing-URL-Detection&theme=nightowl&hide_border=true" alt="Automated Phishing Card" />
+      </a>
+    </td>
+    <td width="50%">
+      <a href="https://github.com/ChinmayGawad/Travel_expense_Splitter">
+        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/pin?username=ChinmayGawad&repo=Travel_expense_Splitter&theme=nightowl&hide_border=true" alt="Travel Expense Splitter Card" />
+      </a>
+    </td>
+  </tr>
+</table>
 
 ---
 
