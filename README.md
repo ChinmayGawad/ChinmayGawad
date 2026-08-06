@@ -46,24 +46,28 @@ I'm a **Computer Engineering student** passionate about **Android Development**,
 
 <p align="center">
   <b>📱 Mobile Development</b><br/>
-  <img src="https://skillicons.dev/icons?i=kotlin,androidstudio,firebase" alt="Kotlin, Android Studio, Firebase" />
+  <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" />
+  <img src="https://img.shields.io/badge/Android_Studio-3DDC84?style=for-the-badge&logo=android-studio&logoColor=white" alt="Android Studio" />
+  <img src="https://img.shields.io/badge/Jetpack_Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white" alt="Jetpack Compose" />
+  <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" alt="Firebase" />
 </p>
 
 <p align="center">
-  <b>🤖 AI / ML & Backend</b><br/>
-  <img src="https://skillicons.dev/icons?i=py,tensorflow,fastapi" alt="Python, TensorFlow, FastAPI" />
+  <b>🤖 AI / ML & Cybersecurity</b><br/>
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white" alt="TensorFlow" />
+  <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" />
+  <img src="https://img.shields.io/badge/Scikit--Learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white" alt="Scikit-Learn" />
 </p>
 
 <p align="center">
-  <b>🛠️ Languages & Tools</b><br/>
-  <img src="https://skillicons.dev/icons?i=java,c,dotnet,git" alt="Java, C, .NET, Git" />
-</p>
-
-<p align="center">
-  <b>➕ Also</b><br/>
-  <img src="https://img.shields.io/badge/Android-3DDC84?style=flat&logo=android&logoColor=white" alt="Android" />
-  <img src="https://img.shields.io/badge/Jetpack%20Compose-4285F4?style=flat&logo=jetpackcompose&logoColor=white" alt="Jetpack Compose" />
-  <img src="https://img.shields.io/badge/SQL-4479A1?style=flat&logo=database&logoColor=white" alt="SQL" />
+  <b>🛠️ Languages, Tools & Systems</b><br/>
+  <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java" />
+  <img src="https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white" alt="C" />
+  <img src="https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET" />
+  <img src="https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=postgresql&logoColor=white" alt="SQL" />
+  <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git" />
+  <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux" />
 </p>
 
 ---
@@ -93,65 +97,22 @@ I'm a **Computer Engineering student** passionate about **Android Development**,
 
 ## 🌟 Featured Projects
 
-<table align="center">
-  <tr>
-    <td width="50%" align="center">
-      <a href="https://github.com/ChinmayGawad/Student_Room_Sharing_App">
-        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/pin?username=ChinmayGawad&repo=Student_Room_Sharing_App&theme=nightowl&hide_border=true" alt="Student Room Sharing App — Android app to help students find compatible roommates" />
-      </a><br/>
-      <a href="https://github.com/ChinmayGawad/Student_Room_Sharing_App"><b>Student Room Sharing App</b></a><br/>
-      <sub>Kotlin · Helps students find compatible roommates</sub>
-    </td>
-    <td width="50%" align="center">
-      <a href="https://github.com/ChinmayGawad/nutrivision-capstone">
-        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/pin?username=ChinmayGawad&repo=nutrivision-capstone&theme=nightowl&hide_border=true" alt="NutriVision AI — food recognition & nutrition estimation powered by YOLOv8" />
-      </a><br/>
-      <a href="https://github.com/ChinmayGawad/nutrivision-capstone"><b>NutriVision AI</b></a><br/>
-      <sub>ML · Food recognition &amp; nutrition estimation (YOLOv8)</sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" align="center">
-      <a href="https://github.com/ChinmayGawad/Log-Analysis-Intrusion-Detection">
-        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/pin?username=ChinmayGawad&repo=Log-Analysis-Intrusion-Detection&theme=nightowl&hide_border=true" alt="Log Analysis & Intrusion Detection — detects anomalous behavior and security threats in system logs" />
-      </a><br/>
-      <a href="https://github.com/ChinmayGawad/Log-Analysis-Intrusion-Detection"><b>Log Analysis &amp; Intrusion Detection</b></a><br/>
-      <sub>Python · Flags anomalous behavior &amp; security threats in system logs</sub>
-    </td>
-    <td width="50%" align="center">
-      <a href="https://github.com/ChinmayGawad/OnePlus8-Kernel">
-        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/pin?username=ChinmayGawad&repo=OnePlus8-Kernel&theme=nightowl&hide_border=true" alt="OnePlus8 Kernel — custom kernel work for the OnePlus 8" />
-      </a><br/>
-      <a href="https://github.com/ChinmayGawad/OnePlus8-Kernel"><b>OnePlus8 Kernel</b></a><br/>
-      <sub>C · Custom kernel work for the OnePlus 8</sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" align="center">
-      <a href="https://github.com/ChinmayGawad/Automated-Phishing-URL-Detection">
-        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/pin?username=ChinmayGawad&repo=Automated-Phishing-URL-Detection&theme=nightowl&hide_border=true" alt="Automated Phishing URL Detection — real-time phishing URL detection (lexical + CNN pipeline)" />
-      </a><br/>
-      <a href="https://github.com/ChinmayGawad/Automated-Phishing-URL-Detection"><b>Automated Phishing URL Detection</b></a><br/>
-      <sub>Python · Real-time phishing URL detection (lexical + CNN)</sub>
-    </td>
-    <td width="50%" align="center">
-      <a href="https://github.com/ChinmayGawad/Travel_expense_Splitter">
-        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/pin?username=ChinmayGawad&repo=Travel_expense_Splitter&theme=nightowl&hide_border=true" alt="Travel Expense Splitter — group expense tracker that calculates who owes whom" />
-      </a><br/>
-      <a href="https://github.com/ChinmayGawad/Travel_expense_Splitter"><b>Travel Expense Splitter</b></a><br/>
-      <sub>C# / .NET · Logs shared expenses &amp; calculates who owes whom</sub>
-    </td>
-  </tr>
-</table>
+| Project | Tech Stack | Description | Link |
+| :--- | :--- | :--- | :---: |
+| 📱 **Student Room Sharing App** | `Kotlin` `Compose` `Firebase` | Android application designed to help university students find compatible roommates based on habits & budget preferences. | [Repo](https://github.com/ChinmayGawad/Student_Room_Sharing_App) |
+| 🧠 **NutriVision AI** | `Python` `YOLOv8` `FastAPI` | Capstone project featuring real-time food item recognition and automated nutrition estimation powered by deep learning. | [Repo](https://github.com/ChinmayGawad/nutrivision-capstone) |
+| 🛡️ **Log Analysis & Intrusion Detection** | `Python` `ML` `Cybersecurity` | Security analytics system for parsing system logs to detect anomalous behaviors, intruder activity, and threat patterns. | [Repo](https://github.com/ChinmayGawad/Log-Analysis-Intrusion-Detection) |
+| ⚙️ **OnePlus 8 Custom Kernel** | `C` `Linux Kernel` `Android` | Low-level custom kernel tweaks, driver optimizations, and performance tuning for the OnePlus 8 smartphone. | [Repo](https://github.com/ChinmayGawad/OnePlus8-Kernel) |
+| 🔍 **Automated Phishing URL Detection** | `Python` `CNN` `Deep Learning` | Real-time phishing URL detection pipeline using lexical feature extraction combined with CNN classification. | [Repo](https://github.com/ChinmayGawad/Automated-Phishing-URL-Detection) |
+| 💸 **Travel Expense Splitter** | `C#` `.NET` `SQL` | Desktop utility for logging shared group travel expenses and computing optimal settlement paths between members. | [Repo](https://github.com/ChinmayGawad/Travel_expense_Splitter) |
 
 ---
 
-## 🔭 Currently Working On
+## 💼 Open to Opportunities
 
-- 📱 [**Student Room Sharing App**](https://github.com/ChinmayGawad/Student_Room_Sharing_App) — redesigning & adding new features
-- 🧠 [**NutriVision AI**](https://github.com/ChinmayGawad/nutrivision-capstone) — expanding the YOLOv8 food-recognition models
-- ⚙️ [**OnePlus 8 kernel**](https://github.com/ChinmayGawad/OnePlus8-Kernel) — building & testing custom kernel builds
-- 🌍 **Open Source** — contributing to projects I use and learning from the community
+- 🎯 **Target Roles**: Android Developer, AI/ML Engineer Intern, Software Development Engineer
+- 📍 **Location**: Mumbai, India (Open to Remote & On-site opportunities)
+- 📬 **Contact**: [chinmaygawad365@gmail.com](mailto:chinmaygawad365@gmail.com) | [LinkedIn](https://www.linkedin.com/in/chinmay-gawad-7b3172256) | [Portfolio](https://chinmaygawad.github.io/Portfolio/)
 
 ---
 
