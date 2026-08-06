@@ -82,7 +82,7 @@ I'm a **Computer Engineering student** passionate about **Android Development**,
 </table>
 
 <p align="center">
-  <img src="https://streak-stats.demolab.com?user=ChinmayGawad&theme=nightowl&hide_border=true&cache_sec=300" alt="GitHub streak" />
+  <img src="https://streak-stats.demolab.com?user=ChinmayGawad&theme=nightowl&hide_border=true&v=1" alt="GitHub streak" />
 </p>
 
 <p align="center">
