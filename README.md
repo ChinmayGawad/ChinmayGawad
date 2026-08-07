@@ -119,7 +119,7 @@
         <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api?username=ChinmayGawad&bg_color=0d1117&title_color=00FF66&text_color=e6edf3&icon_color=00FF66&border_color=00FF66&hide_border=true&show_icons=true&count_private=true&include_all_commits=true&show=reviews,prs_merged&v=3" alt="GitHub Stats" />
       </td>
       <td width="50%" align="center">
-        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/top-langs?username=ChinmayGawad&bg_color=0d1117&title_color=00FF66&text_color=e6edf3&icon_color=00FF66&border_color=00FF66&hide_border=true&hide=c,cpp,c%2B%2B,c++,C++,assembly,perl,html,css,makefile,smpl,yacc&langs_count=6&layout=compact&v=6" alt="Top Languages" />
+        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/top-langs?username=ChinmayGawad&bg_color=0d1117&title_color=00FF66&text_color=e6edf3&icon_color=00FF66&border_color=00FF66&hide_border=true&hide=c,cpp,c%2B%2B,c++,C++,,roff,assembly,perl,html,css,makefile,smpl,yacc&langs_count=6&layout=compact&v=6" alt="Top Languages" />
       </td>
     </tr>
   </table>
