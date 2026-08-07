@@ -1,12 +1,6 @@
-<!-- ASCII HEADER -->
+<!-- VECTOR MATRIX ASCII HEADER -->
 <div align="center">
-<pre style="background-color: #0d1117; color: #00FF66; font-family: monospace; padding: 15px; border-radius: 8px; border: 1px solid #30363d;">
-  ____ _  _ _ _  _ _  _ ____ _  _    ____ ____ _  _ ____ ___  
- / ___| || | | |\ | |\/| |  | || |  / ___|  _ \ || |  _ \ | \ 
-| |   | __ | | .` | |  | |__| || | | |  _| |_) | || | |_) | | |
-| |___| || | | |\ | |  | |  | \_/  | |_| |  _ <| || |  _ <| |_|
- \____|_||_|_|_|\_|_|  |_|_|__| |   \____|_| \_\_||_|_| \_\___/
-</pre>
+  <img src="./assets/header-matrix.svg" width="100%" alt="Chinmay Gawad Matrix Header" />
 </div>
 
 <!-- TYPING SUBTITLE -->
@@ -18,33 +12,9 @@
 
 <br/>
 
-<!-- PROFILE SCAN MODULE -->
+<!-- VECTOR TERMINAL PROFILE CARD WITH EMBEDDED AVATAR -->
 <div align="center">
-  <table width="100%" style="background-color: #0d1117; border-collapse: collapse; border: 1px solid #30363d; border-radius: 8px;">
-    <thead style="background-color: #161b22;">
-      <tr>
-        <th colspan="2" align="left" style="padding: 10px 14px; border-bottom: 1px solid #30363d;">
-          🔴 &nbsp;🟡 &nbsp;🟢 &nbsp;&nbsp;
-          <span style="font-family: monospace; color: #8b949e; font-size: 13px;">terminal ~ profile_scan.sys (zsh)</span>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td width="30%" align="center" style="padding: 20px; vertical-align: middle;">
-          <img src="https://github.com/ChinmayGawad.png" width="150" style="border-radius: 8px; border: 2px solid #00FF66; filter: grayscale(20%) contrast(115%);" alt="Chinmay Gawad Avatar" />
-        </td>
-        <td width="70%" style="padding: 20px; font-family: monospace; font-size: 13px; line-height: 1.6; color: #e6edf3;">
-          <span style="color: #00FF66; font-weight: bold;">Subject</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Chinmay Gawad<br/>
-          <span style="color: #00FF66; font-weight: bold;">Degree</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: B.E. Computer Engineering<br/>
-          <span style="color: #00FF66; font-weight: bold;">Role</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Android Developer & AI/ML Engineer<br/>
-          <span style="color: #00FF66; font-weight: bold;">Core Interests</span>&nbsp;: Mobile Apps, Deep Learning, Security, Custom Kernels<br/>
-          <span style="color: #00FF66; font-weight: bold;">Location</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Mumbai, India<br/>
-          <span style="color: #00FF66; font-weight: bold;">System Status</span>&nbsp;&nbsp;: 🟢 [ONLINE] Ready for SDE & AI/ML Opportunities
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <img src="./assets/profile-scan.svg" width="100%" alt="Profile Scan Diagnostics Card" />
 </div>
 
 <br/>
@@ -60,6 +30,20 @@
   <a href="mailto:chinmaygawad365@gmail.com">
     <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
   </a>
+</div>
+
+<br/>
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
+
+<br/>
+
+<!-- AUTHENTIC PLATANE/SNK 60FPS SNAKE ANIMATION -->
+<div align="center">
+  <h3>🐍 Live GitHub Contribution Snake</h3>
+  <p style="color: #8b949e; font-size: 12px;">Automated 60FPS snake eating contribution dots</p>
+  
+  <img src="./assets/snake-contribution.svg" width="100%" alt="Live GitHub Contribution Snake" />
 </div>
 
 <br/>
@@ -127,40 +111,22 @@
 
 <br/>
 
-<!-- DYNAMIC STATS & LANGUAGES -->
+<!-- SYSTEM ANALYTICS (MATRIX GREEN CUSTOM COLOR MATCH) -->
 <div align="center">
   <h3>📊 System Analytics & Diagnostics</h3>
   
   <table border="0" width="100%">
     <tr>
       <td width="50%" align="center">
-        <img width="100%" src="https://github-readme-stats.vercel.app/api?username=ChinmayGawad&theme=matrix&hide_border=true&show_icons=true&count_private=true&include_all_commits=true" alt="GitHub Stats" />
+        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api?username=ChinmayGawad&bg_color=0d1117&title_color=00FF66&text_color=e6edf3&icon_color=00FF66&border_color=00FF66&hide_border=true&show_icons=true&count_private=true&include_all_commits=true&show=reviews,prs_merged&v=3" alt="GitHub Stats" />
       </td>
       <td width="50%" align="center">
-        <img width="100%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=ChinmayGawad&theme=matrix&hide_border=true&layout=compact" alt="Top Languages" />
+        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/top-langs?username=ChinmayGawad&bg_color=0d1117&title_color=00FF66&text_color=e6edf3&icon_color=00FF66&border_color=00FF66&hide_border=true&hide=c,cpp,c%2B%2B,roff,assembly,perl,html,css,makefile,smpl,yacc&langs_count=6&layout=compact&v=6" alt="Top Languages" />
       </td>
     </tr>
   </table>
   <br/>
-  <img width="100%" src="https://github-readme-streak-stats.herokuapp.com/?user=ChinmayGawad&theme=matrix&hide_border=true" alt="GitHub Streak Stats" />
-</div>
-
-<br/>
-
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
-
-<br/>
-
-<!-- CONTRIBUTION ANIMATION SECTION -->
-<div align="center">
-  <h3>🟢 Contribution Grid Activity Matrix</h3>
-  <p style="color: #8b949e; font-size: 12px;">Automated Open-Source Contribution Snake Grid</p>
-  
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ChinmayGawad/ChinmayGawad/output/github-contribution-grid-snake-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/ChinmayGawad/ChinmayGawad/output/github-contribution-grid-snake.svg">
-    <img alt="GitHub Contribution Grid Snake" src="https://raw.githubusercontent.com/ChinmayGawad/ChinmayGawad/output/github-contribution-grid-snake-dark.svg" width="100%">
-  </picture>
+  <img width="100%" src="https://streak-stats.demolab.com?user=ChinmayGawad&background=0d1117&title=00FF66&currStreakLabel=00FF66&sideLabels=e6edf3&dates=8b949e&fire=00FF66&ring=00FF66&sideNumbers=00FF66&currStreakNum=00FF66&hide_border=true&v=3" alt="GitHub Streak Stats" />
 </div>
 
 <br/>
