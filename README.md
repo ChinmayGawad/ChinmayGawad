@@ -38,12 +38,10 @@
 
 <br/>
 
-<!-- AUTHENTIC PLATANE/SNK 60FPS SNAKE ANIMATION -->
+<!-- TERMINAL ENCAPSULATED GITHUB CONTRIBUTION SNAKE -->
 <div align="center">
-  <h3>🐍 Live GitHub Contribution Snake</h3>
-  <p style="color: #8b949e; font-size: 12px;">Automated 60FPS snake eating contribution dots</p>
-  
-  <img src="./assets/snake-contribution.svg" width="100%" alt="Live GitHub Contribution Snake" />
+  <h3>🐍 Terminal Encapsulated Contribution Snake</h3>
+  <img src="https://raw.githubusercontent.com/ChinmayGawad/ChinmayGawad/snake-output/snake-dark.svg" width="100%" alt="GitHub Contribution Snake" />
 </div>
 
 <br/>
@@ -121,12 +119,12 @@
         <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api?username=ChinmayGawad&bg_color=0d1117&title_color=00FF66&text_color=e6edf3&icon_color=00FF66&border_color=00FF66&hide_border=true&show_icons=true&count_private=true&include_all_commits=true&show=reviews,prs_merged&v=3" alt="GitHub Stats" />
       </td>
       <td width="50%" align="center">
-        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/top-langs?username=ChinmayGawad&bg_color=0d1117&title_color=00FF66&text_color=e6edf3&icon_color=00FF66&border_color=00FF66&hide_border=true&hide=c,cpp,c%2B%2B,roff,assembly,perl,html,css,makefile,smpl,yacc&langs_count=6&layout=compact&v=6" alt="Top Languages" />
+        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/top-langs?username=ChinmayGawad&bg_color=0d1117&title_color=00FF66&text_color=e6edf3&icon_color=00FF66&border_color=00FF66&hide_border=true&hide=c,cpp,c%2B%2B,c++,C++,assembly,perl,html,css,makefile,smpl,yacc&langs_count=6&layout=compact&v=6" alt="Top Languages" />
       </td>
     </tr>
   </table>
   <br/>
-  <img width="100%" src="https://streak-stats.demolab.com?user=ChinmayGawad&background=0d1117&title=00FF66&currStreakLabel=00FF66&sideLabels=e6edf3&dates=8b949e&fire=00FF66&ring=00FF66&sideNumbers=00FF66&currStreakNum=00FF66&hide_border=true&v=3" alt="GitHub Streak Stats" />
+  <img width="100%" src="https://streak-stats.demolab.com?user=ChinmayGawad&theme=tokyonight&background=0d1117&title=00FF66&currStreakLabel=00FF66&fire=00FF66&ring=00FF66&currStreakNum=00FF66&stats=00FF66&sideNums=00FF66&dates=8b949e&sideLabels=e6edf3&hide_border=true&v=5" alt="GitHub Streak Stats" />
 </div>
 
 <br/>
