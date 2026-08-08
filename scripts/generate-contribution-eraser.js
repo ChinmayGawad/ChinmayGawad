@@ -137,7 +137,7 @@ function getLevel(count) {
   return 4;
 }
 
-// Generate SVG fully compliant with GitHub Sanitizer and matching preview.html
+// Generate SVG fully compliant with GitHub Camo and matching preview.html
 function generateSVG(data, theme = 'dark') {
   const isDark = theme === 'dark';
 
@@ -212,7 +212,7 @@ function generateSVG(data, theme = 'dark') {
       if (lvl > 0) {
         totalActiveCount++;
         const color = colors.levels[lvl];
-        activeTilesHTML += `      <rect x="${cellX}" y="${cellY}" width="${CELL_SIZE}" height="${CELL_SIZE}" rx="${RADIUS}" fill="${color}" data-row="${r}" />\n`;
+        activeTilesHTML += `      <rect x="${cellX}" y="${cellY}" width="${CELL_SIZE}" height="${CELL_SIZE}" rx="${RADIUS}" fill="${color}" />\n`;
       }
     });
   });
@@ -257,10 +257,6 @@ function generateSVG(data, theme = 'dark') {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svgWidth} ${svgHeight}" width="100%" height="100%">
   <defs>
     <style>
-      * {
-        box-sizing: border-box;
-      }
-
       .card-bg {
         fill: ${colors.cardBg};
         stroke: ${colors.border};
@@ -283,15 +279,15 @@ function generateSVG(data, theme = 'dark') {
 
       /* Status Badge Toggle Animations */
       @keyframes badge-wash-anim {
-        0%, 44% { opacity: 1; visibility: visible; }
-        48%, 94% { opacity: 0; visibility: hidden; }
-        98%, 100% { opacity: 1; visibility: visible; }
+        0%, 44% { opacity: 1; }
+        48%, 94% { opacity: 0; }
+        98%, 100% { opacity: 1; }
       }
 
       @keyframes badge-rebuild-anim {
-        0%, 44% { opacity: 0; visibility: hidden; }
-        48%, 94% { opacity: 1; visibility: visible; }
-        98%, 100% { opacity: 0; visibility: hidden; }
+        0%, 44% { opacity: 0; }
+        48%, 94% { opacity: 1; }
+        98%, 100% { opacity: 0; }
       }
 
       .badge-wash {
@@ -368,15 +364,6 @@ function generateSVG(data, theme = 'dark') {
       ${rowKeyframesHTML}
     </style>
 
-    <!-- Jet Glow Filter -->
-    <filter id="jet-glow-${theme}" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="3.5" result="blur" />
-      <feMerge>
-        <feMergeNode in="blur" />
-        <feMergeNode in="SourceGraphic" />
-      </feMerge>
-    </filter>
-
     ${clipPathsHTML}
   </defs>
 
@@ -432,14 +419,16 @@ ${emptyTilesHTML}  </g>
   <g class="jet-wrapper">
     <g class="jet-subwrapper">
       <!-- Particle Sparks -->
-      <circle class="particle-1" cx="-6" cy="-2" r="2" fill="${colors.badgeWashText}" filter="url(#jet-glow-${theme})" />
-      <circle class="particle-2" cx="-6" cy="2" r="1.5" fill="${colors.badgeWashText}" filter="url(#jet-glow-${theme})" />
+      <circle class="particle-1" cx="-6" cy="-2" r="2" fill="${colors.badgeWashText}" />
+      <circle class="particle-2" cx="-6" cy="2" r="1.5" fill="${colors.badgeWashText}" />
+
+      <!-- Glowing Jet Engine Circles (Native SVG Layers without <filter>) -->
+      <circle cx="-4" cy="0" r="7" fill="${colors.jetGlow}" opacity="0.3" />
+      <circle cx="-4" cy="0" r="4.5" fill="${colors.jetGlow}" opacity="0.7" />
+      <circle cx="-4" cy="0" r="2.5" fill="#ffffff" />
 
       <!-- Spaceship Jet Cursor Shape -->
-      <g filter="url(#jet-glow-${theme})">
-        <path d="M 10 0 L -6 -7 L -2 0 L -6 7 Z" fill="${colors.jetColor}" />
-        <circle cx="-4" cy="0" r="3" fill="${colors.jetGlow}" />
-      </g>
+      <path d="M 10 0 L -6 -7 L -2 0 L -6 7 Z" fill="${colors.jetColor}" />
     </g>
   </g>
 

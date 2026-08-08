@@ -1,10 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 240" width="100%" height="100%">
   <defs>
     <style>
-      * {
-        box-sizing: border-box;
-      }
-
       .card-bg {
         fill: #161b22;
         stroke: #30363d;
@@ -27,15 +23,15 @@
 
       /* Status Badge Toggle Animations */
       @keyframes badge-wash-anim {
-        0%, 44% { opacity: 1; visibility: visible; }
-        48%, 94% { opacity: 0; visibility: hidden; }
-        98%, 100% { opacity: 1; visibility: visible; }
+        0%, 44% { opacity: 1; }
+        48%, 94% { opacity: 0; }
+        98%, 100% { opacity: 1; }
       }
 
       @keyframes badge-rebuild-anim {
-        0%, 44% { opacity: 0; visibility: hidden; }
-        48%, 94% { opacity: 1; visibility: visible; }
-        98%, 100% { opacity: 0; visibility: hidden; }
+        0%, 44% { opacity: 0; }
+        48%, 94% { opacity: 1; }
+        98%, 100% { opacity: 0; }
       }
 
       .badge-wash {
@@ -209,15 +205,6 @@
       }
     
     </style>
-
-    <!-- Jet Glow Filter -->
-    <filter id="jet-glow-dark" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="3.5" result="blur" />
-      <feMerge>
-        <feMergeNode in="blur" />
-        <feMergeNode in="SourceGraphic" />
-      </feMerge>
-    </filter>
 
         <clipPath id="sweep-clip-row-0-dark">
       <rect class="sweep-rect-row-0" x="-18" y="70" width="936" height="20" />
