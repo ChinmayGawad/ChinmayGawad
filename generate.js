@@ -299,9 +299,13 @@ async function main() {
     ${rectElements}
   </g>
 
-  <!-- Jet Spaceship Cursor Sprite -->
+  <!-- Jet Spaceship Cursor Sprite with Laser Thruster -->
   <g class="jet-cursor">
     <g class="jet-bob">
+      <!-- Plasma Thruster Trail -->
+      <path d="M -6,0 L -22,-3 L -16,0 L -22,3 Z" fill="#39d353" opacity="0.95" filter="url(#glow)">
+        <animate attributeName="opacity" values="0.5;1;0.5" dur="0.2s" repeatCount="indefinite"/>
+      </path>
       <path d="M 8,0 L -6,-6 L -2,0 L -6,6 Z" fill="#ffffff" filter="url(#glow)"/>
       <circle cx="-4" cy="0" r="2.5" fill="#39d353"/>
     </g>
