@@ -36,12 +36,14 @@
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
-<br/>
-
-<!-- TERMINAL ENCAPSULATED GITHUB CONTRIBUTION SNAKE -->
+<!-- ORGANIC GITHUB CONTRIBUTION MATRIX WASH ANIMATION -->
 <div align="center">
-  <h3>🐍 Terminal Encapsulated Contribution Snake</h3>
-  <img src="https://raw.githubusercontent.com/ChinmayGawad/ChinmayGawad/snake-output/snake-dark.svg" width="100%" alt="GitHub Contribution Snake" />
+  <h3>🟢 Organic GitHub Contribution Grid Wash Heatmap</h3>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/eraser-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./assets/eraser-light.svg">
+    <img alt="Organic GitHub Contribution Grid Wash Heatmap" src="./assets/eraser-dark.svg" width="100%" />
+  </picture>
 </div>
 
 # My Profile
@@ -122,7 +124,7 @@
         <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api?username=ChinmayGawad&bg_color=0d1117&title_color=00FF66&text_color=e6edf3&icon_color=00FF66&border_color=00FF66&hide_border=true&show_icons=true&count_private=true&include_all_commits=true&show=reviews,prs_merged&v=3" alt="GitHub Stats" />
       </td>
       <td width="50%" align="center">
-        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/top-langs?username=ChinmayGawad&bg_color=0d1117&title_color=00FF66&text_color=e6edf3&icon_color=00FF66&border_color=00FF66&hide_border=true&hide=c,cpp,c%2B%2B,c++,C++,assembly,perl,html,css,makefile,smpl,yacc&langs_count=6&layout=compact&v=6" alt="Top Languages" />
+        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/top-langs?username=ChinmayGawad&bg_color=0d1117&title_color=00FF66&text_color=e6edf3&icon_color=00FF66&border_color=00FF66&hide_border=true&hide=c,cpp,c%2B%2B,c++,C++,,roff,assembly,perl,html,css,makefile,smpl,yacc&langs_count=6&layout=compact&v=6" alt="Top Languages" />
       </td>
     </tr>
   </table>
