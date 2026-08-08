@@ -1,21 +1,28 @@
 const fs = require('fs');
+const path = require('path');
 
 const USERNAME = process.env.GH_USERNAME || 'ChinmayGawad';
-const COLS = 52;
+const COLS = 34; // 34 weeks matching reference jet design
 const ROWS = 7;
-const CELL_SIZE = 12;
-const GAP = 4;
-const RADIUS = 2;
-const PADDING_X = 24;
-const PADDING_Y = 50;
+const CELL = 12;
+const STEP = 15; // cell + gap
+const GRID_X = 310;
+const GRID_Y = 410;
+const LOOP_DUR = 16; // seconds for full pass
+const MAX_TARGETS = 12;
+
+const FLASH_COLOR = '#00FF66';
+const BULLET_COLOR = '#7ee787';
+const BLAST_COLOR = '#39d353';
+const PAD_Y = 550; // Jet flight altitude
+
+const JET_X_START = GRID_X + 15;
+const JET_X_END = GRID_X + (COLS - 1) * STEP - 15;
+
+const svgWidth = 1180;
+const svgHeight = 620;
 
 const COLORS = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'];
-
-// Grid dimensions inside SVG
-const gridWidth = COLS * (CELL_SIZE + GAP) - GAP;
-const gridHeight = ROWS * (CELL_SIZE + GAP) - GAP;
-const svgWidth = gridWidth + PADDING_X * 2;
-const svgHeight = gridHeight + PADDING_Y + 32;
 
 async function getRealContributions(username) {
     const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
@@ -31,7 +38,7 @@ async function getRealContributions(username) {
                       contributionDays {
                         date
                         contributionCount
-                        contributionLevel
+                        color
                       }
                     }
                   }
@@ -50,31 +57,8 @@ async function getRealContributions(username) {
             const json = await response.json();
             const weeks = json?.data?.user?.contributionsCollection?.contributionCalendar?.weeks;
             if (weeks && weeks.length > 0) {
-                const levelMap = {
-                    'NONE': 0,
-                    'FIRST_QUARTILE': 1,
-                    'SECOND_QUARTILE': 2,
-                    'THIRD_QUARTILE': 3,
-                    'FOURTH_QUARTILE': 4
-                };
-                const slice = weeks.slice(-COLS); // 52 weeks ending today
-                const days = [];
-                for (let c = 0; c < slice.length; c++) {
-                    const weekDays = slice[c].contributionDays;
-                    for (let r = 0; r < weekDays.length; r++) {
-                        const day = weekDays[r];
-                        const level = levelMap[day.contributionLevel] ?? (day.contributionCount > 0 ? 1 : 0);
-                        days.push({
-                            col: c,
-                            row: r,
-                            level: level,
-                            count: day.contributionCount,
-                            date: day.date
-                        });
-                    }
-                }
-                console.log(`Fetched ${days.length} real contribution days via GraphQL API.`);
-                return days;
+                console.log(`Fetched real contribution calendar via GraphQL API.`);
+                return weeks;
             }
         } catch (e) {
             console.warn("GraphQL API fetch failed, falling back to public API:", e.message);
@@ -90,21 +74,23 @@ async function getRealContributions(username) {
                 .filter(x => x.date <= todayStr)
                 .sort((a, b) => a.date.localeCompare(b.date));
                 
-            const recent = pastDays.slice(-364);
-            const days = [];
-            for (let i = 0; i < recent.length; i++) {
-                const c = Math.floor(i / 7);
-                const r = i % 7;
-                days.push({
-                    col: c,
-                    row: r,
-                    level: Math.min(4, Math.max(0, recent[i].level || 0)),
-                    count: recent[i].count || 0,
-                    date: recent[i].date
-                });
+            const recent = pastDays.slice(-238); // 34 weeks * 7 days
+            const weeks = [];
+            for (let w = 0; w < COLS; w++) {
+                const contributionDays = [];
+                for (let d = 0; d < ROWS; d++) {
+                    const idx = w * 7 + d;
+                    const item = recent[idx] || { count: 0, level: 0, date: '' };
+                    contributionDays.push({
+                        date: item.date,
+                        contributionCount: item.count || 0,
+                        color: COLORS[Math.min(4, Math.max(0, item.level || 0))]
+                    });
+                }
+                weeks.push({ contributionDays });
             }
-            console.log(`Fetched ${days.length} real contribution days via public API ending today (${todayStr}).`);
-            return days;
+            console.log(`Fetched real contribution calendar via public API.`);
+            return weeks;
         }
     } catch (e) {
         console.error("Public API fetch failed:", e.message);
@@ -113,223 +99,298 @@ async function getRealContributions(username) {
     return null;
 }
 
-async function main() {
-    const realData = await getRealContributions(USERNAME);
+function buildCells(weeks) {
+    let recent = weeks ? weeks.slice(-COLS) : [];
+    const padCount = COLS - recent.length;
+    const padded = Array.from({ length: Math.max(0, padCount) }, () => ({
+        contributionDays: Array.from({ length: ROWS }, () => ({
+            contributionCount: 0,
+            color: '#161b22',
+            date: null,
+        })),
+    })).concat(recent);
 
-    let cells = [];
-    if (realData && realData.length > 0) {
-        cells = realData.map(d => ({
-            x: PADDING_X + d.col * (CELL_SIZE + GAP),
-            y: PADDING_Y + d.row * (CELL_SIZE + GAP),
-            level: d.level,
-            count: d.count,
-            date: d.date,
-            col: d.col,
-            row: d.row
-        }));
-    } else {
-        for (let c = 0; c < COLS; c++) {
-            for (let r = 0; r < ROWS; r++) {
-                cells.push({
-                    x: PADDING_X + c * (CELL_SIZE + GAP),
-                    y: PADDING_Y + r * (CELL_SIZE + GAP),
-                    level: (c % 5),
-                    count: 1,
-                    date: '',
-                    col: c,
-                    row: r
-                });
-            }
+    const cells = [];
+    padded.forEach((week, col) => {
+        week.contributionDays.forEach((day, row) => {
+            cells.push({
+                col,
+                row,
+                x: GRID_X + col * STEP,
+                y: GRID_Y + row * STEP,
+                color: day.color || '#161b22',
+                count: day.contributionCount || 0,
+                date: day.date,
+            });
+        });
+    });
+    return cells;
+}
+
+function pickTargets(cells) {
+    return [...cells]
+        .filter((c) => c.count > 0)
+        .sort((a, b) => b.count - a.count)
+        .slice(0, MAX_TARGETS)
+        .sort((a, b) => a.col - b.col || a.row - b.row);
+}
+
+function keyTimeForCol(col, direction) {
+    const span = 0.44;
+    const t = 0.03 + (col / (COLS - 1)) * span;
+    return direction === 'forward' ? t : 1.0 - t;
+}
+
+function fmt(n) {
+    return Number(n.toFixed(4));
+}
+
+function buildGrid(cells, targets) {
+    const targetKey = new Set(targets.map((t) => `${t.col}-${t.row}`));
+    let svg = '';
+    for (const c of cells) {
+        const isTarget = targetKey.has(`${c.col}-${c.row}`);
+        if (!isTarget) {
+            svg += `<rect x="${c.x.toFixed(2)}" y="${c.y.toFixed(2)}" width="${CELL}" height="${CELL}" rx="2" ry="2" fill="${c.color}"><title>${c.date || ''}: ${c.count} contributions</title></rect>\n`;
+            continue;
+        }
+        const tFwd = keyTimeForCol(c.col, 'forward');
+        const tBack = keyTimeForCol(c.col, 'backward');
+        const [t1, t2] = [Math.min(tFwd, tBack), Math.max(tFwd, tBack)];
+        const dur = 0.006;
+        svg += `<rect x="${c.x.toFixed(2)}" y="${c.y.toFixed(2)}" width="${CELL}" height="${CELL}" rx="2" ry="2" fill="${c.color}">` +
+            `<animate attributeName="fill" dur="${LOOP_DUR}s" repeatCount="indefinite" ` +
+            `keyTimes="0;${fmt(t1)};${fmt(t1 + dur)};${fmt(t2)};${fmt(t2 + dur)};1" ` +
+            `values="${c.color};${c.color};${FLASH_COLOR};${c.color};${FLASH_COLOR};${c.color}"/>` +
+            `<title>${c.date || ''}: ${c.count} contributions (TARGET)</title></rect>\n`;
+        
+        // Target ring overlay on busiest tiles
+        const cx = fmt(c.x + CELL / 2);
+        const cy = fmt(c.y + CELL / 2);
+        svg += `<circle cx="${cx}" cy="${cy}" r="8" fill="none" stroke="#00FF66" stroke-width="1.2" opacity="0.85"/>\n`;
+        svg += `<circle cx="${cx}" cy="${cy}" r="2" fill="#00FF66"/>\n`;
+    }
+    return svg;
+}
+
+function buildBulletsAndBlasts(targets) {
+    let bullets = '';
+    let blasts = '';
+    const dur = 0.006;
+
+    for (const dir of ['forward', 'backward']) {
+        const ordered = dir === 'forward' ? targets : [...targets].reverse();
+        for (const c of ordered) {
+            const t = keyTimeForCol(c.col, dir);
+            const rise = t - dur * 3;
+            const arrive = t;
+            const fadeEnd = t + dur;
+            const cx = fmt(c.x + CELL / 2);
+            const targetY = fmt(c.y + CELL / 2);
+
+            bullets += `<circle cx="${cx}" cy="${PAD_Y}" r="2.5" fill="${BULLET_COLOR}">` +
+                `<animate attributeName="cy" dur="${LOOP_DUR}s" repeatCount="indefinite" ` +
+                `keyTimes="0;${fmt(rise)};${fmt(arrive)};1" values="${PAD_Y};${PAD_Y};${targetY};${targetY}"/>` +
+                `<animate attributeName="opacity" dur="${LOOP_DUR}s" repeatCount="indefinite" ` +
+                `keyTimes="0;${fmt(rise)};${fmt(arrive)};${fmt(fadeEnd)};1" values="0;1;1;0;0"/>` +
+                `</circle>\n`;
+
+            blasts += `<circle cx="${cx}" cy="${targetY}" r="0" fill="none" stroke="${BLAST_COLOR}" stroke-width="1.6" opacity="0">` +
+                `<animate attributeName="r" dur="${LOOP_DUR}s" repeatCount="indefinite" ` +
+                `keyTimes="0;${fmt(arrive)};${fmt(arrive + dur * 3)};1" values="0;1;9;9"/>` +
+                `<animate attributeName="opacity" dur="${LOOP_DUR}s" repeatCount="indefinite" ` +
+                `keyTimes="0;${fmt(arrive)};${fmt(arrive + dur * 3)};1" values="0;1;1;0"/>` +
+                `</circle>\n`;
         }
     }
+    return { bullets, blasts };
+}
 
-    const activeCells = cells.filter(c => c.level > 0);
+function buildJet() {
+    return `<g id="jet">
+    <g transform="translate(0,0)">
+      <!-- Jet Rocket Spacecraft Sprite -->
+      <polygon points="0,-16 8,6 4,3 -4,3 -8,6" fill="#388bfd" stroke="#1f6feb" stroke-width="1.2"/>
+      <polygon points="-8,6 -14,12 -4,7" fill="#2563eb"/>
+      <polygon points="8,6 14,12 4,7" fill="#2563eb"/>
+      <circle cx="0" cy="-5" r="2.5" fill="#c9e6ff"/>
+      <!-- Orange Plasma Engine Thruster -->
+      <polygon points="-3,7 3,7 0,16" fill="#f0883e">
+        <animate attributeName="opacity" values="0.5;1;0.6;1" dur="0.18s" repeatCount="indefinite"/>
+      </polygon>
+    </g>
+    <animateTransform attributeName="transform" attributeType="XML" type="translate"
+      dur="${LOOP_DUR}s" repeatCount="indefinite"
+      keyTimes="0;0.5;1"
+      values="${JET_X_START}.00,${PAD_Y}.00;${JET_X_END}.00,${PAD_Y}.00;${JET_X_START}.00,${PAD_Y}.00"/>
+  </g>`;
+}
 
-    // Sort active cells strictly by contribution level ascending (Level 1 -> 2 -> 3 -> 4)
-    activeCells.sort((a, b) => {
-        if (a.level !== b.level) return a.level - b.level;
-        if (a.count !== b.count) return a.count - b.count;
-        return a.date.localeCompare(b.date);
-    });
+async function main() {
+    let avatarB64 = '';
+    try {
+        if (fs.existsSync('./assets/avatar_b64.txt')) {
+            avatarB64 = fs.readFileSync('./assets/avatar_b64.txt', 'utf8').trim();
+        }
+    } catch (e) {
+        console.warn("Could not read avatar_b64.txt:", e.message);
+    }
 
-    const TOTAL_LOOP_TIME = 6.0;
-    const WAVE_WINDOW = 2.4;
-
-    const activeCount = activeCells.length;
-    const cellDelayMap = new Map();
-
-    activeCells.forEach((cell, idx) => {
-        const norm = idx / Math.max(1, activeCount - 1);
-        const disappearDelay = (norm * WAVE_WINDOW).toFixed(2);
-        const reconstructDelay = (3.0 + norm * WAVE_WINDOW).toFixed(2);
-        cellDelayMap.set(`${cell.col}_${cell.row}`, { disappear: disappearDelay, reconstruct: reconstructDelay });
-    });
+    const weeks = await getRealContributions(USERNAME);
+    const cells = buildCells(weeks);
+    const targets = pickTargets(cells);
+    const { bullets, blasts } = buildBulletsAndBlasts(targets);
+    const totalContribs = cells.reduce((sum, c) => sum + (c.count || 0), 0);
 
     const cssRules = `
-    /* Disappearing and Reconstructing Animation for Contribution Tiles */
-    @keyframes cellWashAndBuild {
-        0%, 3% { opacity: 1; fill-opacity: 1; }
-        /* Low-to-high Disappearing Phase */
-        22%, 48% { opacity: 0.15; fill-opacity: 0.15; fill: #161b22; }
-        /* Reconstructing Phase */
-        68% { opacity: 1; fill-opacity: 1; }
-        78%, 100% { opacity: 1; fill-opacity: 1; }
-    }
-
-    /* Outward Burst Particles on Disappearing */
-    @keyframes pDisappear {
-        0%, 2% { opacity: 0; r: 1px; }
-        8% { opacity: 1; r: 3px; }
-        24%, 100% { opacity: 0; r: 0.5px; }
-    }
-
-    /* Inward Energy Particles on Reconstructing */
-    @keyframes pReconstruct {
-        0%, 50% { opacity: 0; r: 0.5px; }
-        62% { opacity: 1; r: 3.5px; }
-        72%, 100% { opacity: 0; r: 0.5px; }
-    }
-
-    /* Jet Cursor Horizontal Sweep */
-    @keyframes jetSweep {
-        0% { transform: translate(${PADDING_X}px, ${PADDING_Y + gridHeight / 2}px); }
-        45% { transform: translate(${PADDING_X + gridWidth}px, ${PADDING_Y + gridHeight / 2}px); }
-        49% { opacity: 0; transform: translate(${PADDING_X + gridWidth}px, ${PADDING_Y + gridHeight / 2}px); }
-        50% { opacity: 0; transform: translate(${PADDING_X}px, ${PADDING_Y + gridHeight / 2}px); }
-        54% { opacity: 1; }
-        95% { transform: translate(${PADDING_X + gridWidth}px, ${PADDING_Y + gridHeight / 2}px); }
-        100% { transform: translate(${PADDING_X + gridWidth}px, ${PADDING_Y + gridHeight / 2}px); }
-    }
-
-    /* Jet Cursor Vertical Bobbing */
-    @keyframes jetBob {
-        0%, 100% { transform: translateY(-14px); }
-        50% { transform: translateY(14px); }
-    }
-
     @keyframes pulseBadge {
         0%, 100% { opacity: 1; }
         50% { opacity: 0.4; }
     }
-
-    .cell {
-        animation: cellWashAndBuild ${TOTAL_LOOP_TIME}s ease-in-out infinite;
-    }
-    .p-out {
-        animation: pDisappear ${TOTAL_LOOP_TIME}s ease-out infinite;
-    }
-    .p-in {
-        animation: pReconstruct ${TOTAL_LOOP_TIME}s ease-out infinite;
-    }
-    .jet-cursor {
-        animation: jetSweep ${TOTAL_LOOP_TIME}s ease-in-out infinite;
-    }
-    .jet-bob {
-        animation: jetBob 1.8s ease-in-out infinite;
-    }
-    .badge-dot {
-        animation: pulseBadge 2s ease-in-out infinite;
-    }
+    .badge-dot { animation: pulseBadge 2s ease-in-out infinite; }
+    .label-key { font-family: 'Fira Code', monospace; fill: #38BDF8; font-weight: 600; }
+    .label-val { font-family: 'Fira Code', monospace; fill: #E2E8F0; }
+    .accent-val { font-family: 'Fira Code', monospace; fill: #00FF66; font-weight: 700; }
 `;
-
-    let rectElements = '';
-    let particleElements = '';
-
-    cells.forEach((cell) => {
-        const key = `${cell.col}_${cell.row}`;
-        const baseColor = COLORS[cell.level];
-
-        if (cell.level === 0) {
-            rectElements += `<rect x="${cell.x}" y="${cell.y}" width="${CELL_SIZE}" height="${CELL_SIZE}" rx="${RADIUS}" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>${cell.date}: 0 contributions</title></rect>\n    `;
-        } else {
-            const delays = cellDelayMap.get(key) || { disappear: '0.00', reconstruct: '3.00' };
-            rectElements += `<rect class="cell" x="${cell.x}" y="${cell.y}" width="${CELL_SIZE}" height="${CELL_SIZE}" rx="${RADIUS}" fill="${baseColor}" style="animation-delay: ${delays.disappear}s;"><title>${cell.date}: ${cell.count} contribution${cell.count === 1 ? '' : 's'} (Level ${cell.level})</title></rect>\n    `;
-
-            const cx = cell.x + CELL_SIZE / 2;
-            const cy = cell.y + CELL_SIZE / 2;
-
-            particleElements += `<circle class="p-out" cx="${cx}" cy="${cy}" r="2" fill="${baseColor}" style="animation-delay: ${delays.disappear}s;"/>\n    `;
-            particleElements += `<circle class="p-in" cx="${cx}" cy="${cy}" r="2.5" fill="#39d353" style="animation-delay: ${delays.disappear}s;"/>\n    `;
-        }
-    });
-
-    const totalContribs = cells.reduce((sum, c) => sum + (c.count || 0), 0);
 
     const svgContent = `<svg width="100%" height="100%" viewBox="0 0 ${svgWidth} ${svgHeight}" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+    <radialGradient id="bgGlow" cx="50%" cy="30%" r="80%">
       <stop offset="0%" stop-color="#0d1117"/>
-      <stop offset="100%" stop-color="#161b22"/>
+      <stop offset="100%" stop-color="#050816"/>
+    </radialGradient>
+    <linearGradient id="neonBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00FF66"/>
+      <stop offset="50%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
     </linearGradient>
     <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
       <feMerge>
         <feMergeNode in="blur"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
+    <clipPath id="avatar-clip">
+      <circle cx="120" cy="185" r="70" />
+    </clipPath>
     <style>
       ${cssRules}
     </style>
   </defs>
 
-  <!-- Container Box -->
-  <rect width="${svgWidth}" height="${svgHeight}" rx="12" fill="url(#bgGrad)" stroke="#30363d" stroke-width="1"/>
-  
-  <!-- Header Bar -->
-  <path d="M 0,12 A 12,12 0 0,1 12,0 L ${svgWidth - 12},0 A 12,12 0 0,1 ${svgWidth},12 L ${svgWidth},36 L 0,36 Z" fill="#161b22"/>
-  <line x1="0" y1="36" x2="${svgWidth}" y2="36" stroke="#30363d" stroke-width="1"/>
+  <!-- Container Frame -->
+  <rect width="${svgWidth}" height="${svgHeight}" rx="12" fill="url(#bgGlow)" stroke="url(#neonBorder)" stroke-width="1.5"/>
 
-  <!-- Window Dots -->
-  <circle cx="20" cy="18" r="4.5" fill="#ff5f56"/>
-  <circle cx="34" cy="18" r="4.5" fill="#ffbd2e"/>
-  <circle cx="48" cy="18" r="4.5" fill="#27c93f"/>
+  <!-- Top Header Bar -->
+  <path d="M 0,12 A 12,12 0 0,1 12,0 L ${svgWidth - 12},0 A 12,12 0 0,1 ${svgWidth},12 L ${svgWidth},38 L 0,38 Z" fill="#161b22"/>
+  <line x1="0" y1="38" x2="${svgWidth}" y2="38" stroke="#30363d" stroke-width="1"/>
 
-  <text x="66" y="22" font-family="'Fira Code', 'Segoe UI', monospace" font-size="12" font-weight="600" fill="#8b949e">${USERNAME} ~ ${totalContribs} contributions in past year</text>
+  <!-- macOS Control Buttons -->
+  <circle cx="24" cy="19" r="5" fill="#ff5f56"/>
+  <circle cx="40" cy="19" r="5" fill="#ffbd2e"/>
+  <circle cx="56" cy="19" r="5" fill="#27c93f"/>
 
-  <!-- Status Badge -->
-  <g transform="translate(${svgWidth - 135}, 9)">
-    <rect width="115" height="18" rx="9" fill="rgba(57, 211, 83, 0.15)" stroke="rgba(57, 211, 83, 0.4)" stroke-width="1"/>
-    <circle cx="12" cy="9" r="3.5" fill="#39d353" class="badge-dot"/>
-    <text x="22" y="13" font-family="'Fira Code', monospace" font-size="10" font-weight="700" fill="#39d353" letter-spacing="0.5">WASH EFFECT</text>
+  <!-- Terminal Title -->
+  <text x="78" y="23" font-family="'Fira Code', monospace" font-size="12" font-weight="600" fill="#8b949e">chinmay@devos ~ % ./profile.sh --live</text>
+
+  <!-- Status Live Badge -->
+  <g transform="translate(${svgWidth - 140}, 10)">
+    <rect width="120" height="18" rx="9" fill="rgba(0, 255, 102, 0.12)" stroke="rgba(0, 255, 102, 0.4)" stroke-width="1"/>
+    <circle cx="12" cy="9" r="3.5" fill="#00FF66" class="badge-dot"/>
+    <text x="22" y="13" font-family="'Fira Code', monospace" font-size="10" font-weight="700" fill="#00FF66" letter-spacing="0.5">SCANNING OK</text>
   </g>
 
-  <!-- Grid Cells -->
-  <g>
-    ${rectElements}
+  <!-- PANEL 1: VISUAL MAP (LEFT SIDE) -->
+  <g transform="translate(24, 54)">
+    <rect width="220" height="310" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+    <text x="14" y="24" font-family="'Fira Code', monospace" font-size="11" font-weight="700" fill="#38BDF8" letter-spacing="1">VISUAL.MAP</text>
+    <line x1="14" y1="32" x2="206" y2="32" stroke="#30363d" stroke-width="1"/>
+
+    <!-- Avatar Image & Neon Ring -->
+    <circle cx="110" cy="130" r="62" fill="none" stroke="#00FF66" stroke-width="2.5" filter="url(#glow)"/>
+    ${avatarB64 ? `<image href="data:image/png;base64,${avatarB64}" x="48" y="68" width="124" height="124" clip-path="url(#avatar-clip)" />` : ''}
+
+    <text x="110" y="222" font-family="'Fira Code', monospace" font-size="12" font-weight="700" fill="#00FF66" text-anchor="middle">Chinmay Gawad</text>
+    <text x="110" y="242" font-family="'Fira Code', monospace" font-size="10" fill="#8b949e" text-anchor="middle">SYSTEM ID: CG-9042</text>
+    <text x="110" y="260" font-family="'Fira Code', monospace" font-size="10" fill="#38BDF8" text-anchor="middle">STATUS: ONLINE / ACTIVE</text>
+    <rect x="24" y="278" width="172" height="18" rx="4" fill="rgba(56, 189, 248, 0.1)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1"/>
+    <text x="110" y="291" font-family="'Fira Code', monospace" font-size="9" font-weight="700" fill="#38BDF8" text-anchor="middle">AI/ML &amp; Android Dev</text>
   </g>
 
-  <!-- Jet Spaceship Cursor Sprite with Laser Thruster -->
-  <g class="jet-cursor">
-    <g class="jet-bob">
-      <!-- Plasma Thruster Trail -->
-      <path d="M -6,0 L -22,-3 L -16,0 L -22,3 Z" fill="#39d353" opacity="0.95" filter="url(#glow)">
-        <animate attributeName="opacity" values="0.5;1;0.5" dur="0.2s" repeatCount="indefinite"/>
-      </path>
-      <path d="M 8,0 L -6,-6 L -2,0 L -6,6 Z" fill="#ffffff" filter="url(#glow)"/>
-      <circle cx="-4" cy="0" r="2.5" fill="#39d353"/>
+  <!-- PANEL 2: SYSTEM DIAGNOSTICS & INFO (RIGHT SIDE) -->
+  <g transform="translate(260, 54)">
+    <rect width="896" height="310" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+    <text x="18" y="24" font-family="'Fira Code', monospace" font-size="11" font-weight="700" fill="#38BDF8" letter-spacing="1">SYSTEM.INFO</text>
+    <line x1="18" y1="32" x2="878" y2="32" stroke="#30363d" stroke-width="1"/>
+
+    <text x="24" y="58" class="label-key">. Subject<tspan fill="#8b949e">: ............................. </tspan><tspan class="accent-val">Chinmay Gawad</tspan></text>
+    <text x="24" y="82" class="label-key">. Role<tspan fill="#8b949e">: ................................ </tspan><tspan class="label-val">Android Developer | AI/ML Engineer</tspan></text>
+    <text x="24" y="106" class="label-key">. Education<tspan fill="#8b949e">: ........................... </tspan><tspan class="label-val">B.E. Computer Engineering Student</tspan></text>
+    <text x="24" y="130" class="label-key">. Status<tspan fill="#8b949e">: .............................. </tspan><tspan class="label-val">Building Scalable &amp; Intelligent Systems</tspan></text>
+    <text x="24" y="154" class="label-key">. ToolChain<tspan fill="#8b949e">: ........................... </tspan><tspan class="label-val">Android Studio, VS Code, Git, Firebase, Linux</tspan></text>
+    
+    <line x1="24" y1="168" x2="872" y2="168" stroke="#21262d" stroke-width="1"/>
+
+    <text x="24" y="192" class="label-key">. Core.Lang<tspan fill="#8b949e">: ........................... </tspan><tspan class="accent-val">Kotlin, Python, Java, C, C#, SQL</tspan></text>
+    <text x="24" y="216" class="label-key">. Core.AI_ML<tspan fill="#8b949e">: .......................... </tspan><tspan class="label-val">TensorFlow, YOLOv8, FastAPI, Scikit-Learn</tspan></text>
+    <text x="24" y="240" class="label-key">. Core.Mobile_Tools<tspan fill="#8b949e">: .................... </tspan><tspan class="label-val">Jetpack Compose, Android Studio, Firebase</tspan></text>
+    <text x="24" y="264" class="label-key">. Core.Systems<tspan fill="#8b949e">: ......................... </tspan><tspan class="label-val">Cybersecurity, Custom Linux Kernel, Deep Learning</tspan></text>
+
+    <line x1="24" y1="278" x2="872" y2="278" stroke="#21262d" stroke-width="1"/>
+
+    <text x="24" y="296" class="label-key">. Grid.Contact<tspan fill="#8b949e">: ......................... </tspan><tspan class="accent-val">chinmaygawad365@gmail.com | LinkedIn | Portfolio</tspan></text>
+  </g>
+
+  <!-- PANEL 3: CONTRIBUTION MATRIX (BOTTOM SIDE) -->
+  <g transform="translate(24, 380)">
+    <rect width="1132" height="216" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+    <text x="18" y="24" font-family="'Fira Code', monospace" font-size="11" font-weight="700" fill="#38BDF8" letter-spacing="1">CONTRIBUTION.MATRIX</text>
+    <text x="180" y="24" font-family="'Fira Code', monospace" font-size="11" font-weight="600" fill="#8b949e">(${USERNAME} ~ ${totalContribs} contributions in past year)</text>
+    <line x1="18" y1="32" x2="1114" y2="32" stroke="#30363d" stroke-width="1"/>
+
+    <!-- Status Badge -->
+    <g transform="translate(980, 8)">
+      <rect width="130" height="18" rx="9" fill="rgba(57, 211, 83, 0.15)" stroke="rgba(57, 211, 83, 0.4)" stroke-width="1"/>
+      <circle cx="12" cy="9" r="3.5" fill="#39d353" class="badge-dot"/>
+      <text x="22" y="13" font-family="'Fira Code', monospace" font-size="10" font-weight="700" fill="#39d353" letter-spacing="0.5">JET HEATMAP</text>
     </g>
-  </g>
 
-  <!-- Particles Layer -->
-  <g>
-    ${particleElements}
-  </g>
+    <!-- Grid Cells -->
+    <g id="grid">
+      ${buildGrid(cells, targets)}
+    </g>
 
-  <!-- Footer Legend -->
-  <g transform="translate(${PADDING_X}, ${svgHeight - 12})">
-    <text x="0" y="9" font-family="monospace" font-size="10" fill="#8b949e">Less</text>
-    <rect x="30" y="0" width="10" height="10" rx="2" fill="#161b22" stroke="#21262d"/>
-    <rect x="44" y="0" width="10" height="10" rx="2" fill="#0e4429"/>
-    <rect x="58" y="0" width="10" height="10" rx="2" fill="#006d32"/>
-    <rect x="72" y="0" width="10" height="10" rx="2" fill="#26a641"/>
-    <rect x="86" y="0" width="10" height="10" rx="2" fill="#39d353"/>
-    <text x="102" y="9" font-family="monospace" font-size="10" fill="#8b949e">More</text>
+    <!-- Bullets Layer -->
+    <g id="bullets">
+      ${bullets}
+    </g>
+
+    <!-- Blasts Layer -->
+    <g id="blasts">
+      ${blasts}
+    </g>
+
+    <!-- Jet Spaceship Sprite -->
+    ${buildJet()}
+
+    <!-- Footer Legend -->
+    <g transform="translate(20, 192)">
+      <text x="0" y="9" font-family="monospace" font-size="10" fill="#8b949e">Less</text>
+      <rect x="30" y="0" width="10" height="10" rx="2" fill="#161b22" stroke="#21262d"/>
+      <rect x="44" y="0" width="10" height="10" rx="2" fill="#0e4429"/>
+      <rect x="58" y="0" width="10" height="10" rx="2" fill="#006d32"/>
+      <rect x="72" y="0" width="10" height="10" rx="2" fill="#26a641"/>
+      <rect x="86" y="0" width="10" height="10" rx="2" fill="#39d353"/>
+      <text x="102" y="9" font-family="monospace" font-size="10" fill="#8b949e">More</text>
+    </g>
   </g>
 </svg>`;
 
+    fs.writeFileSync('dark.svg', svgContent);
+    fs.writeFileSync('light.svg', svgContent);
     fs.writeFileSync('contribution_wash.svg', svgContent);
-    console.log("SVG Generated with Jet Spaceship Cursor, dual particles, and automated GitHub workflow!");
+    console.log("Master Jet Heatmap Dashboard SVG generated successfully!");
 }
 
-main();
+main().catch(console.error);

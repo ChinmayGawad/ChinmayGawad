@@ -1,20 +1,11 @@
-<!-- VECTOR MATRIX ASCII HEADER -->
+<!-- ALL-IN-ONE CYBERPUNK TERMINAL DASHBOARD -->
 <div align="center">
-  <img src="./assets/header-matrix.svg" width="100%" alt="Chinmay Gawad Matrix Header" />
-</div>
-
-<!-- TYPING SUBTITLE -->
-<div align="center">
-  <a href="https://git.io/typing-svg">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=19&pause=1000&color=00FF66&center=true&vCenter=true&width=650&lines=System.init();Android+Developer+%7C+AI%2FML+Engineer;B.E.+Computer+Engineering+Student;Building+Scalable+%26+Intelligent+Systems" alt="Typing Subtitle" />
+  <a href="https://github.com/ChinmayGawad/ChinmayGawad">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./dark.svg">
+      <img alt="Chinmay Gawad GitHub Profile Dashboard" src="./light.svg" width="100%">
+    </picture>
   </a>
-</div>
-
-<br/>
-
-<!-- VECTOR TERMINAL PROFILE CARD WITH EMBEDDED AVATAR -->
-<div align="center">
-  <img src="./assets/profile-scan.svg" width="100%" alt="Profile Scan Diagnostics Card" />
 </div>
 
 <br/>
@@ -30,18 +21,6 @@
   <a href="mailto:chinmaygawad365@gmail.com">
     <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
   </a>
-</div>
-
-<br/>
-
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
-
-<br/>
-
-<!-- ORGANIC GITHUB CONTRIBUTION WASH HEATMAP -->
-<div align="center">
-  <h3>🟢 Organic GitHub Contribution Heatmap</h3>
-  <img src="./contribution_wash.svg" width="100%" alt="Organic GitHub Contribution Wash Heatmap" />
 </div>
 
 <br/>
