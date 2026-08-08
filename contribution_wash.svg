@@ -93,7 +93,7 @@
   <circle cx="34" cy="18" r="4.5" fill="#ffbd2e"/>
   <circle cx="48" cy="18" r="4.5" fill="#27c93f"/>
 
-  <text x="66" y="22" font-family="'Fira Code', 'Segoe UI', monospace" font-size="12" font-weight="600" fill="#8b949e">ChinmayGawad ~ 372 contributions in past year</text>
+  <text x="66" y="22" font-family="'Fira Code', 'Segoe UI', monospace" font-size="12" font-weight="600" fill="#8b949e">ChinmayGawad ~ 370 contributions in past year</text>
 
   <!-- Status Badge -->
   <g transform="translate(741, 9)">
@@ -159,7 +159,7 @@
     <rect x="136" y="98" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2025-10-01: 0 contributions</title></rect>
     <rect x="136" y="114" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2025-10-02: 0 contributions</title></rect>
     <rect x="136" y="130" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2025-10-03: 0 contributions</title></rect>
-    <rect class="cell" x="136" y="146" width="12" height="12" rx="2" fill="#006d32" style="animation-delay: 1.57s;"><title>2025-10-04: 3 contributions (Level 2)</title></rect>
+    <rect class="cell" x="136" y="146" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.70s;"><title>2025-10-04: 3 contributions (Level 1)</title></rect>
     <rect x="152" y="50" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2025-10-05: 0 contributions</title></rect>
     <rect x="152" y="66" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2025-10-06: 0 contributions</title></rect>
     <rect x="152" y="82" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2025-10-07: 0 contributions</title></rect>
@@ -216,7 +216,7 @@
     <rect x="264" y="114" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2025-11-27: 0 contributions</title></rect>
     <rect x="264" y="130" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2025-11-28: 0 contributions</title></rect>
     <rect x="264" y="146" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2025-11-29: 0 contributions</title></rect>
-    <rect class="cell" x="280" y="50" width="12" height="12" rx="2" fill="#006d32" style="animation-delay: 1.61s;"><title>2025-11-30: 5 contributions (Level 2)</title></rect>
+    <rect class="cell" x="280" y="50" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.13s;"><title>2025-11-30: 5 contributions (Level 1)</title></rect>
     <rect x="280" y="66" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2025-12-01: 0 contributions</title></rect>
     <rect x="280" y="82" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2025-12-02: 0 contributions</title></rect>
     <rect x="280" y="98" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2025-12-03: 0 contributions</title></rect>
@@ -380,7 +380,7 @@
     <rect x="648" y="50" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2026-05-10: 0 contributions</title></rect>
     <rect class="cell" x="648" y="66" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.44s;"><title>2026-05-11: 2 contributions (Level 1)</title></rect>
     <rect x="648" y="82" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2026-05-12: 0 contributions</title></rect>
-    <rect class="cell" x="648" y="98" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.35s;"><title>2026-05-13: 6 contributions (Level 1)</title></rect>
+    <rect class="cell" x="648" y="98" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.44s;"><title>2026-05-13: 6 contributions (Level 1)</title></rect>
     <rect x="648" y="114" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2026-05-14: 0 contributions</title></rect>
     <rect x="648" y="130" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2026-05-15: 0 contributions</title></rect>
     <rect class="cell" x="648" y="146" width="12" height="12" rx="2" fill="#006d32" style="animation-delay: 2.05s;"><title>2026-05-16: 12 contributions (Level 2)</title></rect>
@@ -411,7 +411,7 @@
     <rect x="712" y="98" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2026-06-10: 0 contributions</title></rect>
     <rect x="712" y="114" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2026-06-11: 0 contributions</title></rect>
     <rect x="712" y="130" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2026-06-12: 0 contributions</title></rect>
-    <rect class="cell" x="712" y="146" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.87s;"><title>2026-06-13: 4 contributions (Level 1)</title></rect>
+    <rect class="cell" x="712" y="146" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.92s;"><title>2026-06-13: 4 contributions (Level 1)</title></rect>
     <rect x="728" y="50" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2026-06-14: 0 contributions</title></rect>
     <rect class="cell" x="728" y="66" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.48s;"><title>2026-06-15: 2 contributions (Level 1)</title></rect>
     <rect x="728" y="82" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2026-06-16: 0 contributions</title></rect>
@@ -422,52 +422,52 @@
     <rect x="744" y="50" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2026-06-21: 0 contributions</title></rect>
     <rect x="744" y="66" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2026-06-22: 0 contributions</title></rect>
     <rect x="744" y="82" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2026-06-23: 0 contributions</title></rect>
-    <rect class="cell" x="744" y="98" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.09s;"><title>2026-06-24: 5 contributions (Level 1)</title></rect>
+    <rect class="cell" x="744" y="98" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.18s;"><title>2026-06-24: 5 contributions (Level 1)</title></rect>
     <rect class="cell" x="744" y="114" width="12" height="12" rx="2" fill="#26a641" style="animation-delay: 2.18s;"><title>2026-06-25: 14 contributions (Level 3)</title></rect>
     <rect class="cell" x="744" y="130" width="12" height="12" rx="2" fill="#006d32" style="animation-delay: 1.96s;"><title>2026-06-26: 11 contributions (Level 2)</title></rect>
-    <rect class="cell" x="744" y="146" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.92s;"><title>2026-06-27: 4 contributions (Level 1)</title></rect>
+    <rect class="cell" x="744" y="146" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.96s;"><title>2026-06-27: 4 contributions (Level 1)</title></rect>
     <rect class="cell" x="760" y="50" width="12" height="12" rx="2" fill="#006d32" style="animation-delay: 1.79s;"><title>2026-06-28: 9 contributions (Level 2)</title></rect>
     <rect class="cell" x="760" y="66" width="12" height="12" rx="2" fill="#006d32" style="animation-delay: 1.66s;"><title>2026-06-29: 8 contributions (Level 2)</title></rect>
-    <rect class="cell" x="760" y="82" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.96s;"><title>2026-06-30: 4 contributions (Level 1)</title></rect>
-    <rect class="cell" x="760" y="98" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.40s;"><title>2026-07-01: 6 contributions (Level 1)</title></rect>
+    <rect class="cell" x="760" y="82" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.00s;"><title>2026-06-30: 4 contributions (Level 1)</title></rect>
+    <rect class="cell" x="760" y="98" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.48s;"><title>2026-07-01: 6 contributions (Level 1)</title></rect>
     <rect class="cell" x="760" y="114" width="12" height="12" rx="2" fill="#006d32" style="animation-delay: 1.92s;"><title>2026-07-02: 10 contributions (Level 2)</title></rect>
     <rect class="cell" x="760" y="130" width="12" height="12" rx="2" fill="#26a641" style="animation-delay: 2.23s;"><title>2026-07-03: 14 contributions (Level 3)</title></rect>
     <rect class="cell" x="760" y="146" width="12" height="12" rx="2" fill="#006d32" style="animation-delay: 1.83s;"><title>2026-07-04: 9 contributions (Level 2)</title></rect>
     <rect class="cell" x="776" y="50" width="12" height="12" rx="2" fill="#006d32" style="animation-delay: 1.88s;"><title>2026-07-05: 9 contributions (Level 2)</title></rect>
     <rect class="cell" x="776" y="66" width="12" height="12" rx="2" fill="#006d32" style="animation-delay: 2.09s;"><title>2026-07-06: 12 contributions (Level 2)</title></rect>
     <rect class="cell" x="776" y="82" width="12" height="12" rx="2" fill="#006d32" style="animation-delay: 2.01s;"><title>2026-07-07: 11 contributions (Level 2)</title></rect>
-    <rect class="cell" x="776" y="98" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.70s;"><title>2026-07-08: 3 contributions (Level 1)</title></rect>
+    <rect class="cell" x="776" y="98" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.74s;"><title>2026-07-08: 3 contributions (Level 1)</title></rect>
     <rect class="cell" x="776" y="114" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.61s;"><title>2026-07-09: 2 contributions (Level 1)</title></rect>
-    <rect class="cell" x="776" y="130" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.13s;"><title>2026-07-10: 5 contributions (Level 1)</title></rect>
+    <rect class="cell" x="776" y="130" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.22s;"><title>2026-07-10: 5 contributions (Level 1)</title></rect>
     <rect class="cell" x="776" y="146" width="12" height="12" rx="2" fill="#26a641" style="animation-delay: 2.27s;"><title>2026-07-11: 16 contributions (Level 3)</title></rect>
-    <rect class="cell" x="792" y="50" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.00s;"><title>2026-07-12: 4 contributions (Level 1)</title></rect>
-    <rect class="cell" x="792" y="66" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.18s;"><title>2026-07-13: 5 contributions (Level 1)</title></rect>
+    <rect class="cell" x="792" y="50" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.05s;"><title>2026-07-12: 4 contributions (Level 1)</title></rect>
+    <rect class="cell" x="792" y="66" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.27s;"><title>2026-07-13: 5 contributions (Level 1)</title></rect>
     <rect class="cell" x="792" y="82" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.65s;"><title>2026-07-14: 2 contributions (Level 1)</title></rect>
-    <rect class="cell" x="792" y="98" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.22s;"><title>2026-07-15: 5 contributions (Level 1)</title></rect>
+    <rect class="cell" x="792" y="98" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.31s;"><title>2026-07-15: 5 contributions (Level 1)</title></rect>
     <rect class="cell" x="792" y="114" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.09s;"><title>2026-07-16: 1 contribution (Level 1)</title></rect>
     <rect class="cell" x="792" y="130" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.13s;"><title>2026-07-17: 1 contribution (Level 1)</title></rect>
     <rect x="792" y="146" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2026-07-18: 0 contributions</title></rect>
-    <rect class="cell" x="808" y="50" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.27s;"><title>2026-07-19: 5 contributions (Level 1)</title></rect>
+    <rect class="cell" x="808" y="50" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.35s;"><title>2026-07-19: 5 contributions (Level 1)</title></rect>
     <rect class="cell" x="808" y="66" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.17s;"><title>2026-07-20: 1 contribution (Level 1)</title></rect>
-    <rect class="cell" x="808" y="82" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.44s;"><title>2026-07-21: 6 contributions (Level 1)</title></rect>
+    <rect class="cell" x="808" y="82" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.53s;"><title>2026-07-21: 6 contributions (Level 1)</title></rect>
     <rect class="cell" x="808" y="98" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.22s;"><title>2026-07-22: 1 contribution (Level 1)</title></rect>
-    <rect class="cell" x="808" y="114" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.74s;"><title>2026-07-23: 3 contributions (Level 1)</title></rect>
-    <rect class="cell" x="808" y="130" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.79s;"><title>2026-07-24: 3 contributions (Level 1)</title></rect>
-    <rect class="cell" x="808" y="146" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.48s;"><title>2026-07-25: 6 contributions (Level 1)</title></rect>
-    <rect class="cell" x="824" y="50" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.53s;"><title>2026-07-26: 6 contributions (Level 1)</title></rect>
+    <rect class="cell" x="808" y="114" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.79s;"><title>2026-07-23: 3 contributions (Level 1)</title></rect>
+    <rect class="cell" x="808" y="130" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.83s;"><title>2026-07-24: 3 contributions (Level 1)</title></rect>
+    <rect class="cell" x="808" y="146" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.57s;"><title>2026-07-25: 6 contributions (Level 1)</title></rect>
+    <rect class="cell" x="824" y="50" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.61s;"><title>2026-07-26: 6 contributions (Level 1)</title></rect>
     <rect class="cell" x="824" y="66" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.26s;"><title>2026-07-27: 1 contribution (Level 1)</title></rect>
     <rect x="824" y="82" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="0.5"><title>2026-07-28: 0 contributions</title></rect>
     <rect class="cell" x="824" y="98" width="12" height="12" rx="2" fill="#006d32" style="animation-delay: 1.70s;"><title>2026-07-29: 8 contributions (Level 2)</title></rect>
-    <rect class="cell" x="824" y="114" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.05s;"><title>2026-07-30: 4 contributions (Level 1)</title></rect>
-    <rect class="cell" x="824" y="130" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.83s;"><title>2026-07-31: 3 contributions (Level 1)</title></rect>
+    <rect class="cell" x="824" y="114" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.09s;"><title>2026-07-30: 4 contributions (Level 1)</title></rect>
+    <rect class="cell" x="824" y="130" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.87s;"><title>2026-07-31: 3 contributions (Level 1)</title></rect>
     <rect class="cell" x="824" y="146" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.31s;"><title>2026-08-01: 1 contribution (Level 1)</title></rect>
     <rect class="cell" x="840" y="50" width="12" height="12" rx="2" fill="#26a641" style="animation-delay: 2.31s;"><title>2026-08-02: 17 contributions (Level 3)</title></rect>
     <rect class="cell" x="840" y="66" width="12" height="12" rx="2" fill="#39d353" style="animation-delay: 2.40s;"><title>2026-08-03: 42 contributions (Level 4)</title></rect>
-    <rect class="cell" x="840" y="82" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.31s;"><title>2026-08-04: 5 contributions (Level 1)</title></rect>
+    <rect class="cell" x="840" y="82" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.40s;"><title>2026-08-04: 5 contributions (Level 1)</title></rect>
     <rect class="cell" x="840" y="98" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.35s;"><title>2026-08-05: 1 contribution (Level 1)</title></rect>
-    <rect class="cell" x="840" y="114" width="12" height="12" rx="2" fill="#006d32" style="animation-delay: 2.14s;"><title>2026-08-06: 13 contributions (Level 2)</title></rect>
+    <rect class="cell" x="840" y="114" width="12" height="12" rx="2" fill="#26a641" style="animation-delay: 2.14s;"><title>2026-08-06: 13 contributions (Level 3)</title></rect>
     <rect class="cell" x="840" y="130" width="12" height="12" rx="2" fill="#006d32" style="animation-delay: 1.75s;"><title>2026-08-07: 8 contributions (Level 2)</title></rect>
-    <rect class="cell" x="840" y="146" width="12" height="12" rx="2" fill="#39d353" style="animation-delay: 2.36s;"><title>2026-08-08: 26 contributions (Level 4)</title></rect>
+    <rect class="cell" x="840" y="146" width="12" height="12" rx="2" fill="#39d353" style="animation-delay: 2.36s;"><title>2026-08-08: 24 contributions (Level 4)</title></rect>
     
   </g>
 
@@ -485,22 +485,22 @@
 
   <!-- Particles Layer -->
   <g>
-    <circle class="p-out" cx="142" cy="152" r="2" fill="#006d32" style="animation-delay: 1.57s;"/>
-    <circle class="p-in" cx="142" cy="152" r="2.5" fill="#39d353" style="animation-delay: 1.57s;"/>
-    <circle class="p-out" cx="286" cy="56" r="2" fill="#006d32" style="animation-delay: 1.61s;"/>
-    <circle class="p-in" cx="286" cy="56" r="2.5" fill="#39d353" style="animation-delay: 1.61s;"/>
+    <circle class="p-out" cx="142" cy="152" r="2" fill="#0e4429" style="animation-delay: 0.70s;"/>
+    <circle class="p-in" cx="142" cy="152" r="2.5" fill="#39d353" style="animation-delay: 0.70s;"/>
+    <circle class="p-out" cx="286" cy="56" r="2" fill="#0e4429" style="animation-delay: 1.13s;"/>
+    <circle class="p-in" cx="286" cy="56" r="2.5" fill="#39d353" style="animation-delay: 1.13s;"/>
     <circle class="p-out" cx="494" cy="56" r="2" fill="#0e4429" style="animation-delay: 0.00s;"/>
     <circle class="p-in" cx="494" cy="56" r="2.5" fill="#39d353" style="animation-delay: 0.00s;"/>
     <circle class="p-out" cx="494" cy="152" r="2" fill="#0e4429" style="animation-delay: 0.39s;"/>
     <circle class="p-in" cx="494" cy="152" r="2.5" fill="#39d353" style="animation-delay: 0.39s;"/>
     <circle class="p-out" cx="654" cy="72" r="2" fill="#0e4429" style="animation-delay: 0.44s;"/>
     <circle class="p-in" cx="654" cy="72" r="2.5" fill="#39d353" style="animation-delay: 0.44s;"/>
-    <circle class="p-out" cx="654" cy="104" r="2" fill="#0e4429" style="animation-delay: 1.35s;"/>
-    <circle class="p-in" cx="654" cy="104" r="2.5" fill="#39d353" style="animation-delay: 1.35s;"/>
+    <circle class="p-out" cx="654" cy="104" r="2" fill="#0e4429" style="animation-delay: 1.44s;"/>
+    <circle class="p-in" cx="654" cy="104" r="2.5" fill="#39d353" style="animation-delay: 1.44s;"/>
     <circle class="p-out" cx="654" cy="152" r="2" fill="#006d32" style="animation-delay: 2.05s;"/>
     <circle class="p-in" cx="654" cy="152" r="2.5" fill="#39d353" style="animation-delay: 2.05s;"/>
-    <circle class="p-out" cx="718" cy="152" r="2" fill="#0e4429" style="animation-delay: 0.87s;"/>
-    <circle class="p-in" cx="718" cy="152" r="2.5" fill="#39d353" style="animation-delay: 0.87s;"/>
+    <circle class="p-out" cx="718" cy="152" r="2" fill="#0e4429" style="animation-delay: 0.92s;"/>
+    <circle class="p-in" cx="718" cy="152" r="2.5" fill="#39d353" style="animation-delay: 0.92s;"/>
     <circle class="p-out" cx="734" cy="72" r="2" fill="#0e4429" style="animation-delay: 0.48s;"/>
     <circle class="p-in" cx="734" cy="72" r="2.5" fill="#39d353" style="animation-delay: 0.48s;"/>
     <circle class="p-out" cx="734" cy="120" r="2" fill="#0e4429" style="animation-delay: 0.52s;"/>
@@ -509,22 +509,22 @@
     <circle class="p-in" cx="734" cy="136" r="2.5" fill="#39d353" style="animation-delay: 0.57s;"/>
     <circle class="p-out" cx="734" cy="152" r="2" fill="#0e4429" style="animation-delay: 0.04s;"/>
     <circle class="p-in" cx="734" cy="152" r="2.5" fill="#39d353" style="animation-delay: 0.04s;"/>
-    <circle class="p-out" cx="750" cy="104" r="2" fill="#0e4429" style="animation-delay: 1.09s;"/>
-    <circle class="p-in" cx="750" cy="104" r="2.5" fill="#39d353" style="animation-delay: 1.09s;"/>
+    <circle class="p-out" cx="750" cy="104" r="2" fill="#0e4429" style="animation-delay: 1.18s;"/>
+    <circle class="p-in" cx="750" cy="104" r="2.5" fill="#39d353" style="animation-delay: 1.18s;"/>
     <circle class="p-out" cx="750" cy="120" r="2" fill="#26a641" style="animation-delay: 2.18s;"/>
     <circle class="p-in" cx="750" cy="120" r="2.5" fill="#39d353" style="animation-delay: 2.18s;"/>
     <circle class="p-out" cx="750" cy="136" r="2" fill="#006d32" style="animation-delay: 1.96s;"/>
     <circle class="p-in" cx="750" cy="136" r="2.5" fill="#39d353" style="animation-delay: 1.96s;"/>
-    <circle class="p-out" cx="750" cy="152" r="2" fill="#0e4429" style="animation-delay: 0.92s;"/>
-    <circle class="p-in" cx="750" cy="152" r="2.5" fill="#39d353" style="animation-delay: 0.92s;"/>
+    <circle class="p-out" cx="750" cy="152" r="2" fill="#0e4429" style="animation-delay: 0.96s;"/>
+    <circle class="p-in" cx="750" cy="152" r="2.5" fill="#39d353" style="animation-delay: 0.96s;"/>
     <circle class="p-out" cx="766" cy="56" r="2" fill="#006d32" style="animation-delay: 1.79s;"/>
     <circle class="p-in" cx="766" cy="56" r="2.5" fill="#39d353" style="animation-delay: 1.79s;"/>
     <circle class="p-out" cx="766" cy="72" r="2" fill="#006d32" style="animation-delay: 1.66s;"/>
     <circle class="p-in" cx="766" cy="72" r="2.5" fill="#39d353" style="animation-delay: 1.66s;"/>
-    <circle class="p-out" cx="766" cy="88" r="2" fill="#0e4429" style="animation-delay: 0.96s;"/>
-    <circle class="p-in" cx="766" cy="88" r="2.5" fill="#39d353" style="animation-delay: 0.96s;"/>
-    <circle class="p-out" cx="766" cy="104" r="2" fill="#0e4429" style="animation-delay: 1.40s;"/>
-    <circle class="p-in" cx="766" cy="104" r="2.5" fill="#39d353" style="animation-delay: 1.40s;"/>
+    <circle class="p-out" cx="766" cy="88" r="2" fill="#0e4429" style="animation-delay: 1.00s;"/>
+    <circle class="p-in" cx="766" cy="88" r="2.5" fill="#39d353" style="animation-delay: 1.00s;"/>
+    <circle class="p-out" cx="766" cy="104" r="2" fill="#0e4429" style="animation-delay: 1.48s;"/>
+    <circle class="p-in" cx="766" cy="104" r="2.5" fill="#39d353" style="animation-delay: 1.48s;"/>
     <circle class="p-out" cx="766" cy="120" r="2" fill="#006d32" style="animation-delay: 1.92s;"/>
     <circle class="p-in" cx="766" cy="120" r="2.5" fill="#39d353" style="animation-delay: 1.92s;"/>
     <circle class="p-out" cx="766" cy="136" r="2" fill="#26a641" style="animation-delay: 2.23s;"/>
@@ -537,61 +537,61 @@
     <circle class="p-in" cx="782" cy="72" r="2.5" fill="#39d353" style="animation-delay: 2.09s;"/>
     <circle class="p-out" cx="782" cy="88" r="2" fill="#006d32" style="animation-delay: 2.01s;"/>
     <circle class="p-in" cx="782" cy="88" r="2.5" fill="#39d353" style="animation-delay: 2.01s;"/>
-    <circle class="p-out" cx="782" cy="104" r="2" fill="#0e4429" style="animation-delay: 0.70s;"/>
-    <circle class="p-in" cx="782" cy="104" r="2.5" fill="#39d353" style="animation-delay: 0.70s;"/>
+    <circle class="p-out" cx="782" cy="104" r="2" fill="#0e4429" style="animation-delay: 0.74s;"/>
+    <circle class="p-in" cx="782" cy="104" r="2.5" fill="#39d353" style="animation-delay: 0.74s;"/>
     <circle class="p-out" cx="782" cy="120" r="2" fill="#0e4429" style="animation-delay: 0.61s;"/>
     <circle class="p-in" cx="782" cy="120" r="2.5" fill="#39d353" style="animation-delay: 0.61s;"/>
-    <circle class="p-out" cx="782" cy="136" r="2" fill="#0e4429" style="animation-delay: 1.13s;"/>
-    <circle class="p-in" cx="782" cy="136" r="2.5" fill="#39d353" style="animation-delay: 1.13s;"/>
+    <circle class="p-out" cx="782" cy="136" r="2" fill="#0e4429" style="animation-delay: 1.22s;"/>
+    <circle class="p-in" cx="782" cy="136" r="2.5" fill="#39d353" style="animation-delay: 1.22s;"/>
     <circle class="p-out" cx="782" cy="152" r="2" fill="#26a641" style="animation-delay: 2.27s;"/>
     <circle class="p-in" cx="782" cy="152" r="2.5" fill="#39d353" style="animation-delay: 2.27s;"/>
-    <circle class="p-out" cx="798" cy="56" r="2" fill="#0e4429" style="animation-delay: 1.00s;"/>
-    <circle class="p-in" cx="798" cy="56" r="2.5" fill="#39d353" style="animation-delay: 1.00s;"/>
-    <circle class="p-out" cx="798" cy="72" r="2" fill="#0e4429" style="animation-delay: 1.18s;"/>
-    <circle class="p-in" cx="798" cy="72" r="2.5" fill="#39d353" style="animation-delay: 1.18s;"/>
+    <circle class="p-out" cx="798" cy="56" r="2" fill="#0e4429" style="animation-delay: 1.05s;"/>
+    <circle class="p-in" cx="798" cy="56" r="2.5" fill="#39d353" style="animation-delay: 1.05s;"/>
+    <circle class="p-out" cx="798" cy="72" r="2" fill="#0e4429" style="animation-delay: 1.27s;"/>
+    <circle class="p-in" cx="798" cy="72" r="2.5" fill="#39d353" style="animation-delay: 1.27s;"/>
     <circle class="p-out" cx="798" cy="88" r="2" fill="#0e4429" style="animation-delay: 0.65s;"/>
     <circle class="p-in" cx="798" cy="88" r="2.5" fill="#39d353" style="animation-delay: 0.65s;"/>
-    <circle class="p-out" cx="798" cy="104" r="2" fill="#0e4429" style="animation-delay: 1.22s;"/>
-    <circle class="p-in" cx="798" cy="104" r="2.5" fill="#39d353" style="animation-delay: 1.22s;"/>
+    <circle class="p-out" cx="798" cy="104" r="2" fill="#0e4429" style="animation-delay: 1.31s;"/>
+    <circle class="p-in" cx="798" cy="104" r="2.5" fill="#39d353" style="animation-delay: 1.31s;"/>
     <circle class="p-out" cx="798" cy="120" r="2" fill="#0e4429" style="animation-delay: 0.09s;"/>
     <circle class="p-in" cx="798" cy="120" r="2.5" fill="#39d353" style="animation-delay: 0.09s;"/>
     <circle class="p-out" cx="798" cy="136" r="2" fill="#0e4429" style="animation-delay: 0.13s;"/>
     <circle class="p-in" cx="798" cy="136" r="2.5" fill="#39d353" style="animation-delay: 0.13s;"/>
-    <circle class="p-out" cx="814" cy="56" r="2" fill="#0e4429" style="animation-delay: 1.27s;"/>
-    <circle class="p-in" cx="814" cy="56" r="2.5" fill="#39d353" style="animation-delay: 1.27s;"/>
+    <circle class="p-out" cx="814" cy="56" r="2" fill="#0e4429" style="animation-delay: 1.35s;"/>
+    <circle class="p-in" cx="814" cy="56" r="2.5" fill="#39d353" style="animation-delay: 1.35s;"/>
     <circle class="p-out" cx="814" cy="72" r="2" fill="#0e4429" style="animation-delay: 0.17s;"/>
     <circle class="p-in" cx="814" cy="72" r="2.5" fill="#39d353" style="animation-delay: 0.17s;"/>
-    <circle class="p-out" cx="814" cy="88" r="2" fill="#0e4429" style="animation-delay: 1.44s;"/>
-    <circle class="p-in" cx="814" cy="88" r="2.5" fill="#39d353" style="animation-delay: 1.44s;"/>
+    <circle class="p-out" cx="814" cy="88" r="2" fill="#0e4429" style="animation-delay: 1.53s;"/>
+    <circle class="p-in" cx="814" cy="88" r="2.5" fill="#39d353" style="animation-delay: 1.53s;"/>
     <circle class="p-out" cx="814" cy="104" r="2" fill="#0e4429" style="animation-delay: 0.22s;"/>
     <circle class="p-in" cx="814" cy="104" r="2.5" fill="#39d353" style="animation-delay: 0.22s;"/>
-    <circle class="p-out" cx="814" cy="120" r="2" fill="#0e4429" style="animation-delay: 0.74s;"/>
-    <circle class="p-in" cx="814" cy="120" r="2.5" fill="#39d353" style="animation-delay: 0.74s;"/>
-    <circle class="p-out" cx="814" cy="136" r="2" fill="#0e4429" style="animation-delay: 0.79s;"/>
-    <circle class="p-in" cx="814" cy="136" r="2.5" fill="#39d353" style="animation-delay: 0.79s;"/>
-    <circle class="p-out" cx="814" cy="152" r="2" fill="#0e4429" style="animation-delay: 1.48s;"/>
-    <circle class="p-in" cx="814" cy="152" r="2.5" fill="#39d353" style="animation-delay: 1.48s;"/>
-    <circle class="p-out" cx="830" cy="56" r="2" fill="#0e4429" style="animation-delay: 1.53s;"/>
-    <circle class="p-in" cx="830" cy="56" r="2.5" fill="#39d353" style="animation-delay: 1.53s;"/>
+    <circle class="p-out" cx="814" cy="120" r="2" fill="#0e4429" style="animation-delay: 0.79s;"/>
+    <circle class="p-in" cx="814" cy="120" r="2.5" fill="#39d353" style="animation-delay: 0.79s;"/>
+    <circle class="p-out" cx="814" cy="136" r="2" fill="#0e4429" style="animation-delay: 0.83s;"/>
+    <circle class="p-in" cx="814" cy="136" r="2.5" fill="#39d353" style="animation-delay: 0.83s;"/>
+    <circle class="p-out" cx="814" cy="152" r="2" fill="#0e4429" style="animation-delay: 1.57s;"/>
+    <circle class="p-in" cx="814" cy="152" r="2.5" fill="#39d353" style="animation-delay: 1.57s;"/>
+    <circle class="p-out" cx="830" cy="56" r="2" fill="#0e4429" style="animation-delay: 1.61s;"/>
+    <circle class="p-in" cx="830" cy="56" r="2.5" fill="#39d353" style="animation-delay: 1.61s;"/>
     <circle class="p-out" cx="830" cy="72" r="2" fill="#0e4429" style="animation-delay: 0.26s;"/>
     <circle class="p-in" cx="830" cy="72" r="2.5" fill="#39d353" style="animation-delay: 0.26s;"/>
     <circle class="p-out" cx="830" cy="104" r="2" fill="#006d32" style="animation-delay: 1.70s;"/>
     <circle class="p-in" cx="830" cy="104" r="2.5" fill="#39d353" style="animation-delay: 1.70s;"/>
-    <circle class="p-out" cx="830" cy="120" r="2" fill="#0e4429" style="animation-delay: 1.05s;"/>
-    <circle class="p-in" cx="830" cy="120" r="2.5" fill="#39d353" style="animation-delay: 1.05s;"/>
-    <circle class="p-out" cx="830" cy="136" r="2" fill="#0e4429" style="animation-delay: 0.83s;"/>
-    <circle class="p-in" cx="830" cy="136" r="2.5" fill="#39d353" style="animation-delay: 0.83s;"/>
+    <circle class="p-out" cx="830" cy="120" r="2" fill="#0e4429" style="animation-delay: 1.09s;"/>
+    <circle class="p-in" cx="830" cy="120" r="2.5" fill="#39d353" style="animation-delay: 1.09s;"/>
+    <circle class="p-out" cx="830" cy="136" r="2" fill="#0e4429" style="animation-delay: 0.87s;"/>
+    <circle class="p-in" cx="830" cy="136" r="2.5" fill="#39d353" style="animation-delay: 0.87s;"/>
     <circle class="p-out" cx="830" cy="152" r="2" fill="#0e4429" style="animation-delay: 0.31s;"/>
     <circle class="p-in" cx="830" cy="152" r="2.5" fill="#39d353" style="animation-delay: 0.31s;"/>
     <circle class="p-out" cx="846" cy="56" r="2" fill="#26a641" style="animation-delay: 2.31s;"/>
     <circle class="p-in" cx="846" cy="56" r="2.5" fill="#39d353" style="animation-delay: 2.31s;"/>
     <circle class="p-out" cx="846" cy="72" r="2" fill="#39d353" style="animation-delay: 2.40s;"/>
     <circle class="p-in" cx="846" cy="72" r="2.5" fill="#39d353" style="animation-delay: 2.40s;"/>
-    <circle class="p-out" cx="846" cy="88" r="2" fill="#0e4429" style="animation-delay: 1.31s;"/>
-    <circle class="p-in" cx="846" cy="88" r="2.5" fill="#39d353" style="animation-delay: 1.31s;"/>
+    <circle class="p-out" cx="846" cy="88" r="2" fill="#0e4429" style="animation-delay: 1.40s;"/>
+    <circle class="p-in" cx="846" cy="88" r="2.5" fill="#39d353" style="animation-delay: 1.40s;"/>
     <circle class="p-out" cx="846" cy="104" r="2" fill="#0e4429" style="animation-delay: 0.35s;"/>
     <circle class="p-in" cx="846" cy="104" r="2.5" fill="#39d353" style="animation-delay: 0.35s;"/>
-    <circle class="p-out" cx="846" cy="120" r="2" fill="#006d32" style="animation-delay: 2.14s;"/>
+    <circle class="p-out" cx="846" cy="120" r="2" fill="#26a641" style="animation-delay: 2.14s;"/>
     <circle class="p-in" cx="846" cy="120" r="2.5" fill="#39d353" style="animation-delay: 2.14s;"/>
     <circle class="p-out" cx="846" cy="136" r="2" fill="#006d32" style="animation-delay: 1.75s;"/>
     <circle class="p-in" cx="846" cy="136" r="2.5" fill="#39d353" style="animation-delay: 1.75s;"/>
