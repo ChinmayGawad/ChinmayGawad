@@ -47,19 +47,19 @@ const PIXEL_FONT = {
 function generatePixelMap(text, totalCols = 53) {
   const grid = Array.from({ length: 7 }, () => Array(totalCols).fill(0));
   const chars = text.toUpperCase().split('');
-  
+
   // Calculate total width needed
   let charWidths = chars.map(ch => (PIXEL_FONT[ch] ? 5 : 0));
   let totalTextWidth = charWidths.reduce((sum, w) => sum + w, 0) + (chars.length - 1); // 1 space between chars
-  
+
   // Center starting column
   let startCol = Math.max(1, Math.floor((totalCols - totalTextWidth) / 2));
-  
+
   let currentCol = startCol;
   for (let ch of chars) {
     const glyph = PIXEL_FONT[ch] || PIXEL_FONT[' '];
     if (currentCol + 5 > totalCols) break;
-    
+
     for (let r = 0; r < 7; r++) {
       const rowBits = glyph[r];
       for (let c = 0; c < 5; c++) {
@@ -70,7 +70,7 @@ function generatePixelMap(text, totalCols = 53) {
     }
     currentCol += 6; // 5 width + 1 spacing
   }
-  
+
   return grid;
 }
 
@@ -89,27 +89,27 @@ function buildSVG({ text = "CHINMAY", theme = "dark" }) {
   const rows = 7;
   const cellSize = 11;
   const cellGap = 3;
-  
+
   const padLeft = 45;
   const padTop = 45;
   const padRight = 35;
   const padBottom = 35;
-  
+
   const gridWidth = cols * (cellSize + cellGap) - cellGap;
   const gridHeight = rows * (cellSize + cellGap) - cellGap;
-  
+
   const width = padLeft + gridWidth + padRight;
   const height = padTop + gridHeight + padBottom;
-  
+
   const pixelMap = generatePixelMap(text, cols);
-  
+
   // Theme Palettes
   const isDark = theme === "dark";
   const bgFill = isDark ? "#0d1117" : "#ffffff";
   const borderStroke = isDark ? "#30363d" : "#d0d7de";
   const textMuted = isDark ? "#8b949e" : "#57606a";
   const textTitle = isDark ? "#00FF66" : "#0969da";
-  
+
   // Contribution level base colors
   const baseColors = isDark ? [
     "#161b22", // Level 0
@@ -124,32 +124,32 @@ function buildSVG({ text = "CHINMAY", theme = "dark" }) {
     "#30a14e",
     "#216e39"
   ];
-  
+
   // High energy reveal colors
   const revealColor = isDark ? "#00ff66" : "#1f883d";
   const revealGlow = isDark ? "#00ffcc" : "#2ea043";
   const flashColor = isDark ? "#ffffff" : "#00ff66";
-  
+
   // Sweep timing settings
   const animDuration = 6.5; // seconds per cycle
   const sweepPercent = 80; // 0% to 80% is jet movement across grid, 80%-100% reset phase
-  
+
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  
+
   // Build cell SVG nodes and CSS rules
   let cellSVG = "";
   let keyframeRules = "";
-  
+
   for (let c = 0; c < cols; c++) {
     const x = padLeft + c * (cellSize + cellGap);
-    
+
     // Calculate normalized progress of beam hitting column c
-    const colProgress = c / cols; 
+    const colProgress = c / cols;
     const hitTimePct = (colProgress * sweepPercent).toFixed(2);
     const flashEndPct = (parseFloat(hitTimePct) + 3).toFixed(2);
     const resetTimePct = (sweepPercent + 5).toFixed(2);
-    
+
     keyframeRules += `
       @keyframes colSweep_${c} {
         0%, ${hitTimePct}% {
@@ -170,18 +170,18 @@ function buildSVG({ text = "CHINMAY", theme = "dark" }) {
         }
       }
     `;
-    
+
     for (let r = 0; r < rows; r++) {
       const y = padTop + r * (cellSize + cellGap);
       const isText = pixelMap[r][c] === 1;
       const baseLevel = getBackgroundLevel(c, r);
       const baseColor = baseColors[baseLevel];
-      
+
       const targetColor = isText ? revealColor : baseColor;
       const targetFilter = isText ? `drop-shadow(0px 0px 3px ${revealColor})` : "none";
-      
+
       const cellId = `cell_${c}_${r}`;
-      
+
       cellSVG += `<rect id="${cellId}" class="cell col_${c}" x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" style="--base-color: ${baseColor}; --target-color: ${targetColor}; --target-filter: ${targetFilter}; animation: colSweep_${c} ${animDuration}s infinite cubic-bezier(0.25, 1, 0.5, 1);" />\n`;
     }
   }
@@ -193,7 +193,7 @@ function buildSVG({ text = "CHINMAY", theme = "dark" }) {
     const mX = padLeft + mCol * (cellSize + cellGap);
     monthLabelsSVG += `<text x="${mX}" y="${padTop - 12}" class="label-text">${months[i]}</text>\n`;
   }
-  
+
   // Day Labels (Mon, Wed, Fri)
   let dayLabelsSVG = "";
   [1, 3, 5].forEach(r => {
@@ -204,7 +204,7 @@ function buildSVG({ text = "CHINMAY", theme = "dark" }) {
   // Jet Sweep animation calculation
   const startX = padLeft - 25;
   const endX = padLeft + gridWidth + 25;
-  
+
   const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="100%" style="background: ${bgFill}; border-radius: 10px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
   <defs>
     <!-- Glowing filter effects -->
