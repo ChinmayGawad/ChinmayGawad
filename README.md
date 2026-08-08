@@ -40,9 +40,9 @@
 <div align="center">
   <h3>🟢 Organic GitHub Contribution Grid Wash Heatmap</h3>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ChinmayGawad/ChinmayGawad/eraser-output/eraser-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/ChinmayGawad/ChinmayGawad/eraser-output/eraser-light.svg">
-    <img alt="Organic GitHub Contribution Grid Wash Heatmap" src="https://raw.githubusercontent.com/ChinmayGawad/ChinmayGawad/eraser-output/eraser-dark.svg" width="100%" />
+    <source media="(prefers-color-scheme: dark)" srcset="./dist/eraser-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./dist/eraser-light.svg">
+    <img alt="Organic GitHub Contribution Grid Wash Heatmap" src="./dist/eraser-dark.svg" width="100%" />
   </picture>
 </div>
 
