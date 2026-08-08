@@ -1,0 +1,38 @@
+name: Generate Matrix Beam Animation
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+
+jobs:
+  generate:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Generate Matrix Beam SVGs
+        run: node scripts/generate-contribution-matrix.js
+
+      - name: Push SVGs to matrix-output Branch
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: matrix-output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

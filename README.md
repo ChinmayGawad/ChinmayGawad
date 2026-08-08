@@ -38,6 +38,14 @@
 
 <br/>
 
+<!-- TERMINAL ENCAPSULATED GITHUB CONTRIBUTION MATRIX JET SWEEP -->
+<div align="center">
+  <h3>⚡ Matrix Jet Sweep Contribution Heatmap</h3>
+  <img src="https://raw.githubusercontent.com/ChinmayGawad/ChinmayGawad/matrix-output/matrix-beam-dark.svg" width="100%" alt="GitHub Matrix Jet Sweep Contribution Heatmap" />
+</div>
+
+<br/>
+
 <!-- TERMINAL ENCAPSULATED GITHUB CONTRIBUTION SNAKE -->
 <div align="center">
   <h3>🐍 Terminal Encapsulated Contribution Snake</h3>
