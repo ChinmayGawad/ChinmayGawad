@@ -38,26 +38,6 @@
 
 <br/>
 
-<!-- TERMINAL ENCAPSULATED GITHUB CONTRIBUTION MATRIX JET SWEEP -->
-<div align="center">
-  <h3>⚡ Matrix Jet Sweep Contribution Heatmap</h3>
-  <img src="https://raw.githubusercontent.com/ChinmayGawad/ChinmayGawad/matrix-output/matrix-beam-dark.svg" width="100%" alt="GitHub Matrix Jet Sweep Contribution Heatmap" />
-</div>
-
-<br/>
-
-<!-- TERMINAL ENCAPSULATED GITHUB CONTRIBUTION SNAKE -->
-<div align="center">
-  <h3>🐍 Terminal Encapsulated Contribution Snake</h3>
-  <img src="https://raw.githubusercontent.com/ChinmayGawad/ChinmayGawad/snake-output/snake-dark.svg" width="100%" alt="GitHub Contribution Snake" />
-</div>
-
-<br/>
-
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
-
-<br/>
-
 <!-- TECH STACK BADGES -->
 <div align="center">
   <h3>🛠️ Technical Stack Matrix</h3>
