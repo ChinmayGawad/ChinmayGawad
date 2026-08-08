@@ -137,7 +137,7 @@ function getLevel(count) {
   return 4;
 }
 
-// Generate valid SVG XML structure matching preview.html
+// Generate SVG identical in design, mini jet sprite, organic wave sweep, and card layout to preview.html
 function generateSVG(data, theme = 'dark') {
   const isDark = theme === 'dark';
 
@@ -193,6 +193,8 @@ function generateSVG(data, theme = 'dark') {
   const weeks = (data.weeks || []).slice(-COLS);
 
   let emptyTilesHTML = '';
+  let activeTilesPhase1HTML = '';
+  let activeTilesPhase2HTML = '';
   let totalActiveCount = 0;
   const totalDays = COLS * ROWS;
 
@@ -206,14 +208,14 @@ function generateSVG(data, theme = 'dark') {
 
       if (lvl > 0) totalActiveCount++;
 
-      // Base grid tile
+      // Base empty grid tile
       emptyTilesHTML += `      <rect x="${cellX}" y="${cellY}" width="${CELL_SIZE}" height="${CELL_SIZE}" rx="${RADIUS}" fill="${colors.gridEmpty}" stroke="${colors.gridEmptyBorder}" stroke-width="1" />\n`;
     });
   });
 
-  // Per-row clip paths for organic sine-wave frontline sweep effect
+  // Per-row clip paths for Washing (Phase 1) and Rebuilding (Phase 2)
   let clipPathsHTML = '';
-  let rowKeyframesHTML = '';
+  let keyframesHTML = '';
 
   const sweepDistance = gridWidth + 90;
 
@@ -221,27 +223,95 @@ function generateSVG(data, theme = 'dark') {
     const sineOffset = Math.sin(r * 0.9) * 14;
     const rowY = gridStartY + r * tileStep - 2;
     const rowH = tileStep + 4;
-    const startX = gridStartX - 30 + sineOffset;
 
-    clipPathsHTML += `    <clipPath id="sweep-clip-row-${r}-${theme}">\n`;
-    clipPathsHTML += `      <rect class="sweep-rect-row-${r}" x="${startX}" y="${rowY}" width="${gridWidth + 200}" height="${rowH}" />\n`;
+    // Phase 1 (Washing): Clip rect left edge moves right -> erases tiles behind it
+    const p1StartX = gridStartX - 40 + sineOffset;
+    clipPathsHTML += `    <clipPath id="wash-clip-row-${r}-${theme}">\n`;
+    clipPathsHTML += `      <rect class="wash-rect-row-${r}" x="${p1StartX}" y="${rowY}" width="${gridWidth + 200}" height="${rowH}" />\n`;
     clipPathsHTML += `    </clipPath>\n`;
 
-    rowKeyframesHTML += `
-      @keyframes sweep-anim-row-${r} {
+    // Phase 2 (Rebuilding): Clip rect right edge moves right -> reveals tiles behind it
+    const p2StartX = gridStartX - 60 + sineOffset;
+    clipPathsHTML += `    <clipPath id="rebuild-clip-row-${r}-${theme}">\n`;
+    clipPathsHTML += `      <rect class="rebuild-rect-row-${r}" x="${p2StartX}" y="${rowY}" width="0" height="${rowH}" />\n`;
+    clipPathsHTML += `    </clipPath>\n`;
+
+    keyframesHTML += `
+      @keyframes wash-anim-row-${r} {
         0% { transform: translateX(0px); }
-        42% { transform: translateX(${sweepDistance}px); }
-        48% { transform: translateX(${sweepDistance}px); }
-        50% { transform: translateX(${sweepDistance}px); }
-        92% { transform: translateX(0px); }
-        98% { transform: translateX(0px); }
-        100% { transform: translateX(0px); }
+        44% { transform: translateX(${sweepDistance}px); }
+        48%, 100% { transform: translateX(${sweepDistance}px); }
       }
-      .sweep-rect-row-${r} {
-        transform-origin: 0 0;
-        animation: sweep-anim-row-${r} 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      .wash-rect-row-${r} {
+        animation: wash-anim-row-${r} 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes rebuild-anim-row-${r} {
+        0%, 48% { width: 0px; }
+        92% { width: ${gridWidth + 120}px; }
+        98%, 100% { width: ${gridWidth + 120}px; }
+      }
+      .rebuild-rect-row-${r} {
+        animation: rebuild-anim-row-${r} 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes glow-line-anim-${r} {
+        0% { transform: translateX(${p1StartX}px); opacity: 1; }
+        44% { transform: translateX(${p1StartX + sweepDistance}px); opacity: 1; }
+        45%, 49% { transform: translateX(${p1StartX + sweepDistance}px); opacity: 0; }
+        50% { transform: translateX(${p1StartX}px); opacity: 1; }
+        94% { transform: translateX(${p1StartX + sweepDistance}px); opacity: 1; }
+        95%, 100% { transform: translateX(${p1StartX + sweepDistance}px); opacity: 0; }
+      }
+      .frontline-glow-row-${r} {
+        animation: glow-line-anim-${r} 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       }
     `;
+  }
+
+  // Active tiles HTML for Phase 1 (Clipped by wash clipPath)
+  for (let r = 0; r < ROWS; r++) {
+    activeTilesPhase1HTML += `    <g clip-path="url(#wash-clip-row-${r}-${theme})">\n`;
+    weeks.forEach((week, c) => {
+      const cellX = gridStartX + c * tileStep;
+      (week.contributionDays || []).forEach((day) => {
+        if (day.weekday === r) {
+          const lvl = getLevel(day.contributionCount);
+          if (lvl > 0) {
+            const color = colors.levels[lvl];
+            const cellY = gridStartY + r * tileStep;
+            activeTilesPhase1HTML += `      <rect x="${cellX}" y="${cellY}" width="${CELL_SIZE}" height="${CELL_SIZE}" rx="${RADIUS}" fill="${color}" />\n`;
+          }
+        }
+      });
+    });
+    activeTilesPhase1HTML += `    </g>\n`;
+  }
+
+  // Active tiles HTML for Phase 2 (Clipped by rebuild clipPath)
+  for (let r = 0; r < ROWS; r++) {
+    activeTilesPhase2HTML += `    <g clip-path="url(#rebuild-clip-row-${r}-${theme})">\n`;
+    weeks.forEach((week, c) => {
+      const cellX = gridStartX + c * tileStep;
+      (week.contributionDays || []).forEach((day) => {
+        if (day.weekday === r) {
+          const lvl = getLevel(day.contributionCount);
+          if (lvl > 0) {
+            const color = colors.levels[lvl];
+            const cellY = gridStartY + r * tileStep;
+            activeTilesPhase2HTML += `      <rect x="${cellX}" y="${cellY}" width="${CELL_SIZE}" height="${CELL_SIZE}" rx="${RADIUS}" fill="${color}" />\n`;
+          }
+        }
+      });
+    });
+    activeTilesPhase2HTML += `    </g>\n`;
+  }
+
+  // Frontline white/green glow bars for frontline tiles
+  let frontlineGlowHTML = '';
+  for (let r = 0; r < ROWS; r++) {
+    const rowY = gridStartY + r * tileStep;
+    frontlineGlowHTML += `    <rect class="frontline-glow-row-${r}" x="0" y="${rowY}" width="4" height="${CELL_SIZE}" rx="2" fill="#ffffff" opacity="0.85" />\n`;
   }
 
   // Jet Y keyframes (sine-wave oscillation matching drawJet in preview.html)
@@ -275,16 +345,16 @@ function generateSVG(data, theme = 'dark') {
         fill: ${colors.footerText};
       }
 
-      /* Status Badge Toggle Animations */
+      /* Status Badge Toggle Animations matching preview.html */
       @keyframes badge-wash-anim {
-        0%, 44% { opacity: 1; }
-        48%, 94% { opacity: 0; }
+        0%, 45% { opacity: 1; }
+        48%, 95% { opacity: 0; }
         98%, 100% { opacity: 1; }
       }
 
       @keyframes badge-rebuild-anim {
-        0%, 44% { opacity: 0; }
-        48%, 94% { opacity: 1; }
+        0%, 45% { opacity: 0; }
+        48%, 95% { opacity: 1; }
         98%, 100% { opacity: 0; }
       }
 
@@ -296,14 +366,30 @@ function generateSVG(data, theme = 'dark') {
         animation: badge-rebuild-anim 8s ease-in-out infinite;
       }
 
+      /* Phase Visibility Animations */
+      @keyframes phase-wash-visibility {
+        0%, 46% { opacity: 1; }
+        48%, 96% { opacity: 0; }
+        98%, 100% { opacity: 1; }
+      }
+
+      @keyframes phase-rebuild-visibility {
+        0%, 46% { opacity: 0; }
+        48%, 96% { opacity: 1; }
+        98%, 100% { opacity: 0; }
+      }
+
+      .phase-wash-layer { animation: phase-wash-visibility 8s ease-in-out infinite; }
+      .phase-rebuild-layer { animation: phase-rebuild-visibility 8s ease-in-out infinite; }
+
       /* Jet Spaceship Movements */
       @keyframes jet-x-anim {
         0% { transform: translateX(${jetMinX}px); opacity: 1; }
-        42% { transform: translateX(${jetMaxX}px); opacity: 1; }
-        43%, 49% { transform: translateX(${jetMaxX}px); opacity: 0; }
+        44% { transform: translateX(${jetMaxX}px); opacity: 1; }
+        45%, 49% { transform: translateX(${jetMaxX}px); opacity: 0; }
         50% { transform: translateX(${jetMinX}px); opacity: 1; }
-        92% { transform: translateX(${jetMaxX}px); opacity: 1; }
-        93%, 100% { transform: translateX(${jetMaxX}px); opacity: 0; }
+        94% { transform: translateX(${jetMaxX}px); opacity: 1; }
+        95%, 100% { transform: translateX(${jetMaxX}px); opacity: 0; }
       }
 
       @keyframes jet-y-anim {
@@ -328,47 +414,39 @@ function generateSVG(data, theme = 'dark') {
         animation: jet-y-anim 8s ease-in-out infinite;
       }
 
-      /* Particle Sparkle Animations */
+      /* Particle Sparkle Animations matching spawnParticles in preview.html */
       @keyframes particle-pop-1 {
         0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
-        10% { transform: translate(-8px, -6px) scale(1.4); opacity: 0.9; }
-        25% { transform: translate(-16px, -12px) scale(0.6); opacity: 0; }
+        10% { transform: translate(-10px, -8px) scale(1.5); opacity: 0.95; }
+        25% { transform: translate(-20px, -16px) scale(0.4); opacity: 0; }
       }
 
       @keyframes particle-pop-2 {
         0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
-        12% { transform: translate(-6px, 8px) scale(1.3); opacity: 0.95; }
-        28% { transform: translate(-14px, 14px) scale(0.4); opacity: 0; }
+        12% { transform: translate(-8px, 10px) scale(1.4); opacity: 0.95; }
+        28% { transform: translate(-18px, 18px) scale(0.3); opacity: 0; }
+      }
+
+      @keyframes particle-pop-3 {
+        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
+        15% { transform: translate(-12px, 0px) scale(1.6); opacity: 1; }
+        30% { transform: translate(-24px, 0px) scale(0.2); opacity: 0; }
       }
 
       .particle-1 { animation: particle-pop-1 1.2s ease-out infinite; }
       .particle-2 { animation: particle-pop-2 1.5s ease-out infinite; }
+      .particle-3 { animation: particle-pop-3 1.1s ease-out infinite; }
 
-      /* Counter text visibility animation */
-      @keyframes text-wash-visibility {
-        0%, 44% { opacity: 1; }
-        48%, 94% { opacity: 0; }
-        98%, 100% { opacity: 1; }
-      }
-      @keyframes text-rebuild-visibility {
-        0%, 44% { opacity: 0; }
-        48%, 94% { opacity: 1; }
-        98%, 100% { opacity: 0; }
-      }
-
-      .text-wash-state { animation: text-wash-visibility 8s ease-in-out infinite; }
-      .text-rebuild-state { animation: text-rebuild-visibility 8s ease-in-out infinite; }
-
-      ${rowKeyframesHTML}
+      ${keyframesHTML}
     </style>
 
     ${clipPathsHTML}
   </defs>
 
-  <!-- Outer Card Background -->
+  <!-- Outer Card Background matching preview.html card -->
   <rect class="card-bg" x="1" y="1" width="${svgWidth - 2}" height="${svgHeight - 2}" />
 
-  <!-- Header Section -->
+  <!-- Header Section matching preview.html header -->
   <g transform="translate(28, 44)">
     <text class="title-text" x="0" y="0">Contribution Activity</text>
 
@@ -385,59 +463,46 @@ function generateSVG(data, theme = 'dark') {
     </g>
   </g>
 
-  <!-- BASE LAYER: Empty Contribution Grid -->
+  <!-- BASE LAYER: Empty Contribution Grid (52 cols x 7 rows) -->
   <g id="base-empty-grid">
 ${emptyTilesHTML}  </g>
 
-  <!-- TOP LAYER: Real Active Contribution Tiles (Clipped row-by-row with organic sine offset) -->
-  <g id="active-contribution-grid">
-`;
+  <!-- PHASE 1 LAYER: Active Contribution Tiles (WASHING PHASE) -->
+  <g id="active-grid-phase-1" class="phase-wash-layer">
+${activeTilesPhase1HTML}  </g>
 
-  // Render active tiles per row clipped by individual row sweep clip paths
-  let activeRowsHTML = '';
-  for (let r = 0; r < ROWS; r++) {
-    activeRowsHTML += `    <g clip-path="url(#sweep-clip-row-${r}-${theme})">\n`;
-    weeks.forEach((week, c) => {
-      const cellX = gridStartX + c * tileStep;
-      (week.contributionDays || []).forEach((day) => {
-        if (day.weekday === r) {
-          const lvl = getLevel(day.contributionCount);
-          if (lvl > 0) {
-            const color = colors.levels[lvl];
-            const cellY = gridStartY + r * tileStep;
-            activeRowsHTML += `      <rect x="${cellX}" y="${cellY}" width="${CELL_SIZE}" height="${CELL_SIZE}" rx="${RADIUS}" fill="${color}" />\n`;
-          }
-        }
-      });
-    });
-    activeRowsHTML += `    </g>\n`;
-  }
+  <!-- PHASE 2 LAYER: Active Contribution Tiles (REBUILDING PHASE) -->
+  <g id="active-grid-phase-2" class="phase-rebuild-layer">
+${activeTilesPhase2HTML}  </g>
 
-  const footerHTML = `  </g>
+  <!-- FRONTLINE WHITE GLOW INDICATOR OVERLAY -->
+  <g id="frontline-glow-indicators">
+${frontlineGlowHTML}  </g>
 
   <!-- MINI JET SPACESHIP CURSOR WITH ENGINE GLOW & PARTICLES -->
   <g class="jet-wrapper">
     <g class="jet-subwrapper">
       <!-- Particle Sparks -->
-      <circle class="particle-1" cx="-6" cy="-2" r="2" fill="${colors.badgeWashText}" />
-      <circle class="particle-2" cx="-6" cy="2" r="1.5" fill="${colors.badgeWashText}" />
+      <circle class="particle-1" cx="-6" cy="-3" r="2" fill="${colors.badgeWashText}" />
+      <circle class="particle-2" cx="-6" cy="3" r="1.5" fill="${colors.badgeWashText}" />
+      <circle class="particle-3" cx="-8" cy="0" r="2.5" fill="#ffffff" />
 
       <!-- Glowing Jet Engine Circles (Native SVG Layers without <filter>) -->
       <circle cx="-4" cy="0" r="7" fill="${colors.jetGlow}" opacity="0.3" />
       <circle cx="-4" cy="0" r="4.5" fill="${colors.jetGlow}" opacity="0.7" />
       <circle cx="-4" cy="0" r="2.5" fill="#ffffff" />
 
-      <!-- Spaceship Jet Cursor Shape -->
+      <!-- Spaceship Jet Cursor Shape matching drawJet in preview.html -->
       <path d="M 10 0 L -6 -7 L -2 0 L -6 7 Z" fill="${colors.jetColor}" />
     </g>
   </g>
 
-  <!-- FOOTER DIAGNOSTICS & LEGEND -->
+  <!-- FOOTER DIAGNOSTICS & LEGEND matching preview.html footer -->
   <g transform="translate(28, ${svgHeight - 24})">
     <!-- Counter Text: Washing State -->
-    <text x="0" y="0" class="footer-text text-wash-state">${totalActiveCount} / ${totalDays} days washed</text>
+    <text x="0" y="0" class="footer-text phase-wash-layer">${totalActiveCount} / ${totalDays} days washed</text>
     <!-- Counter Text: Rebuilding State -->
-    <text x="0" y="0" class="footer-text text-rebuild-state">0 / ${totalDays} days erased</text>
+    <text x="0" y="0" class="footer-text phase-rebuild-layer">0 / ${totalDays} days erased</text>
 
     <!-- Contribution Level Legend -->
     <g transform="translate(${svgWidth - 250}, -10)">
@@ -452,7 +517,7 @@ ${emptyTilesHTML}  </g>
   </g>
 </svg>`;
 
-  return headerHTML + activeRowsHTML + footerHTML;
+  return headerHTML;
 }
 
 // Main execution function

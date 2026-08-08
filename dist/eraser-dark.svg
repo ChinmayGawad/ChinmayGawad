@@ -25,16 +25,16 @@
         fill: #8b949e;
       }
 
-      /* Status Badge Toggle Animations */
+      /* Status Badge Toggle Animations matching preview.html */
       @keyframes badge-wash-anim {
-        0%, 44% { opacity: 1; }
-        48%, 94% { opacity: 0; }
+        0%, 45% { opacity: 1; }
+        48%, 95% { opacity: 0; }
         98%, 100% { opacity: 1; }
       }
 
       @keyframes badge-rebuild-anim {
-        0%, 44% { opacity: 0; }
-        48%, 94% { opacity: 1; }
+        0%, 45% { opacity: 0; }
+        48%, 95% { opacity: 1; }
         98%, 100% { opacity: 0; }
       }
 
@@ -46,14 +46,30 @@
         animation: badge-rebuild-anim 8s ease-in-out infinite;
       }
 
+      /* Phase Visibility Animations */
+      @keyframes phase-wash-visibility {
+        0%, 46% { opacity: 1; }
+        48%, 96% { opacity: 0; }
+        98%, 100% { opacity: 1; }
+      }
+
+      @keyframes phase-rebuild-visibility {
+        0%, 46% { opacity: 0; }
+        48%, 96% { opacity: 1; }
+        98%, 100% { opacity: 0; }
+      }
+
+      .phase-wash-layer { animation: phase-wash-visibility 8s ease-in-out infinite; }
+      .phase-rebuild-layer { animation: phase-rebuild-visibility 8s ease-in-out infinite; }
+
       /* Jet Spaceship Movements */
       @keyframes jet-x-anim {
         0% { transform: translateX(-3px); opacity: 1; }
-        42% { transform: translateX(903px); opacity: 1; }
-        43%, 49% { transform: translateX(903px); opacity: 0; }
+        44% { transform: translateX(903px); opacity: 1; }
+        45%, 49% { transform: translateX(903px); opacity: 0; }
         50% { transform: translateX(-3px); opacity: 1; }
-        92% { transform: translateX(903px); opacity: 1; }
-        93%, 100% { transform: translateX(903px); opacity: 0; }
+        94% { transform: translateX(903px); opacity: 1; }
+        95%, 100% { transform: translateX(903px); opacity: 0; }
       }
 
       @keyframes jet-y-anim {
@@ -78,166 +94,291 @@
         animation: jet-y-anim 8s ease-in-out infinite;
       }
 
-      /* Particle Sparkle Animations */
+      /* Particle Sparkle Animations matching spawnParticles in preview.html */
       @keyframes particle-pop-1 {
         0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
-        10% { transform: translate(-8px, -6px) scale(1.4); opacity: 0.9; }
-        25% { transform: translate(-16px, -12px) scale(0.6); opacity: 0; }
+        10% { transform: translate(-10px, -8px) scale(1.5); opacity: 0.95; }
+        25% { transform: translate(-20px, -16px) scale(0.4); opacity: 0; }
       }
 
       @keyframes particle-pop-2 {
         0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
-        12% { transform: translate(-6px, 8px) scale(1.3); opacity: 0.95; }
-        28% { transform: translate(-14px, 14px) scale(0.4); opacity: 0; }
+        12% { transform: translate(-8px, 10px) scale(1.4); opacity: 0.95; }
+        28% { transform: translate(-18px, 18px) scale(0.3); opacity: 0; }
+      }
+
+      @keyframes particle-pop-3 {
+        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
+        15% { transform: translate(-12px, 0px) scale(1.6); opacity: 1; }
+        30% { transform: translate(-24px, 0px) scale(0.2); opacity: 0; }
       }
 
       .particle-1 { animation: particle-pop-1 1.2s ease-out infinite; }
       .particle-2 { animation: particle-pop-2 1.5s ease-out infinite; }
-
-      /* Counter text visibility animation */
-      @keyframes text-wash-visibility {
-        0%, 44% { opacity: 1; }
-        48%, 94% { opacity: 0; }
-        98%, 100% { opacity: 1; }
-      }
-      @keyframes text-rebuild-visibility {
-        0%, 44% { opacity: 0; }
-        48%, 94% { opacity: 1; }
-        98%, 100% { opacity: 0; }
-      }
-
-      .text-wash-state { animation: text-wash-visibility 8s ease-in-out infinite; }
-      .text-rebuild-state { animation: text-rebuild-visibility 8s ease-in-out infinite; }
+      .particle-3 { animation: particle-pop-3 1.1s ease-out infinite; }
 
       
-      @keyframes sweep-anim-row-0 {
+      @keyframes wash-anim-row-0 {
         0% { transform: translateX(0px); }
-        42% { transform: translateX(926px); }
-        48% { transform: translateX(926px); }
-        50% { transform: translateX(926px); }
-        92% { transform: translateX(0px); }
-        98% { transform: translateX(0px); }
-        100% { transform: translateX(0px); }
+        44% { transform: translateX(926px); }
+        48%, 100% { transform: translateX(926px); }
       }
-      .sweep-rect-row-0 {
-        transform-origin: 0 0;
-        animation: sweep-anim-row-0 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      .wash-rect-row-0 {
+        animation: wash-anim-row-0 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes rebuild-anim-row-0 {
+        0%, 48% { width: 0px; }
+        92% { width: 956px; }
+        98%, 100% { width: 956px; }
+      }
+      .rebuild-rect-row-0 {
+        animation: rebuild-anim-row-0 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes glow-line-anim-0 {
+        0% { transform: translateX(-8px); opacity: 1; }
+        44% { transform: translateX(918px); opacity: 1; }
+        45%, 49% { transform: translateX(918px); opacity: 0; }
+        50% { transform: translateX(-8px); opacity: 1; }
+        94% { transform: translateX(918px); opacity: 1; }
+        95%, 100% { transform: translateX(918px); opacity: 0; }
+      }
+      .frontline-glow-row-0 {
+        animation: glow-line-anim-0 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       }
     
-      @keyframes sweep-anim-row-1 {
+      @keyframes wash-anim-row-1 {
         0% { transform: translateX(0px); }
-        42% { transform: translateX(926px); }
-        48% { transform: translateX(926px); }
-        50% { transform: translateX(926px); }
-        92% { transform: translateX(0px); }
-        98% { transform: translateX(0px); }
-        100% { transform: translateX(0px); }
+        44% { transform: translateX(926px); }
+        48%, 100% { transform: translateX(926px); }
       }
-      .sweep-rect-row-1 {
-        transform-origin: 0 0;
-        animation: sweep-anim-row-1 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      .wash-rect-row-1 {
+        animation: wash-anim-row-1 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes rebuild-anim-row-1 {
+        0%, 48% { width: 0px; }
+        92% { width: 956px; }
+        98%, 100% { width: 956px; }
+      }
+      .rebuild-rect-row-1 {
+        animation: rebuild-anim-row-1 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes glow-line-anim-1 {
+        0% { transform: translateX(2.966576734784768px); opacity: 1; }
+        44% { transform: translateX(928.9665767347848px); opacity: 1; }
+        45%, 49% { transform: translateX(928.9665767347848px); opacity: 0; }
+        50% { transform: translateX(2.966576734784768px); opacity: 1; }
+        94% { transform: translateX(928.9665767347848px); opacity: 1; }
+        95%, 100% { transform: translateX(928.9665767347848px); opacity: 0; }
+      }
+      .frontline-glow-row-1 {
+        animation: glow-line-anim-1 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       }
     
-      @keyframes sweep-anim-row-2 {
+      @keyframes wash-anim-row-2 {
         0% { transform: translateX(0px); }
-        42% { transform: translateX(926px); }
-        48% { transform: translateX(926px); }
-        50% { transform: translateX(926px); }
-        92% { transform: translateX(0px); }
-        98% { transform: translateX(0px); }
-        100% { transform: translateX(0px); }
+        44% { transform: translateX(926px); }
+        48%, 100% { transform: translateX(926px); }
       }
-      .sweep-rect-row-2 {
-        transform-origin: 0 0;
-        animation: sweep-anim-row-2 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      .wash-rect-row-2 {
+        animation: wash-anim-row-2 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes rebuild-anim-row-2 {
+        0%, 48% { width: 0px; }
+        92% { width: 956px; }
+        98%, 100% { width: 956px; }
+      }
+      .rebuild-rect-row-2 {
+        animation: rebuild-anim-row-2 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes glow-line-anim-2 {
+        0% { transform: translateX(5.633866832294732px); opacity: 1; }
+        44% { transform: translateX(931.6338668322948px); opacity: 1; }
+        45%, 49% { transform: translateX(931.6338668322948px); opacity: 0; }
+        50% { transform: translateX(5.633866832294732px); opacity: 1; }
+        94% { transform: translateX(931.6338668322948px); opacity: 1; }
+        95%, 100% { transform: translateX(931.6338668322948px); opacity: 0; }
+      }
+      .frontline-glow-row-2 {
+        animation: glow-line-anim-2 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       }
     
-      @keyframes sweep-anim-row-3 {
+      @keyframes wash-anim-row-3 {
         0% { transform: translateX(0px); }
-        42% { transform: translateX(926px); }
-        48% { transform: translateX(926px); }
-        50% { transform: translateX(926px); }
-        92% { transform: translateX(0px); }
-        98% { transform: translateX(0px); }
-        100% { transform: translateX(0px); }
+        44% { transform: translateX(926px); }
+        48%, 100% { transform: translateX(926px); }
       }
-      .sweep-rect-row-3 {
-        transform-origin: 0 0;
-        animation: sweep-anim-row-3 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      .wash-rect-row-3 {
+        animation: wash-anim-row-3 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes rebuild-anim-row-3 {
+        0%, 48% { width: 0px; }
+        92% { width: 956px; }
+        98%, 100% { width: 956px; }
+      }
+      .rebuild-rect-row-3 {
+        animation: rebuild-anim-row-3 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes glow-line-anim-3 {
+        0% { transform: translateX(-2.0166816767263835px); opacity: 1; }
+        44% { transform: translateX(923.9833183232736px); opacity: 1; }
+        45%, 49% { transform: translateX(923.9833183232736px); opacity: 0; }
+        50% { transform: translateX(-2.0166816767263835px); opacity: 1; }
+        94% { transform: translateX(923.9833183232736px); opacity: 1; }
+        95%, 100% { transform: translateX(923.9833183232736px); opacity: 0; }
+      }
+      .frontline-glow-row-3 {
+        animation: glow-line-anim-3 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       }
     
-      @keyframes sweep-anim-row-4 {
+      @keyframes wash-anim-row-4 {
         0% { transform: translateX(0px); }
-        42% { transform: translateX(926px); }
-        48% { transform: translateX(926px); }
-        50% { transform: translateX(926px); }
-        92% { transform: translateX(0px); }
-        98% { transform: translateX(0px); }
-        100% { transform: translateX(0px); }
+        44% { transform: translateX(926px); }
+        48%, 100% { transform: translateX(926px); }
       }
-      .sweep-rect-row-4 {
-        transform-origin: 0 0;
-        animation: sweep-anim-row-4 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      .wash-rect-row-4 {
+        animation: wash-anim-row-4 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes rebuild-anim-row-4 {
+        0%, 48% { width: 0px; }
+        92% { width: 956px; }
+        98%, 100% { width: 956px; }
+      }
+      .rebuild-rect-row-4 {
+        animation: rebuild-anim-row-4 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes glow-line-anim-4 {
+        0% { transform: translateX(-14.195286206127935px); opacity: 1; }
+        44% { transform: translateX(911.8047137938721px); opacity: 1; }
+        45%, 49% { transform: translateX(911.8047137938721px); opacity: 0; }
+        50% { transform: translateX(-14.195286206127935px); opacity: 1; }
+        94% { transform: translateX(911.8047137938721px); opacity: 1; }
+        95%, 100% { transform: translateX(911.8047137938721px); opacity: 0; }
+      }
+      .frontline-glow-row-4 {
+        animation: glow-line-anim-4 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       }
     
-      @keyframes sweep-anim-row-5 {
+      @keyframes wash-anim-row-5 {
         0% { transform: translateX(0px); }
-        42% { transform: translateX(926px); }
-        48% { transform: translateX(926px); }
-        50% { transform: translateX(926px); }
-        92% { transform: translateX(0px); }
-        98% { transform: translateX(0px); }
-        100% { transform: translateX(0px); }
+        44% { transform: translateX(926px); }
+        48%, 100% { transform: translateX(926px); }
       }
-      .sweep-rect-row-5 {
-        transform-origin: 0 0;
-        animation: sweep-anim-row-5 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      .wash-rect-row-5 {
+        animation: wash-anim-row-5 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes rebuild-anim-row-5 {
+        0%, 48% { width: 0px; }
+        92% { width: 956px; }
+        98%, 100% { width: 956px; }
+      }
+      .rebuild-rect-row-5 {
+        animation: rebuild-anim-row-5 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes glow-line-anim-5 {
+        0% { transform: translateX(-21.685421647311358px); opacity: 1; }
+        44% { transform: translateX(904.3145783526886px); opacity: 1; }
+        45%, 49% { transform: translateX(904.3145783526886px); opacity: 0; }
+        50% { transform: translateX(-21.685421647311358px); opacity: 1; }
+        94% { transform: translateX(904.3145783526886px); opacity: 1; }
+        95%, 100% { transform: translateX(904.3145783526886px); opacity: 0; }
+      }
+      .frontline-glow-row-5 {
+        animation: glow-line-anim-5 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       }
     
-      @keyframes sweep-anim-row-6 {
+      @keyframes wash-anim-row-6 {
         0% { transform: translateX(0px); }
-        42% { transform: translateX(926px); }
-        48% { transform: translateX(926px); }
-        50% { transform: translateX(926px); }
-        92% { transform: translateX(0px); }
-        98% { transform: translateX(0px); }
-        100% { transform: translateX(0px); }
+        44% { transform: translateX(926px); }
+        48%, 100% { transform: translateX(926px); }
       }
-      .sweep-rect-row-6 {
-        transform-origin: 0 0;
-        animation: sweep-anim-row-6 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      .wash-rect-row-6 {
+        animation: wash-anim-row-6 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes rebuild-anim-row-6 {
+        0%, 48% { width: 0px; }
+        92% { width: 956px; }
+        98%, 100% { width: 956px; }
+      }
+      .rebuild-rect-row-6 {
+        animation: rebuild-anim-row-6 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes glow-line-anim-6 {
+        0% { transform: translateX(-18.81870282578382px); opacity: 1; }
+        44% { transform: translateX(907.1812971742162px); opacity: 1; }
+        45%, 49% { transform: translateX(907.1812971742162px); opacity: 0; }
+        50% { transform: translateX(-18.81870282578382px); opacity: 1; }
+        94% { transform: translateX(907.1812971742162px); opacity: 1; }
+        95%, 100% { transform: translateX(907.1812971742162px); opacity: 0; }
+      }
+      .frontline-glow-row-6 {
+        animation: glow-line-anim-6 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       }
     
     </style>
 
-        <clipPath id="sweep-clip-row-0-dark">
-      <rect class="sweep-rect-row-0" x="2" y="70" width="1036" height="20" />
+        <clipPath id="wash-clip-row-0-dark">
+      <rect class="wash-rect-row-0" x="-8" y="70" width="1036" height="20" />
     </clipPath>
-    <clipPath id="sweep-clip-row-1-dark">
-      <rect class="sweep-rect-row-1" x="12.966576734784768" y="86" width="1036" height="20" />
+    <clipPath id="rebuild-clip-row-0-dark">
+      <rect class="rebuild-rect-row-0" x="-28" y="70" width="0" height="20" />
     </clipPath>
-    <clipPath id="sweep-clip-row-2-dark">
-      <rect class="sweep-rect-row-2" x="15.633866832294732" y="102" width="1036" height="20" />
+    <clipPath id="wash-clip-row-1-dark">
+      <rect class="wash-rect-row-1" x="2.966576734784768" y="86" width="1036" height="20" />
     </clipPath>
-    <clipPath id="sweep-clip-row-3-dark">
-      <rect class="sweep-rect-row-3" x="7.9833183232736165" y="118" width="1036" height="20" />
+    <clipPath id="rebuild-clip-row-1-dark">
+      <rect class="rebuild-rect-row-1" x="-17.033423265215234" y="86" width="0" height="20" />
     </clipPath>
-    <clipPath id="sweep-clip-row-4-dark">
-      <rect class="sweep-rect-row-4" x="-4.195286206127935" y="134" width="1036" height="20" />
+    <clipPath id="wash-clip-row-2-dark">
+      <rect class="wash-rect-row-2" x="5.633866832294732" y="102" width="1036" height="20" />
     </clipPath>
-    <clipPath id="sweep-clip-row-5-dark">
-      <rect class="sweep-rect-row-5" x="-11.685421647311358" y="150" width="1036" height="20" />
+    <clipPath id="rebuild-clip-row-2-dark">
+      <rect class="rebuild-rect-row-2" x="-14.366133167705268" y="102" width="0" height="20" />
     </clipPath>
-    <clipPath id="sweep-clip-row-6-dark">
-      <rect class="sweep-rect-row-6" x="-8.81870282578382" y="166" width="1036" height="20" />
+    <clipPath id="wash-clip-row-3-dark">
+      <rect class="wash-rect-row-3" x="-2.0166816767263835" y="118" width="1036" height="20" />
+    </clipPath>
+    <clipPath id="rebuild-clip-row-3-dark">
+      <rect class="rebuild-rect-row-3" x="-22.016681676726385" y="118" width="0" height="20" />
+    </clipPath>
+    <clipPath id="wash-clip-row-4-dark">
+      <rect class="wash-rect-row-4" x="-14.195286206127935" y="134" width="1036" height="20" />
+    </clipPath>
+    <clipPath id="rebuild-clip-row-4-dark">
+      <rect class="rebuild-rect-row-4" x="-34.19528620612793" y="134" width="0" height="20" />
+    </clipPath>
+    <clipPath id="wash-clip-row-5-dark">
+      <rect class="wash-rect-row-5" x="-21.685421647311358" y="150" width="1036" height="20" />
+    </clipPath>
+    <clipPath id="rebuild-clip-row-5-dark">
+      <rect class="rebuild-rect-row-5" x="-41.68542164731136" y="150" width="0" height="20" />
+    </clipPath>
+    <clipPath id="wash-clip-row-6-dark">
+      <rect class="wash-rect-row-6" x="-18.81870282578382" y="166" width="1036" height="20" />
+    </clipPath>
+    <clipPath id="rebuild-clip-row-6-dark">
+      <rect class="rebuild-rect-row-6" x="-38.81870282578382" y="166" width="0" height="20" />
     </clipPath>
 
   </defs>
 
-  <!-- Outer Card Background -->
+  <!-- Outer Card Background matching preview.html card -->
   <rect class="card-bg" x="1" y="1" width="898" height="238" />
 
-  <!-- Header Section -->
+  <!-- Header Section matching preview.html header -->
   <g transform="translate(28, 44)">
     <text class="title-text" x="0" y="0">Contribution Activity</text>
 
@@ -254,7 +395,7 @@
     </g>
   </g>
 
-  <!-- BASE LAYER: Empty Contribution Grid -->
+  <!-- BASE LAYER: Empty Contribution Grid (52 cols x 7 rows) -->
   <g id="base-empty-grid">
       <rect x="32" y="72" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="1" />
       <rect x="32" y="88" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="1" />
@@ -622,9 +763,9 @@
       <rect x="848" y="168" width="12" height="12" rx="2" fill="#161b22" stroke="#21262d" stroke-width="1" />
   </g>
 
-  <!-- TOP LAYER: Real Active Contribution Tiles (Clipped row-by-row with organic sine offset) -->
-  <g id="active-contribution-grid">
-    <g clip-path="url(#sweep-clip-row-0-dark)">
+  <!-- PHASE 1 LAYER: Active Contribution Tiles (WASHING PHASE) -->
+  <g id="active-grid-phase-1" class="phase-wash-layer">
+    <g clip-path="url(#wash-clip-row-0-dark)">
       <rect x="32" y="72" width="12" height="12" rx="2" fill="#0e4429" />
       <rect x="48" y="72" width="12" height="12" rx="2" fill="#0e4429" />
       <rect x="64" y="72" width="12" height="12" rx="2" fill="#0e4429" />
@@ -650,7 +791,7 @@
       <rect x="736" y="72" width="12" height="12" rx="2" fill="#0e4429" />
       <rect x="848" y="72" width="12" height="12" rx="2" fill="#0e4429" />
     </g>
-    <g clip-path="url(#sweep-clip-row-1-dark)">
+    <g clip-path="url(#wash-clip-row-1-dark)">
       <rect x="96" y="88" width="12" height="12" rx="2" fill="#0e4429" />
       <rect x="112" y="88" width="12" height="12" rx="2" fill="#39d353" />
       <rect x="144" y="88" width="12" height="12" rx="2" fill="#0e4429" />
@@ -682,7 +823,7 @@
       <rect x="816" y="88" width="12" height="12" rx="2" fill="#0e4429" />
       <rect x="832" y="88" width="12" height="12" rx="2" fill="#0e4429" />
     </g>
-    <g clip-path="url(#sweep-clip-row-2-dark)">
+    <g clip-path="url(#wash-clip-row-2-dark)">
       <rect x="32" y="104" width="12" height="12" rx="2" fill="#0e4429" />
       <rect x="80" y="104" width="12" height="12" rx="2" fill="#0e4429" />
       <rect x="96" y="104" width="12" height="12" rx="2" fill="#006d32" />
@@ -711,7 +852,7 @@
       <rect x="736" y="104" width="12" height="12" rx="2" fill="#0e4429" />
       <rect x="848" y="104" width="12" height="12" rx="2" fill="#006d32" />
     </g>
-    <g clip-path="url(#sweep-clip-row-3-dark)">
+    <g clip-path="url(#wash-clip-row-3-dark)">
       <rect x="48" y="120" width="12" height="12" rx="2" fill="#39d353" />
       <rect x="64" y="120" width="12" height="12" rx="2" fill="#0e4429" />
       <rect x="112" y="120" width="12" height="12" rx="2" fill="#0e4429" />
@@ -744,7 +885,7 @@
       <rect x="816" y="120" width="12" height="12" rx="2" fill="#0e4429" />
       <rect x="832" y="120" width="12" height="12" rx="2" fill="#0e4429" />
     </g>
-    <g clip-path="url(#sweep-clip-row-4-dark)">
+    <g clip-path="url(#wash-clip-row-4-dark)">
       <rect x="32" y="136" width="12" height="12" rx="2" fill="#0e4429" />
       <rect x="128" y="136" width="12" height="12" rx="2" fill="#0e4429" />
       <rect x="144" y="136" width="12" height="12" rx="2" fill="#0e4429" />
@@ -771,7 +912,7 @@
       <rect x="736" y="136" width="12" height="12" rx="2" fill="#0e4429" />
       <rect x="800" y="136" width="12" height="12" rx="2" fill="#0e4429" />
     </g>
-    <g clip-path="url(#sweep-clip-row-5-dark)">
+    <g clip-path="url(#wash-clip-row-5-dark)">
       <rect x="32" y="152" width="12" height="12" rx="2" fill="#0e4429" />
       <rect x="48" y="152" width="12" height="12" rx="2" fill="#0e4429" />
       <rect x="96" y="152" width="12" height="12" rx="2" fill="#0e4429" />
@@ -800,7 +941,7 @@
       <rect x="832" y="152" width="12" height="12" rx="2" fill="#0e4429" />
       <rect x="848" y="152" width="12" height="12" rx="2" fill="#0e4429" />
     </g>
-    <g clip-path="url(#sweep-clip-row-6-dark)">
+    <g clip-path="url(#wash-clip-row-6-dark)">
       <rect x="80" y="168" width="12" height="12" rx="2" fill="#0e4429" />
       <rect x="96" y="168" width="12" height="12" rx="2" fill="#0e4429" />
       <rect x="112" y="168" width="12" height="12" rx="2" fill="#006d32" />
@@ -833,29 +974,252 @@
     </g>
   </g>
 
+  <!-- PHASE 2 LAYER: Active Contribution Tiles (REBUILDING PHASE) -->
+  <g id="active-grid-phase-2" class="phase-rebuild-layer">
+    <g clip-path="url(#rebuild-clip-row-0-dark)">
+      <rect x="32" y="72" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="48" y="72" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="64" y="72" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="80" y="72" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="96" y="72" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="128" y="72" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="144" y="72" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="176" y="72" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="208" y="72" width="12" height="12" rx="2" fill="#39d353" />
+      <rect x="224" y="72" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="240" y="72" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="288" y="72" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="304" y="72" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="336" y="72" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="448" y="72" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="496" y="72" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="528" y="72" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="544" y="72" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="576" y="72" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="592" y="72" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="608" y="72" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="704" y="72" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="736" y="72" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="848" y="72" width="12" height="12" rx="2" fill="#0e4429" />
+    </g>
+    <g clip-path="url(#rebuild-clip-row-1-dark)">
+      <rect x="96" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="112" y="88" width="12" height="12" rx="2" fill="#39d353" />
+      <rect x="144" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="160" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="176" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="192" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="208" y="88" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="224" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="240" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="288" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="320" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="336" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="352" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="384" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="400" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="416" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="464" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="528" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="544" y="88" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="560" y="88" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="576" y="88" width="12" height="12" rx="2" fill="#39d353" />
+      <rect x="608" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="656" y="88" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="704" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="736" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="768" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="784" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="800" y="88" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="816" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="832" y="88" width="12" height="12" rx="2" fill="#0e4429" />
+    </g>
+    <g clip-path="url(#rebuild-clip-row-2-dark)">
+      <rect x="32" y="104" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="80" y="104" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="96" y="104" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="112" y="104" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="128" y="104" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="176" y="104" width="12" height="12" rx="2" fill="#39d353" />
+      <rect x="192" y="104" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="208" y="104" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="256" y="104" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="272" y="104" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="288" y="104" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="352" y="104" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="368" y="104" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="384" y="104" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="400" y="104" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="416" y="104" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="432" y="104" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="448" y="104" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="528" y="104" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="592" y="104" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="640" y="104" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="672" y="104" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="688" y="104" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="704" y="104" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="720" y="104" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="736" y="104" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="848" y="104" width="12" height="12" rx="2" fill="#006d32" />
+    </g>
+    <g clip-path="url(#rebuild-clip-row-3-dark)">
+      <rect x="48" y="120" width="12" height="12" rx="2" fill="#39d353" />
+      <rect x="64" y="120" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="112" y="120" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="128" y="120" width="12" height="12" rx="2" fill="#39d353" />
+      <rect x="144" y="120" width="12" height="12" rx="2" fill="#39d353" />
+      <rect x="160" y="120" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="176" y="120" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="192" y="120" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="224" y="120" width="12" height="12" rx="2" fill="#39d353" />
+      <rect x="240" y="120" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="272" y="120" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="320" y="120" width="12" height="12" rx="2" fill="#39d353" />
+      <rect x="336" y="120" width="12" height="12" rx="2" fill="#39d353" />
+      <rect x="384" y="120" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="400" y="120" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="432" y="120" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="448" y="120" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="464" y="120" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="496" y="120" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="544" y="120" width="12" height="12" rx="2" fill="#39d353" />
+      <rect x="592" y="120" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="608" y="120" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="640" y="120" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="656" y="120" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="672" y="120" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="752" y="120" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="768" y="120" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="784" y="120" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="800" y="120" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="816" y="120" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="832" y="120" width="12" height="12" rx="2" fill="#0e4429" />
+    </g>
+    <g clip-path="url(#rebuild-clip-row-4-dark)">
+      <rect x="32" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="128" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="144" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="176" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="208" y="136" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="224" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="256" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="288" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="320" y="136" width="12" height="12" rx="2" fill="#39d353" />
+      <rect x="336" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="368" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="384" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="432" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="464" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="480" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="496" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="528" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="560" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="576" y="136" width="12" height="12" rx="2" fill="#39d353" />
+      <rect x="608" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="656" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="672" y="136" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="704" y="136" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="736" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="800" y="136" width="12" height="12" rx="2" fill="#0e4429" />
+    </g>
+    <g clip-path="url(#rebuild-clip-row-5-dark)">
+      <rect x="32" y="152" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="48" y="152" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="96" y="152" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="128" y="152" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="160" y="152" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="176" y="152" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="192" y="152" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="208" y="152" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="272" y="152" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="288" y="152" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="304" y="152" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="336" y="152" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="368" y="152" width="12" height="12" rx="2" fill="#39d353" />
+      <rect x="400" y="152" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="432" y="152" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="448" y="152" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="464" y="152" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="496" y="152" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="592" y="152" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="624" y="152" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="640" y="152" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="672" y="152" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="688" y="152" width="12" height="12" rx="2" fill="#39d353" />
+      <rect x="784" y="152" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="800" y="152" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="832" y="152" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="848" y="152" width="12" height="12" rx="2" fill="#0e4429" />
+    </g>
+    <g clip-path="url(#rebuild-clip-row-6-dark)">
+      <rect x="80" y="168" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="96" y="168" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="112" y="168" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="128" y="168" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="160" y="168" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="176" y="168" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="192" y="168" width="12" height="12" rx="2" fill="#39d353" />
+      <rect x="240" y="168" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="256" y="168" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="304" y="168" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="320" y="168" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="368" y="168" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="384" y="168" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="400" y="168" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="416" y="168" width="12" height="12" rx="2" fill="#39d353" />
+      <rect x="448" y="168" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="480" y="168" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="528" y="168" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="592" y="168" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="624" y="168" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="672" y="168" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="688" y="168" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="704" y="168" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="720" y="168" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="736" y="168" width="12" height="12" rx="2" fill="#39d353" />
+      <rect x="752" y="168" width="12" height="12" rx="2" fill="#006d32" />
+      <rect x="800" y="168" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="816" y="168" width="12" height="12" rx="2" fill="#0e4429" />
+      <rect x="832" y="168" width="12" height="12" rx="2" fill="#0e4429" />
+    </g>
+  </g>
+
+  <!-- FRONTLINE WHITE GLOW INDICATOR OVERLAY -->
+  <g id="frontline-glow-indicators">
+    <rect class="frontline-glow-row-0" x="0" y="72" width="4" height="12" rx="2" fill="#ffffff" opacity="0.85" />
+    <rect class="frontline-glow-row-1" x="0" y="88" width="4" height="12" rx="2" fill="#ffffff" opacity="0.85" />
+    <rect class="frontline-glow-row-2" x="0" y="104" width="4" height="12" rx="2" fill="#ffffff" opacity="0.85" />
+    <rect class="frontline-glow-row-3" x="0" y="120" width="4" height="12" rx="2" fill="#ffffff" opacity="0.85" />
+    <rect class="frontline-glow-row-4" x="0" y="136" width="4" height="12" rx="2" fill="#ffffff" opacity="0.85" />
+    <rect class="frontline-glow-row-5" x="0" y="152" width="4" height="12" rx="2" fill="#ffffff" opacity="0.85" />
+    <rect class="frontline-glow-row-6" x="0" y="168" width="4" height="12" rx="2" fill="#ffffff" opacity="0.85" />
+  </g>
+
   <!-- MINI JET SPACESHIP CURSOR WITH ENGINE GLOW & PARTICLES -->
   <g class="jet-wrapper">
     <g class="jet-subwrapper">
       <!-- Particle Sparks -->
-      <circle class="particle-1" cx="-6" cy="-2" r="2" fill="#39d353" />
-      <circle class="particle-2" cx="-6" cy="2" r="1.5" fill="#39d353" />
+      <circle class="particle-1" cx="-6" cy="-3" r="2" fill="#39d353" />
+      <circle class="particle-2" cx="-6" cy="3" r="1.5" fill="#39d353" />
+      <circle class="particle-3" cx="-8" cy="0" r="2.5" fill="#ffffff" />
 
       <!-- Glowing Jet Engine Circles (Native SVG Layers without <filter>) -->
       <circle cx="-4" cy="0" r="7" fill="#39d353" opacity="0.3" />
       <circle cx="-4" cy="0" r="4.5" fill="#39d353" opacity="0.7" />
       <circle cx="-4" cy="0" r="2.5" fill="#ffffff" />
 
-      <!-- Spaceship Jet Cursor Shape -->
+      <!-- Spaceship Jet Cursor Shape matching drawJet in preview.html -->
       <path d="M 10 0 L -6 -7 L -2 0 L -6 7 Z" fill="#ffffff" />
     </g>
   </g>
 
-  <!-- FOOTER DIAGNOSTICS & LEGEND -->
+  <!-- FOOTER DIAGNOSTICS & LEGEND matching preview.html footer -->
   <g transform="translate(28, 216)">
     <!-- Counter Text: Washing State -->
-    <text x="0" y="0" class="footer-text text-wash-state">193 / 364 days washed</text>
+    <text x="0" y="0" class="footer-text phase-wash-layer">193 / 364 days washed</text>
     <!-- Counter Text: Rebuilding State -->
-    <text x="0" y="0" class="footer-text text-rebuild-state">0 / 364 days erased</text>
+    <text x="0" y="0" class="footer-text phase-rebuild-layer">0 / 364 days erased</text>
 
     <!-- Contribution Level Legend -->
     <g transform="translate(650, -10)">
