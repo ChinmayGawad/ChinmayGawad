@@ -1,0 +1,25 @@
+{
+  "name": "github-contribution-wash-animation",
+  "version": "1.0.0",
+  "description": "Production-ready auto-updating GitHub contribution wash animation for profile README",
+  "main": "src/generate-animation.js",
+  "scripts": {
+    "generate": "node src/generate-animation.js",
+    "preview": "node -e \"console.log('Open preview.html in browser to preview animation')\""
+  },
+  "dependencies": {
+    "gif-encoder-2": "^1.0.5",
+    "playwright": "^1.49.1",
+    "pngjs": "^7.0.0"
+  },
+  "keywords": [
+    "github",
+    "contributions",
+    "animation",
+    "readme",
+    "canvas",
+    "gif"
+  ],
+  "author": "ChinmayGawad",
+  "license": "MIT"
+}

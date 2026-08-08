@@ -1,0 +1,346 @@
+/**
+ * Builds the exact HTML page preserving preview.html 1-to-1 with real grid data injected
+ */
+function getHTMLTemplate(gridData, totalContributions = 0) {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Organic GitHub Contribution Wash Effect</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #0b0e14;
+      color: #c9d1d9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .status-badge {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 12px;
+      background: rgba(57, 211, 83, 0.15);
+      color: #39d353;
+      border: 1px solid rgba(57, 211, 83, 0.3);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    .canvas-container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
+    }
+
+    canvas {
+      display: block;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+      font-size: 12px;
+      color: #8b949e;
+      font-family: monospace;
+    }
+
+    .legend {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .legend-box {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card" id="cardContainer">
+  <div class="header">
+    <div class="title">
+      <span>Contribution Activity</span>
+      <span class="status-badge" id="modeBadge">WASHING GRID</span>
+    </div>
+  </div>
+
+  <div class="canvas-container">
+    <canvas id="gridCanvas"></canvas>
+  </div>
+
+  <div class="footer">
+    <span id="counterText">0 / 364 days erased</span>
+    <div class="legend">
+      <span>Less</span>
+      <div class="legend-box" style="background: #161b22; border: 1px solid #21262d;"></div>
+      <div class="legend-box" style="background: #0e4429;"></div>
+      <div class="legend-box" style="background: #006d32;"></div>
+      <div class="legend-box" style="background: #26a641;"></div>
+      <div class="legend-box" style="background: #39d353;"></div>
+      <span>More</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  const canvas = document.getElementById('gridCanvas');
+  const ctx = canvas.getContext('2d');
+  const modeBadge = document.getElementById('modeBadge');
+  const counterText = document.getElementById('counterText');
+
+  // Matrix Configuration
+  const COLS = 52;
+  const ROWS = 7;
+  const CELL_SIZE = 12;
+  const CELL_GAP = 4;
+  const RADIUS = 2;
+
+  const COLORS = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'];
+
+  // Setup Canvas Dimensions
+  const width = COLS * (CELL_SIZE + CELL_GAP) + CELL_GAP;
+  const height = ROWS * (CELL_SIZE + CELL_GAP) + CELL_GAP;
+  canvas.width = width;
+  canvas.height = height;
+
+  // Injected Real Grid Data
+  const INJECTED_DATA = ${JSON.stringify(gridData)};
+
+  // Build Grid State from Real Data
+  const grid = [];
+  let totalActive = 0;
+
+  for (let c = 0; c < COLS; c++) {
+    const col = [];
+    for (let r = 0; r < ROWS; r++) {
+      const cellData = (INJECTED_DATA[c] && INJECTED_DATA[c][r]) ? INJECTED_DATA[c][r] : { level: 0 };
+      const level = Math.min(4, Math.max(0, cellData.level || 0));
+
+      if (level > 0) totalActive++;
+
+      col.push({
+        level: level,
+        currentLevel: level,
+        erased: false
+      });
+    }
+    grid.push(col);
+  }
+
+  // Particle System
+  const particles = [];
+
+  function spawnParticles(x, y, color) {
+    const count = Math.floor(Math.random() * 3) + 2;
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: x + CELL_SIZE / 2,
+        y: y + CELL_SIZE / 2,
+        vx: (Math.random() - 0.5) * 2.5,
+        vy: (Math.random() - 0.8) * 2,
+        size: Math.random() * 2.5 + 1,
+        alpha: 1,
+        color: color
+      });
+    }
+  }
+
+  function updateParticles() {
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.alpha -= 0.04;
+
+      if (p.alpha <= 0) {
+        particles.splice(i, 1);
+      } else {
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = p.color;
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = 6;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+  }
+
+  // Animation State
+  let sweepX = -60;
+  let isErasing = true;
+
+  // Draw Mini Jet Sprite
+  function drawJet(x, y) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.shadowColor = '#39d353';
+    ctx.shadowBlur = 10;
+    
+    // Mini Spaceship / Cursor Shape
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.moveTo(10, 0);
+    ctx.lineTo(-6, -7);
+    ctx.lineTo(-2, 0);
+    ctx.lineTo(-6, 7);
+    ctx.closePath();
+    ctx.fill();
+
+    // Jet Engine Glow
+    ctx.fillStyle = '#39d353';
+    ctx.beginPath();
+    ctx.arc(-4, 0, 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  // Deterministic Step Function for Headless Playwright Frame Capture
+  // progressRatio: 0.0 to 1.0 (0% to 100% of full Washing + Rebuilding cycle)
+  window.renderStep = function(progressRatio) {
+    ctx.clearRect(0, 0, width, height);
+
+    if (progressRatio !== undefined) {
+      // 0.0 to 1.0 is Washing phase; 1.0 to 2.0 is Rebuilding phase
+      const cycle = progressRatio * 2.0;
+      isErasing = cycle < 1.0;
+      const localNorm = isErasing ? cycle : (cycle - 1.0);
+      sweepX = -60 + localNorm * (width + 140);
+    } else {
+      sweepX += 2.2;
+      if (sweepX > width + 80) {
+        sweepX = -60;
+        isErasing = !isErasing;
+      }
+    }
+
+    modeBadge.innerText = isErasing ? "WASHING GRID" : "REBUILDING GRID";
+    modeBadge.style.color = isErasing ? "#39d353" : "#58a6ff";
+    modeBadge.style.borderColor = isErasing ? "rgba(57, 211, 83, 0.3)" : "rgba(88, 166, 255, 0.3)";
+    modeBadge.style.background = isErasing ? "rgba(57, 211, 83, 0.15)" : "rgba(88, 166, 255, 0.15)";
+
+    let currentErased = 0;
+    const time = progressRatio !== undefined ? progressRatio * 15.0 : Date.now() * 0.005;
+
+    for (let c = 0; c < COLS; c++) {
+      const cellX = c * (CELL_SIZE + CELL_GAP) + CELL_GAP;
+
+      for (let r = 0; r < ROWS; r++) {
+        const cellY = r * (CELL_SIZE + CELL_GAP) + CELL_GAP;
+        const cell = grid[c][r];
+
+        // Organic Sine Wave Offset per row
+        const rowOffset = Math.sin(r * 0.9 + time) * 14;
+        const effectiveSweep = sweepX + rowOffset;
+
+        const isPassed = cellX < effectiveSweep;
+
+        if (isErasing) {
+          cell.erased = isPassed;
+          if (isPassed && cell.level > 0 && Math.abs(cellX - effectiveSweep) < 18) {
+            spawnParticles(cellX, cellY, COLORS[cell.level]);
+          }
+        } else {
+          cell.erased = !isPassed;
+          if (isPassed && cell.level > 0 && Math.abs(cellX - effectiveSweep) < 18) {
+            spawnParticles(cellX, cellY, '#39d353');
+          }
+        }
+
+        cell.currentLevel = cell.erased ? 0 : cell.level;
+
+        if (cell.erased && cell.level > 0) currentErased++;
+
+        // Draw Cell
+        ctx.fillStyle = COLORS[Math.round(cell.currentLevel)];
+        ctx.beginPath();
+        ctx.roundRect(cellX, cellY, CELL_SIZE, CELL_SIZE, RADIUS);
+        ctx.fill();
+
+        // Subtle glow effect on front-line active tiles
+        const distanceToWave = Math.abs(cellX - effectiveSweep);
+        if (distanceToWave < 12 && cell.level > 0) {
+          ctx.save();
+          ctx.shadowColor = '#39d353';
+          ctx.shadowBlur = 8;
+          ctx.fillStyle = '#ffffff';
+          ctx.beginPath();
+          ctx.roundRect(cellX, cellY, CELL_SIZE, CELL_SIZE, RADIUS);
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+    }
+
+    // Update particles & draw jet cursor
+    updateParticles();
+
+    if (sweepX >= -10 && sweepX <= width + 10) {
+      const jetY = (height / 2) + Math.sin(time * 2) * (height / 3);
+      drawJet(sweepX, jetY);
+    }
+
+    counterText.innerText = \`\${currentErased} / \${COLS * ROWS} days washed\`;
+  };
+
+  function animateLoop() {
+    if (!window.manualStepMode) {
+      window.renderStep();
+      requestAnimationFrame(animateLoop);
+    }
+  }
+
+  animateLoop();
+</script>
+
+</body>
+</html>`;
+}
+
+module.exports = {
+  getHTMLTemplate
+};
