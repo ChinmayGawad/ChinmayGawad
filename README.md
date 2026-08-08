@@ -38,14 +38,11 @@
 
 <br/>
 
-<!-- TERMINAL ENCAPSULATED GITHUB CONTRIBUTION SNAKE -->
+<!-- ORGANIC GITHUB CONTRIBUTION WASH HEATMAP -->
 <div align="center">
-  <h3>🐍 Terminal Encapsulated Contribution Snake</h3>
-  <img src="https://raw.githubusercontent.com/ChinmayGawad/ChinmayGawad/snake-output/snake-dark.svg" width="100%" alt="GitHub Contribution Snake" />
+  <h3>🟢 Organic GitHub Contribution Heatmap</h3>
+  <img src="./contribution_wash.svg" width="100%" alt="Organic GitHub Contribution Wash Heatmap" />
 </div>
-
-# My Profile
-![Contribution Wash](./contribution_wash.svg)
 
 <br/>
 
