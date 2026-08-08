@@ -1,9 +1,16 @@
-<svg width="100%" height="100%" viewBox="0 0 876 188" xmlns="http://www.w3.org/2000/svg">
+<svg width="100%" height="100%" viewBox="0 0 876 190" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#0d1117"/>
       <stop offset="100%" stop-color="#161b22"/>
     </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
     <style>
       
     /* Disappearing and Reconstructing Animation for Contribution Tiles */
@@ -30,6 +37,23 @@
         72%, 100% { opacity: 0; r: 0.5px; }
     }
 
+    /* Jet Cursor Horizontal Sweep */
+    @keyframes jetSweep {
+        0% { transform: translate(24px, 104px); }
+        45% { transform: translate(852px, 104px); }
+        49% { opacity: 0; transform: translate(852px, 104px); }
+        50% { opacity: 0; transform: translate(24px, 104px); }
+        54% { opacity: 1; }
+        95% { transform: translate(852px, 104px); }
+        100% { transform: translate(852px, 104px); }
+    }
+
+    /* Jet Cursor Vertical Bobbing */
+    @keyframes jetBob {
+        0%, 100% { transform: translateY(-14px); }
+        50% { transform: translateY(14px); }
+    }
+
     @keyframes pulseBadge {
         0%, 100% { opacity: 1; }
         50% { opacity: 0.4; }
@@ -44,6 +68,12 @@
     .p-in {
         animation: pReconstruct 6s ease-out infinite;
     }
+    .jet-cursor {
+        animation: jetSweep 6s ease-in-out infinite;
+    }
+    .jet-bob {
+        animation: jetBob 1.8s ease-in-out infinite;
+    }
     .badge-dot {
         animation: pulseBadge 2s ease-in-out infinite;
     }
@@ -52,7 +82,7 @@
   </defs>
 
   <!-- Container Box -->
-  <rect width="876" height="188" rx="12" fill="url(#bgGrad)" stroke="#30363d" stroke-width="1"/>
+  <rect width="876" height="190" rx="12" fill="url(#bgGrad)" stroke="#30363d" stroke-width="1"/>
   
   <!-- Header Bar -->
   <path d="M 0,12 A 12,12 0 0,1 12,0 L 864,0 A 12,12 0 0,1 876,12 L 876,36 L 0,36 Z" fill="#161b22"/>
@@ -441,6 +471,14 @@
     
   </g>
 
+  <!-- Jet Spaceship Cursor Sprite -->
+  <g class="jet-cursor">
+    <g class="jet-bob">
+      <path d="M 8,0 L -6,-6 L -2,0 L -6,6 Z" fill="#ffffff" filter="url(#glow)"/>
+      <circle cx="-4" cy="0" r="2.5" fill="#39d353"/>
+    </g>
+  </g>
+
   <!-- Particles Layer -->
   <g>
     <circle class="p-out" cx="142" cy="152" r="2" fill="#006d32" style="animation-delay: 1.57s;"/>
@@ -559,7 +597,7 @@
   </g>
 
   <!-- Footer Legend -->
-  <g transform="translate(24, 176)">
+  <g transform="translate(24, 178)">
     <text x="0" y="9" font-family="monospace" font-size="10" fill="#8b949e">Less</text>
     <rect x="30" y="0" width="10" height="10" rx="2" fill="#161b22" stroke="#21262d"/>
     <rect x="44" y="0" width="10" height="10" rx="2" fill="#0e4429"/>

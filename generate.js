@@ -15,7 +15,7 @@ const COLORS = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'];
 const gridWidth = COLS * (CELL_SIZE + GAP) - GAP;
 const gridHeight = ROWS * (CELL_SIZE + GAP) - GAP;
 const svgWidth = gridWidth + PADDING_X * 2;
-const svgHeight = gridHeight + PADDING_Y + 30;
+const svgHeight = gridHeight + PADDING_Y + 32;
 
 async function getRealContributions(username) {
     const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
@@ -73,11 +73,11 @@ async function getRealContributions(username) {
                         });
                     }
                 }
-                console.log(`Fetched ${days.length} real contribution days via GraphQL API ending on current week.`);
+                console.log(`Fetched ${days.length} real contribution days via GraphQL API.`);
                 return days;
             }
         } catch (e) {
-            console.warn("GraphQL API fetch failed, falling back to public endpoint:", e.message);
+            console.warn("GraphQL API fetch failed, falling back to public API:", e.message);
         }
     }
 
@@ -143,10 +143,9 @@ async function main() {
         }
     }
 
-    // Active contribution cells
     const activeCells = cells.filter(c => c.level > 0);
 
-    // Sort active cells strictly by contribution level ascending (Level 1 -> Level 2 -> Level 3 -> Level 4)
+    // Sort active cells strictly by contribution level ascending (Level 1 -> 2 -> 3 -> 4)
     activeCells.sort((a, b) => {
         if (a.level !== b.level) return a.level - b.level;
         if (a.count !== b.count) return a.count - b.count;
@@ -191,6 +190,23 @@ async function main() {
         72%, 100% { opacity: 0; r: 0.5px; }
     }
 
+    /* Jet Cursor Horizontal Sweep */
+    @keyframes jetSweep {
+        0% { transform: translate(${PADDING_X}px, ${PADDING_Y + gridHeight / 2}px); }
+        45% { transform: translate(${PADDING_X + gridWidth}px, ${PADDING_Y + gridHeight / 2}px); }
+        49% { opacity: 0; transform: translate(${PADDING_X + gridWidth}px, ${PADDING_Y + gridHeight / 2}px); }
+        50% { opacity: 0; transform: translate(${PADDING_X}px, ${PADDING_Y + gridHeight / 2}px); }
+        54% { opacity: 1; }
+        95% { transform: translate(${PADDING_X + gridWidth}px, ${PADDING_Y + gridHeight / 2}px); }
+        100% { transform: translate(${PADDING_X + gridWidth}px, ${PADDING_Y + gridHeight / 2}px); }
+    }
+
+    /* Jet Cursor Vertical Bobbing */
+    @keyframes jetBob {
+        0%, 100% { transform: translateY(-14px); }
+        50% { transform: translateY(14px); }
+    }
+
     @keyframes pulseBadge {
         0%, 100% { opacity: 1; }
         50% { opacity: 0.4; }
@@ -204,6 +220,12 @@ async function main() {
     }
     .p-in {
         animation: pReconstruct ${TOTAL_LOOP_TIME}s ease-out infinite;
+    }
+    .jet-cursor {
+        animation: jetSweep ${TOTAL_LOOP_TIME}s ease-in-out infinite;
+    }
+    .jet-bob {
+        animation: jetBob 1.8s ease-in-out infinite;
     }
     .badge-dot {
         animation: pulseBadge 2s ease-in-out infinite;
@@ -226,9 +248,7 @@ async function main() {
             const cx = cell.x + CELL_SIZE / 2;
             const cy = cell.y + CELL_SIZE / 2;
 
-            // Disappearing particle burst (at cell center)
             particleElements += `<circle class="p-out" cx="${cx}" cy="${cy}" r="2" fill="${baseColor}" style="animation-delay: ${delays.disappear}s;"/>\n    `;
-            // Reconstructing particle burst (at cell center)
             particleElements += `<circle class="p-in" cx="${cx}" cy="${cy}" r="2.5" fill="#39d353" style="animation-delay: ${delays.disappear}s;"/>\n    `;
         }
     });
@@ -241,6 +261,13 @@ async function main() {
       <stop offset="0%" stop-color="#0d1117"/>
       <stop offset="100%" stop-color="#161b22"/>
     </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
     <style>
       ${cssRules}
     </style>
@@ -272,6 +299,14 @@ async function main() {
     ${rectElements}
   </g>
 
+  <!-- Jet Spaceship Cursor Sprite -->
+  <g class="jet-cursor">
+    <g class="jet-bob">
+      <path d="M 8,0 L -6,-6 L -2,0 L -6,6 Z" fill="#ffffff" filter="url(#glow)"/>
+      <circle cx="-4" cy="0" r="2.5" fill="#39d353"/>
+    </g>
+  </g>
+
   <!-- Particles Layer -->
   <g>
     ${particleElements}
@@ -290,7 +325,7 @@ async function main() {
 </svg>`;
 
     fs.writeFileSync('contribution_wash.svg', svgContent);
-    console.log("SVG Generated with optimized, 100% compatible particle wash & rebuild animations!");
+    console.log("SVG Generated with Jet Spaceship Cursor, dual particles, and automated GitHub workflow!");
 }
 
 main();
