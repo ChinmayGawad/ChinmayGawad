@@ -5,130 +5,63 @@ const https = require('https');
 const USERNAME = process.env.GITHUB_USERNAME || 'ChinmayGawad';
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
 
-// Ensure output directories exist
 const distDir = path.join(__dirname, '..', 'dist');
 const assetsDir = path.join(__dirname, '..', 'assets');
 [distDir, assetsDir].forEach(dir => {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 });
 
-// Fetch GitHub contributions via GraphQL API
 async function fetchContributions(username, token) {
   if (!token) {
-    console.log(`No GITHUB_TOKEN provided. Using fallback matrix data for @${username}.`);
+    console.log('No GITHUB_TOKEN. Using fallback data.');
     return generateFallbackData();
   }
-
   const query = JSON.stringify({
-    query: `
-      query($username: String!) {
-        user(login: $username) {
-          contributionsCollection {
-            contributionCalendar {
-              totalContributions
-              weeks {
-                contributionDays {
-                  color
-                  contributionCount
-                  date
-                  weekday
-                }
-              }
-            }
-          }
-        }
-      }
-    `,
-    variables: { username }
+    query: `query($u:String!){user(login:$u){contributionsCollection{contributionCalendar{totalContributions weeks{contributionDays{contributionCount date weekday}}}}}}`,
+    variables: { u: username }
   });
-
-  const options = {
-    hostname: 'api.github.com',
-    path: '/graphql',
-    method: 'POST',
-    headers: {
-      'Authorization': `bearer ${token}`,
-      'User-Agent': 'Node-GitHub-Laser-Eraser-Generator',
-      'Content-Type': 'application/json',
-      'Content-Length': Buffer.byteLength(query)
-    }
+  const opts = {
+    hostname: 'api.github.com', path: '/graphql', method: 'POST',
+    headers: { 'Authorization': `bearer ${token}`, 'User-Agent': 'eraser-gen', 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(query) }
   };
-
-  return new Promise((resolve) => {
-    const req = https.request(options, (res) => {
-      let data = '';
-      res.on('data', (chunk) => data += chunk);
+  return new Promise(resolve => {
+    const req = https.request(opts, res => {
+      let d = ''; res.on('data', c => d += c);
       res.on('end', () => {
         try {
-          const json = JSON.parse(data);
-          if (json.data && json.data.user && json.data.user.contributionsCollection) {
-            const calendar = json.data.user.contributionsCollection.contributionCalendar;
-            console.log(`Successfully fetched ${calendar.totalContributions} total contributions for @${username}.`);
-            resolve({
-              totalContributions: calendar.totalContributions,
-              weeks: calendar.weeks
-            });
-          } else {
-            console.warn("GraphQL API response missing expected structure. Using fallback data.", json);
-            resolve(generateFallbackData());
-          }
-        } catch (err) {
-          console.error("Failed to parse GraphQL response:", err);
-          resolve(generateFallbackData());
-        }
+          const j = JSON.parse(d);
+          if (j.data?.user?.contributionsCollection) {
+            const cal = j.data.user.contributionsCollection.contributionCalendar;
+            resolve({ weeks: cal.weeks });
+          } else resolve(generateFallbackData());
+        } catch(e) { resolve(generateFallbackData()); }
       });
     });
-
-    req.on('error', (err) => {
-      console.error("GraphQL request error:", err);
-      resolve(generateFallbackData());
-    });
-
-    req.write(query);
-    req.end();
+    req.on('error', () => resolve(generateFallbackData()));
+    req.write(query); req.end();
   });
 }
 
-// Fallback contribution data generator
 function generateFallbackData() {
   const weeks = [];
-  const today = new Date();
-  let totalCount = 0;
-
   for (let w = 51; w >= 0; w--) {
     const days = [];
     for (let d = 0; d < 7; d++) {
-      const dayOffset = (w * 7) + (6 - d);
-      const date = new Date(today);
-      date.setDate(today.getDate() - dayOffset);
-
-      const seed = Math.sin(w * 7 + d * 13 + 42) * 10000;
+      const c = 51 - w, r = d;
+      const seed = Math.sin(c * 7 + r * 13 + 42) * 10000;
       const rand = seed - Math.floor(seed);
       let count = 0;
-      if (rand > 0.45) count = 1;
-      if (rand > 0.65) count = 3;
-      if (rand > 0.82) count = 6;
-      if (rand > 0.94) count = 10;
-
-      totalCount += count;
-      days.push({
-        contributionCount: count,
-        date: date.toISOString().split('T')[0],
-        weekday: d
-      });
+      if (rand > 0.35) count = 1;
+      if (rand > 0.60) count = 3;
+      if (rand > 0.80) count = 6;
+      if (rand > 0.92) count = 10;
+      days.push({ contributionCount: count, weekday: d });
     }
     weeks.push({ contributionDays: days });
   }
-
-  return {
-    totalContributions: totalCount || 1482,
-    weeks: weeks.reverse()
-  };
+  return { weeks: weeks.reverse() };
 }
 
-// Convert count to level 0..4
 function getLevel(count) {
   if (count === 0) return 0;
   if (count <= 3) return 1;
@@ -137,403 +70,299 @@ function getLevel(count) {
   return 4;
 }
 
-// Generate SVG matching preview.html canvas animation
-function generateSVG(data, theme = 'dark') {
+function generateSVG(data, theme) {
   const isDark = theme === 'dark';
-
-  const colors = isDark ? {
-    cardBg: '#161b22',
-    border: '#30363d',
-    titleText: '#c9d1d9',
-    badgeWashText: '#39d353',
-    badgeWashBg: 'rgba(57, 211, 83, 0.15)',
-    badgeWashBorder: 'rgba(57, 211, 83, 0.3)',
-    badgeRebuildText: '#58a6ff',
-    badgeRebuildBg: 'rgba(88, 166, 255, 0.15)',
-    badgeRebuildBorder: 'rgba(88, 166, 255, 0.3)',
-    gridEmpty: '#161b22',
-    gridEmptyBorder: '#21262d',
-    levels: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
-    footerText: '#8b949e',
-    jetColor: '#ffffff',
-    jetGlow: '#39d353'
+  const C = isDark ? {
+    card:'#161b22', brd:'#30363d', txt:'#c9d1d9', lbl:'#8b949e',
+    empty:'#161b22', eStk:'#21262d',
+    lv:['#161b22','#0e4429','#006d32','#26a641','#39d353'],
+    wash:'#39d353', washBg:'rgba(57,211,83,0.15)', washBdr:'rgba(57,211,83,0.3)',
+    reb:'#58a6ff', rebBg:'rgba(88,166,255,0.15)', rebBdr:'rgba(88,166,255,0.3)',
+    jet:'#fff', visor:'#0d1117'
   } : {
-    cardBg: '#ffffff',
-    border: '#d0d7de',
-    titleText: '#1f2328',
-    badgeWashText: '#216e39',
-    badgeWashBg: 'rgba(33, 110, 57, 0.15)',
-    badgeWashBorder: 'rgba(33, 110, 57, 0.3)',
-    badgeRebuildText: '#0969da',
-    badgeRebuildBg: 'rgba(9, 105, 218, 0.15)',
-    badgeRebuildBorder: 'rgba(9, 105, 218, 0.3)',
-    gridEmpty: '#ebedf0',
-    gridEmptyBorder: '#d0d7de',
-    levels: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
-    footerText: '#656d76',
-    jetColor: '#1f2328',
-    jetGlow: '#216e39'
+    card:'#fff', brd:'#d0d7de', txt:'#1f2328', lbl:'#656d76',
+    empty:'#ebedf0', eStk:'#d0d7de',
+    lv:['#ebedf0','#9be9a8','#40c463','#30a14e','#216e39'],
+    wash:'#216e39', washBg:'rgba(33,110,57,0.15)', washBdr:'rgba(33,110,57,0.3)',
+    reb:'#0969da', rebBg:'rgba(9,105,218,0.15)', rebBdr:'rgba(9,105,218,0.3)',
+    jet:'#1f2328', visor:'#f0f6ff'
   };
 
-  const svgWidth = 900;
-  const svgHeight = 240;
-  const COLS = 52;
-  const ROWS = 7;
-  const CELL_SIZE = 12;
-  const CELL_GAP = 4;
-  const RADIUS = 2;
+  // preview.html exact constants
+  const COLS=52, ROWS=7, SZ=12, GAP=4, RR=2.5;
+  const step = SZ+GAP; // 16
+  const OL=30, OT=22;
+  const mW = COLS*step+GAP; // 836
+  const mH = ROWS*step+GAP; // 116
+  const tW = mW+OL; // 866
 
-  const tileStep = CELL_SIZE + CELL_GAP; // 16px
-  const gridWidth = COLS * tileStep + CELL_GAP; // 836px
-  const gridHeight = ROWS * tileStep + CELL_GAP; // 116px
+  // SVG card layout
+  const PAD=28, HDR=50, FTR=36;
+  const svgW = tW+PAD*2; // 922
+  const svgH = HDR+OT+mH+FTR+PAD; // 252
 
-  const gridStartX = Math.round((svgWidth - gridWidth) / 2); // 32px
-  const gridStartY = 72;
+  // Grid origin
+  const gX = PAD+OL; // 58
+  const gY = HDR+OT; // 72
 
-  const weeks = (data.weeks || []).slice(-COLS);
+  const weeks = (data.weeks||[]).slice(-COLS);
+  const dur = 8; // animation duration in seconds
 
-  let emptyTilesHTML = '';
-  let activeTilesPhase1HTML = '';
-  let activeTilesPhase2HTML = '';
-  let totalActiveCount = 0;
-  const totalDays = COLS * ROWS;
-
-  weeks.forEach((week, c) => {
-    const cellX = gridStartX + c * tileStep;
-    (week.contributionDays || []).forEach((day) => {
-      const r = day.weekday;
-      if (r >= ROWS) return;
-      const cellY = gridStartY + r * tileStep;
-      const lvl = getLevel(day.contributionCount);
-
-      if (lvl > 0) totalActiveCount++;
-
-      // Base empty grid tile
-      emptyTilesHTML += `      <rect x="${cellX}" y="${cellY}" width="${CELL_SIZE}" height="${CELL_SIZE}" rx="${RADIUS}" fill="${colors.gridEmpty}" stroke="${colors.gridEmptyBorder}" stroke-width="1" />\n`;
-    });
-  });
-
-  // Per-row clip paths for Washing (Pass 1) and Rebuilding (Pass 2)
-  let clipPathsHTML = '';
-  let keyframesHTML = '';
-
-  const sweepDistance = gridWidth + 90;
-
-  for (let r = 0; r < ROWS; r++) {
-    const sineOffset = Math.sin(r * 0.9) * 14;
-    const rowY = gridStartY + r * tileStep - 2;
-    const rowH = tileStep + 4;
-
-    const p1StartX = gridStartX - 40 + sineOffset;
-    clipPathsHTML += `    <clipPath id="wash-clip-row-${r}-${theme}">\n`;
-    clipPathsHTML += `      <rect class="wash-rect-row-${r}" x="${p1StartX}" y="${rowY}" width="${gridWidth + 200}" height="${rowH}" />\n`;
-    clipPathsHTML += `    </clipPath>\n`;
-
-    const p2StartX = gridStartX - 60 + sineOffset;
-    clipPathsHTML += `    <clipPath id="rebuild-clip-row-${r}-${theme}">\n`;
-    clipPathsHTML += `      <rect class="rebuild-rect-row-${r}" x="${p2StartX}" y="${rowY}" width="0" height="${rowH}" />\n`;
-    clipPathsHTML += `    </clipPath>\n`;
-
-    keyframesHTML += `
-      @keyframes wash-anim-row-${r} {
-        0% { transform: translateX(0px); }
-        44% { transform: translateX(${sweepDistance}px); }
-        48%, 100% { transform: translateX(${sweepDistance}px); }
-      }
-      .wash-rect-row-${r} {
-        animation: wash-anim-row-${r} 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-      }
-
-      @keyframes rebuild-anim-row-${r} {
-        0%, 48% { width: 0px; }
-        92% { width: ${gridWidth + 120}px; }
-        98%, 100% { width: ${gridWidth + 120}px; }
-      }
-      .rebuild-rect-row-${r} {
-        animation: rebuild-anim-row-${r} 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-      }
-
-      @keyframes glow-line-anim-${r} {
-        0% { transform: translateX(${p1StartX}px); opacity: 1; }
-        44% { transform: translateX(${p1StartX + sweepDistance}px); opacity: 1; }
-        45%, 49% { transform: translateX(${p1StartX + sweepDistance}px); opacity: 0; }
-        50% { transform: translateX(${p1StartX}px); opacity: 1; }
-        94% { transform: translateX(${p1StartX + sweepDistance}px); opacity: 1; }
-        95%, 100% { transform: translateX(${p1StartX + sweepDistance}px); opacity: 0; }
-      }
-      .frontline-glow-row-${r} {
-        animation: glow-line-anim-${r} 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-      }
-    `;
+  // ── Labels ──
+  const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const DAYLAB=['','Mon','','Wed','','Fri',''];
+  let labels='';
+  for(let r=0;r<ROWS;r++){
+    if(DAYLAB[r]){
+      labels+=`<text x="${PAD+4}" y="${gY+r*step+SZ-2}" font-family="sans-serif" font-size="10" fill="${C.lbl}">${DAYLAB[r]}</text>\n`;
+    }
+  }
+  const mi=Math.floor(COLS/12);
+  for(let m=0;m<12;m++){
+    const ci=m*mi;
+    if(ci<COLS) labels+=`<text x="${gX+ci*step}" y="${gY-8}" font-family="sans-serif" font-size="10" fill="${C.lbl}">${MONTHS[m]}</text>\n`;
   }
 
-  // Active tiles HTML for Phase 1 (Clipped by wash clipPath)
-  for (let r = 0; r < ROWS; r++) {
-    activeTilesPhase1HTML += `    <g clip-path="url(#wash-clip-row-${r}-${theme})">\n`;
-    weeks.forEach((week, c) => {
-      const cellX = gridStartX + c * tileStep;
-      (week.contributionDays || []).forEach((day) => {
-        if (day.weekday === r) {
-          const lvl = getLevel(day.contributionCount);
-          if (lvl > 0) {
-            const color = colors.levels[lvl];
-            const cellY = gridStartY + r * tileStep;
-            activeTilesPhase1HTML += `      <rect x="${cellX}" y="${cellY}" width="${CELL_SIZE}" height="${CELL_SIZE}" rx="${RADIUS}" fill="${color}" />\n`;
-          }
+  // ── Build grid data ──
+  let emptyTiles='', totalActive=0;
+
+  // Per-row: compute sine offset (static bake of preview.html wave shape at time=0)
+  // preview.html: rowOffset = Math.sin(r*0.85 + time*1.8)*18 + Math.cos(r*0.4 + time*2.5)*8
+  // For SVG we bake time=0: sOff = Math.sin(r*0.85)*18 + Math.cos(r*0.4)*8
+  const rowOffsets = [];
+  for(let r=0;r<ROWS;r++){
+    rowOffsets.push(Math.sin(r*0.85)*18 + Math.cos(r*0.4)*8);
+  }
+
+  // clipPath defs per row for eraser and rebuild
+  let clipDefs='', clipAnims='';
+  const sweepDist = mW + 100;
+
+  // Sweep range for calculating per-tile timing
+  const sweepMinX = gX - 50;
+  const sweepRange = mW + 100; // total X distance the sweep covers
+
+  for(let r=0;r<ROWS;r++){
+    const so = rowOffsets[r];
+    const startX = gX - 50 + so;
+    const rowTop = gY + r*step - 2;
+    const rowH = step + 4;
+
+    clipDefs += `<clipPath id="ec${r}${theme}"><rect class="er${r}${theme}" x="${startX}" y="${rowTop}" width="${mW+200}" height="${rowH}"/></clipPath>\n`;
+    clipDefs += `<clipPath id="rc${r}${theme}"><rect class="rr${r}${theme}" x="${startX}" y="${rowTop}" width="0" height="${rowH}"/></clipPath>\n`;
+
+    clipAnims += `
+@keyframes es${r}{0%{transform:translateX(0)}44%{transform:translateX(${sweepDist}px)}47%,100%{transform:translateX(${sweepDist}px)}}
+.er${r}${theme}{animation:es${r} ${dur}s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes rs${r}{0%,48%{width:0}92%{width:${mW+140}px}97%,100%{width:${mW+140}px}}
+.rr${r}${theme}{animation:rs${r} ${dur}s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes fl${r}{0%{transform:translateX(${startX}px);opacity:1}44%{transform:translateX(${startX+sweepDist}px);opacity:1}45%,49%{opacity:0}50%{transform:translateX(${startX}px);opacity:1}94%{transform:translateX(${startX+sweepDist}px);opacity:1}95%,100%{opacity:0}}
+.fl${r}${theme}{animation:fl${r} ${dur}s cubic-bezier(.4,0,.2,1) infinite}
+`;
+  }
+
+  // Build tiles per row, wrapped in clip groups
+  let washTiles='', rebuildTiles='';
+
+  for(let r=0;r<ROWS;r++){
+    let wRow=`<g clip-path="url(#ec${r}${theme})">\n`;
+    let rRow=`<g clip-path="url(#rc${r}${theme})">\n`;
+    weeks.forEach((week,c)=>{
+      const cx=gX+c*step, cy=gY+r*step;
+      (week.contributionDays||[]).forEach(day=>{
+        if(day.weekday!==r) return;
+        const lvl=getLevel(day.contributionCount);
+        emptyTiles+=`<rect x="${cx}" y="${cy}" width="${SZ}" height="${SZ}" rx="${RR}" fill="${C.empty}" stroke="${C.eStk}" stroke-width="1"/>\n`;
+        if(lvl>0){
+          totalActive++;
+          const fill=C.lv[lvl];
+          wRow+=`<rect x="${cx}" y="${cy}" width="${SZ}" height="${SZ}" rx="${RR}" fill="${fill}"/>\n`;
+          rRow+=`<rect x="${cx}" y="${cy}" width="${SZ}" height="${SZ}" rx="${RR}" fill="${fill}"/>\n`;
         }
       });
     });
-    activeTilesPhase1HTML += `    </g>\n`;
+    wRow+='</g>\n'; rRow+='</g>\n';
+    washTiles+=wRow; rebuildTiles+=rRow;
   }
 
-  // Active tiles HTML for Phase 2 (Clipped by rebuild clipPath)
-  for (let r = 0; r < ROWS; r++) {
-    activeTilesPhase2HTML += `    <g clip-path="url(#rebuild-clip-row-${r}-${theme})">\n`;
-    weeks.forEach((week, c) => {
-      const cellX = gridStartX + c * tileStep;
-      (week.contributionDays || []).forEach((day) => {
-        if (day.weekday === r) {
-          const lvl = getLevel(day.contributionCount);
-          if (lvl > 0) {
-            const color = colors.levels[lvl];
-            const cellY = gridStartY + r * tileStep;
-            activeTilesPhase2HTML += `      <rect x="${cellX}" y="${cellY}" width="${CELL_SIZE}" height="${CELL_SIZE}" rx="${RADIUS}" fill="${color}" />\n`;
-          }
-        }
-      });
-    });
-    activeTilesPhase2HTML += `    </g>\n`;
+  // ── Disintegration Particles (per-column, not per-tile) ──
+  // 52 columns × 4 particles = 208 circles with 52 shared keyframes
+  let particleSvg='', particleAnims='';
+  function seededRand(s) { const x=Math.sin(s)*10000; return x-Math.floor(x); }
+
+  for(let c=0;c<COLS;c++){
+    const cx = gX + c*step + SZ/2;
+    // When does the sweep reach this column? (use middle row offset)
+    const progress = c / (COLS - 1);
+    const eraseHit = Math.max(1, Math.min(42, progress * 44));
+    const rebuildHit = Math.max(51, Math.min(92, 50 + progress * 44));
+
+    const eH = eraseHit.toFixed(1);
+    const eEnd = (eraseHit + 5).toFixed(1);
+    const rH = rebuildHit.toFixed(1);
+    const rEnd = (rebuildHit + 5).toFixed(1);
+
+    // 4 particles per column, scattered across rows
+    for(let pi=0;pi<4;pi++){
+      const pid = `d${c}_${pi}`;
+      const seed = c*73+pi*31+17;
+      const vx = (seededRand(seed)-0.5)*30;
+      const vy = (seededRand(seed+7)-0.8)*24;
+      const pcy = gY + (seededRand(seed+3) * (ROWS-1)) * step + SZ/2;
+      const sz = (seededRand(seed+13)*2+1).toFixed(1);
+      const fillIdx = Math.min(4, Math.max(1, Math.round(seededRand(seed+19)*4)));
+
+      particleAnims += `@keyframes ${pid}{0%,${eH}%{transform:translate(0,0);opacity:0}${(eraseHit+0.3).toFixed(1)}%{transform:translate(0,0);opacity:1}${eEnd}%{transform:translate(${vx.toFixed(0)}px,${vy.toFixed(0)}px);opacity:0}${(parseFloat(eEnd)+0.5).toFixed(1)}%,${rH}%{transform:translate(0,0);opacity:0}${(rebuildHit+0.3).toFixed(1)}%{transform:translate(0,0);opacity:1}${rEnd}%{transform:translate(${(-vx).toFixed(0)}px,${(vy*0.7).toFixed(0)}px);opacity:0}${(parseFloat(rEnd)+0.5).toFixed(1)}%,100%{opacity:0}}
+.${pid}{animation:${pid} ${dur}s ease-out infinite}
+`;
+      particleSvg += `<circle class="${pid}" cx="${cx}" cy="${pcy.toFixed(0)}" r="${sz}" fill="${C.lv[fillIdx]}" filter="url(#gl${theme})"/>\n`;
+    }
   }
 
-  // Frontline white glow indicators
-  let frontlineGlowHTML = '';
-  for (let r = 0; r < ROWS; r++) {
-    const rowY = gridStartY + r * tileStep;
-    frontlineGlowHTML += `    <rect class="frontline-glow-row-${r}" x="0" y="${rowY}" width="4" height="${CELL_SIZE}" rx="2" fill="#ffffff" opacity="0.85" />\n`;
+  // Frontline glow bars per row
+  let glowBarsW='', glowBarsR='';
+  for(let r=0;r<ROWS;r++){
+    const y=gY+r*step;
+    glowBarsW+=`<rect class="fl${r}${theme}" x="0" y="${y}" width="5" height="${SZ}" rx="2" fill="${C.wash}" opacity="0.9" filter="url(#gl${theme})"/>\n`;
+    glowBarsR+=`<rect class="fl${r}${theme}" x="0" y="${y}" width="5" height="${SZ}" rx="2" fill="${C.reb}" opacity="0.9" filter="url(#gl${theme})"/>\n`;
   }
 
-  // Floating Mini Jet Cursor moving in Sine Wave
-  const jetMinX = gridStartX - 35;
-  const jetMaxX = gridStartX + gridWidth + 35;
+  // White flash overlays on leading edge
+  let flashW='', flashR='';
+  for(let r=0;r<ROWS;r++){
+    const y=gY+r*step;
+    flashW+=`<rect class="fl${r}${theme}" x="-4" y="${y}" width="${SZ+10}" height="${SZ}" rx="${RR}" fill="white" opacity="0.8" filter="url(#gl${theme})"/>\n`;
+    flashR+=`<rect class="fl${r}${theme}" x="-4" y="${y}" width="${SZ+10}" height="${SZ}" rx="${RR}" fill="white" opacity="0.8" filter="url(#gl${theme})"/>\n`;
+  }
 
-  const headerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svgWidth} ${svgHeight}" width="100%" height="100%">
-  <defs>
-    <style>
-      * {
-        box-sizing: border-box;
-      }
+  // Jet exhaust trail particles
+  let exhaustSvg='', exhaustAnims='';
+  for(let ei=0;ei<4;ei++){
+    const eid = `ex${ei}${theme}`;
+    const vy = ((ei%3)-1)*3;
+    exhaustAnims += `@keyframes ${eid}{0%,100%{transform:translate(0,${vy}px);opacity:0}5%{opacity:.7}12%{transform:translate(-18px,${vy*2}px);opacity:0}}
+.${eid}{animation:${eid} 0.${8+ei}s ease-out ${(ei*0.2).toFixed(1)}s infinite}
+`;
+    exhaustSvg += `<circle class="${eid}" cx="-10" cy="0" r="${(1+ei*0.3).toFixed(1)}" fill="${C.wash}"/>\n`;
+  }
 
-      .card-bg {
-        fill: ${colors.cardBg};
-        stroke: ${colors.border};
-        stroke-width: 1;
-        rx: 12px;
-      }
+  // Jet Y keyframes from preview.html: jetY = OT+(mH/2)+Math.sin(time*2.2)*(mH/2.8)
+  const midY = gY + mH/2;
+  const ampY = mH/2.8;
+  let jetYKf='';
+  for(let p=0;p<=100;p+=2){
+    const t=(p/100)*dur*2.2;
+    const y=Math.round(midY+Math.sin(t)*ampY);
+    jetYKf+=`${p}%{transform:translateY(${y}px)}`;
+  }
+  const jMinX=gX-60, jMaxX=gX+mW+60;
 
-      .title-text {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        font-size: 15px;
-        font-weight: 600;
-        fill: ${colors.titleText};
-      }
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svgW} ${svgH}" width="100%" height="100%">
+<defs>
+<filter id="gl${theme}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+${clipDefs}
+<style>
+@keyframes pw{0%,44%{opacity:1}46%,94%{opacity:0}96%,100%{opacity:1}}
+@keyframes pr{0%,44%{opacity:0}50%,94%{opacity:1}96%,100%{opacity:0}}
+@keyframes bw{0%,44%{opacity:1}47%,95%{opacity:0}98%,100%{opacity:1}}
+@keyframes br{0%,44%{opacity:0}47%,95%{opacity:1}98%,100%{opacity:0}}
+@keyframes pd{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes jx{0%{transform:translateX(${jMinX}px);opacity:1}44%{transform:translateX(${jMaxX}px);opacity:1}45%,49%{transform:translateX(${jMaxX}px);opacity:0}50%{transform:translateX(${jMinX}px);opacity:1}94%{transform:translateX(${jMaxX}px);opacity:1}95%,100%{transform:translateX(${jMaxX}px);opacity:0}}
+@keyframes jy{${jetYKf}}
+.pw{animation:pw ${dur}s ease-in-out infinite}
+.pr{animation:pr ${dur}s ease-in-out infinite}
+.bw{animation:bw ${dur}s ease-in-out infinite}
+.br{animation:br ${dur}s ease-in-out infinite}
+.pd{animation:pd 1.5s ease-in-out infinite}
+.jx{animation:jx ${dur}s cubic-bezier(.4,0,.2,1) infinite}
+.jy{animation:jy ${dur}s ease-in-out infinite}
+${clipAnims}
+${particleAnims}
+${exhaustAnims}
+</style>
+</defs>
 
-      .footer-text {
-        font-family: monospace, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        font-size: 12px;
-        fill: ${colors.footerText};
-      }
+<rect x="1" y="1" width="${svgW-2}" height="${svgH-2}" rx="12" fill="${C.card}" stroke="${C.brd}"/>
 
-      /* Status Badge Toggle Animations matching preview.html */
-      @keyframes badge-wash-anim {
-        0%, 45% { opacity: 1; }
-        48%, 95% { opacity: 0; }
-        98%, 100% { opacity: 1; }
-      }
+<g transform="translate(${PAD},${PAD})">
+<path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z" fill="${C.txt}"/>
+<text x="26" y="13" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="15" font-weight="600" fill="${C.txt}">Contribution Activity</text>
+<g class="bw" transform="translate(${svgW-PAD*2-200},-4)">
+<rect width="195" height="24" rx="12" fill="${C.washBg}" stroke="${C.washBdr}"/>
+<circle class="pd" cx="16" cy="12" r="3" fill="${C.wash}"/>
+<text x="28" y="16" font-family="ui-monospace,monospace" font-size="10.5" font-weight="600" letter-spacing=".5" fill="${C.wash}">ERASER SWEEP ACTIVE</text>
+</g>
+<g class="br" transform="translate(${svgW-PAD*2-208},-4)">
+<rect width="203" height="24" rx="12" fill="${C.rebBg}" stroke="${C.rebBdr}"/>
+<circle class="pd" cx="16" cy="12" r="3" fill="${C.reb}"/>
+<text x="28" y="16" font-family="ui-monospace,monospace" font-size="10.5" font-weight="600" letter-spacing=".5" fill="${C.reb}">RESTORE SWEEP ACTIVE</text>
+</g>
+</g>
 
-      @keyframes badge-rebuild-anim {
-        0%, 45% { opacity: 0; }
-        48%, 95% { opacity: 1; }
-        98%, 100% { opacity: 0; }
-      }
+${labels}
+${emptyTiles}
 
-      .badge-wash {
-        animation: badge-wash-anim 8s ease-in-out infinite;
-      }
+<g class="pw">
+${washTiles}</g>
 
-      .badge-rebuild {
-        animation: badge-rebuild-anim 8s ease-in-out infinite;
-      }
+<g class="pr">
+${rebuildTiles}</g>
 
-      /* Phase Visibility Animations */
-      @keyframes phase-wash-visibility {
-        0%, 46% { opacity: 1; }
-        48%, 96% { opacity: 0; }
-        98%, 100% { opacity: 1; }
-      }
+<g class="pw">
+${flashW}</g>
+<g class="pr">
+${flashR}</g>
 
-      @keyframes phase-rebuild-visibility {
-        0%, 46% { opacity: 0; }
-        48%, 96% { opacity: 1; }
-        98%, 100% { opacity: 1; }
-      }
+<g class="pw">
+${glowBarsW}</g>
+<g class="pr">
+${glowBarsR}</g>
 
-      .phase-wash-layer { animation: phase-wash-visibility 8s ease-in-out infinite; }
-      .phase-rebuild-layer { animation: phase-rebuild-visibility 8s ease-in-out infinite; }
+<!-- Disintegration particles -->
+${particleSvg}
 
-      /* Floating Mini Jet Movements */
-      @keyframes jet-x-anim {
-        0% { transform: translateX(${jetMinX}px); opacity: 1; }
-        44% { transform: translateX(${jetMaxX}px); opacity: 1; }
-        45%, 49% { transform: translateX(${jetMaxX}px); opacity: 0; }
-        50% { transform: translateX(${jetMinX}px); opacity: 1; }
-        94% { transform: translateX(${jetMaxX}px); opacity: 1; }
-        95%, 100% { transform: translateX(${jetMaxX}px); opacity: 0; }
-      }
+<g class="jx"><g class="jy">
+<circle cx="-6" cy="0" r="7" fill="${C.wash}" opacity=".35" class="pw" filter="url(#gl${theme})"/>
+<circle cx="-6" cy="0" r="3.5" fill="${C.wash}" class="pw"/>
+<circle cx="-6" cy="0" r="7" fill="${C.reb}" opacity=".35" class="pr" filter="url(#gl${theme})"/>
+<circle cx="-6" cy="0" r="3.5" fill="${C.reb}" class="pr"/>
+<path d="M12 0L-8-8L-3 0L-8 8Z" fill="${C.jet}"/>
+<path d="M2 0L-4-6L-1 0L-4 6Z" fill="${C.wash}" class="pw"/>
+<path d="M2 0L-4-6L-1 0L-4 6Z" fill="${C.reb}" class="pr"/>
+<ellipse cx="3" cy="0" rx="3" ry="1.5" fill="${C.visor}"/>
+${exhaustSvg}
+</g></g>
 
-      @keyframes jet-y-anim {
-        0% { transform: translateY(${gridStartY + 58}px); }
-        10% { transform: translateY(${gridStartY + 18}px); }
-        20% { transform: translateY(${gridStartY + 98}px); }
-        30% { transform: translateY(${gridStartY + 28}px); }
-        40% { transform: translateY(${gridStartY + 88}px); }
-        50% { transform: translateY(${gridStartY + 58}px); }
-        60% { transform: translateY(${gridStartY + 18}px); }
-        70% { transform: translateY(${gridStartY + 98}px); }
-        80% { transform: translateY(${gridStartY + 28}px); }
-        90% { transform: translateY(${gridStartY + 88}px); }
-        100% { transform: translateY(${gridStartY + 58}px); }
-      }
-
-      .jet-wrapper {
-        animation: jet-x-anim 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-      }
-
-      .jet-subwrapper {
-        animation: jet-y-anim 8s ease-in-out infinite;
-      }
-
-      /* Disintegration Particle Sparkle Animations matching preview.html */
-      @keyframes particle-pop-1 {
-        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
-        10% { transform: translate(-10px, -8px) scale(1.5); opacity: 0.95; }
-        25% { transform: translate(-20px, -16px) scale(0.4); opacity: 0; }
-      }
-
-      @keyframes particle-pop-2 {
-        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
-        12% { transform: translate(-8px, 10px) scale(1.4); opacity: 0.95; }
-        28% { transform: translate(-18px, 18px) scale(0.3); opacity: 0; }
-      }
-
-      @keyframes particle-pop-3 {
-        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
-        15% { transform: translate(-12px, 0px) scale(1.6); opacity: 1; }
-        30% { transform: translate(-24px, 0px) scale(0.2); opacity: 0; }
-      }
-
-      .particle-1 { animation: particle-pop-1 1.2s ease-out infinite; }
-      .particle-2 { animation: particle-pop-2 1.5s ease-out infinite; }
-      .particle-3 { animation: particle-pop-3 1.1s ease-out infinite; }
-
-      ${keyframesHTML}
-    </style>
-
-    ${clipPathsHTML}
-  </defs>
-
-  <!-- Outer Card Background matching preview.html card -->
-  <rect class="card-bg" x="1" y="1" width="${svgWidth - 2}" height="${svgHeight - 2}" />
-
-  <!-- Header Section matching preview.html header -->
-  <g transform="translate(28, 44)">
-    <text class="title-text" x="0" y="0">Contribution Activity</text>
-
-    <!-- Status Badge: ERASER SWEEP ACTIVE -->
-    <g class="badge-wash" transform="translate(165, -13)">
-      <rect x="0" y="0" width="165" height="20" rx="10" fill="${colors.badgeWashBg}" stroke="${colors.badgeWashBorder}" stroke-width="1" />
-      <text x="82.5" y="13" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5" fill="${colors.badgeWashText}" text-anchor="middle">ERASER SWEEP ACTIVE</text>
-    </g>
-
-    <!-- Status Badge: RESTORE SWEEP ACTIVE -->
-    <g class="badge-rebuild" transform="translate(165, -13)">
-      <rect x="0" y="0" width="170" height="20" rx="10" fill="${colors.badgeRebuildBg}" stroke="${colors.badgeRebuildBorder}" stroke-width="1" />
-      <text x="85" y="13" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5" fill="${colors.badgeRebuildText}" text-anchor="middle">RESTORE SWEEP ACTIVE</text>
-    </g>
-  </g>
-
-  <!-- BASE LAYER: Empty Contribution Grid (52 cols x 7 rows) -->
-  <g id="base-empty-grid">
-${emptyTilesHTML}  </g>
-
-  <!-- PHASE 1 LAYER: Active Contribution Tiles (ERASER PHASE) -->
-  <g id="active-grid-phase-1" class="phase-wash-layer">
-${activeTilesPhase1HTML}  </g>
-
-  <!-- PHASE 2 LAYER: Active Contribution Tiles (RESTORE PHASE) -->
-  <g id="active-grid-phase-2" class="phase-rebuild-layer">
-${activeTilesPhase2HTML}  </g>
-
-  <!-- FRONTLINE WHITE GLOW INDICATOR OVERLAY -->
-  <g id="frontline-glow-indicators">
-${frontlineGlowHTML}  </g>
-
-  <!-- FLOATING MINI JET SPACESHIP CURSOR MOVING IN SINE WAVE -->
-  <g class="jet-wrapper">
-    <g class="jet-subwrapper">
-      <!-- Disintegration Particle Sparks -->
-      <circle class="particle-1" cx="-6" cy="-3" r="2" fill="${colors.badgeWashText}" />
-      <circle class="particle-2" cx="-6" cy="3" r="1.5" fill="${colors.badgeWashText}" />
-      <circle class="particle-3" cx="-8" cy="0" r="2.5" fill="#ffffff" />
-
-      <!-- Glowing Jet Engine Circles -->
-      <circle cx="-4" cy="0" r="7" fill="${colors.jetGlow}" opacity="0.3" />
-      <circle cx="-4" cy="0" r="4.5" fill="${colors.jetGlow}" opacity="0.7" />
-      <circle cx="-4" cy="0" r="2.5" fill="#ffffff" />
-
-      <!-- Spaceship Jet Cursor Shape matching drawJet in preview.html -->
-      <path d="M 10 0 L -6 -7 L -2 0 L -6 7 Z" fill="${colors.jetColor}" />
-    </g>
-  </g>
-
-  <!-- FOOTER DIAGNOSTICS & LEGEND matching preview.html footer -->
-  <g transform="translate(28, ${svgHeight - 24})">
-    <!-- Real-Time Counter HUD: Eraser State -->
-    <text x="0" y="0" class="footer-text phase-wash-layer">${totalActiveCount} / ${totalDays} days erased</text>
-    <!-- Real-Time Counter HUD: Restore State -->
-    <text x="0" y="0" class="footer-text phase-rebuild-layer">0 / ${totalDays} days restored</text>
-
-    <!-- Contribution Level Legend -->
-    <g transform="translate(${svgWidth - 250}, -10)">
-      <text x="0" y="10" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="${colors.footerText}">Less</text>
-      <rect x="35" y="1" width="10" height="10" rx="2" fill="${colors.levels[0]}" stroke="${colors.gridEmptyBorder}" stroke-width="1" />
-      <rect x="50" y="1" width="10" height="10" rx="2" fill="${colors.levels[1]}" />
-      <rect x="65" y="1" width="10" height="10" rx="2" fill="${colors.levels[2]}" />
-      <rect x="80" y="1" width="10" height="10" rx="2" fill="${colors.levels[3]}" />
-      <rect x="95" y="1" width="10" height="10" rx="2" fill="${colors.levels[4]}" />
-      <text x="113" y="10" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="${colors.footerText}">More</text>
-    </g>
-  </g>
+<g transform="translate(${PAD},${gY+mH+18})">
+<text class="pw" font-family="ui-monospace,monospace" font-size="12" fill="${C.lbl}">${totalActive} / ${COLS*ROWS} days erased</text>
+<text class="pr" font-family="ui-monospace,monospace" font-size="12" fill="${C.lbl}">0 / ${COLS*ROWS} days restored</text>
+<g transform="translate(${svgW-PAD*2-130},-10)">
+<text x="0" y="10" font-family="sans-serif" font-size="12" fill="${C.lbl}">Less</text>
+<rect x="35" y="1" width="10" height="10" rx="2" fill="${C.lv[0]}" stroke="${C.eStk}"/>
+<rect x="50" y="1" width="10" height="10" rx="2" fill="${C.lv[1]}"/>
+<rect x="65" y="1" width="10" height="10" rx="2" fill="${C.lv[2]}"/>
+<rect x="80" y="1" width="10" height="10" rx="2" fill="${C.lv[3]}"/>
+<rect x="95" y="1" width="10" height="10" rx="2" fill="${C.lv[4]}"/>
+<text x="113" y="10" font-family="sans-serif" font-size="12" fill="${C.lbl}">More</text>
+</g>
+</g>
 </svg>`;
-
-  return headerHTML;
+  return svg;
 }
 
-// Main execution function
 async function main() {
-  console.log(`Starting Matrix Laser Jet Eraser SVG Generation for @${USERNAME}...`);
+  console.log('Generating SVGs...');
   const data = await fetchContributions(USERNAME, GITHUB_TOKEN);
-
-  const darkSVG = generateSVG(data, 'dark');
-  const lightSVG = generateSVG(data, 'light');
-
-  // Save to dist/
-  fs.writeFileSync(path.join(distDir, 'eraser-dark.svg'), darkSVG, 'utf8');
-  fs.writeFileSync(path.join(distDir, 'eraser-light.svg'), lightSVG, 'utf8');
-
-  console.log("Successfully generated Laser Jet Eraser SVGs in dist/!");
+  const dark = generateSVG(data, 'dark');
+  const light = generateSVG(data, 'light');
+  fs.writeFileSync(path.join(distDir, 'eraser-dark.svg'), dark, 'utf8');
+  fs.writeFileSync(path.join(distDir, 'eraser-light.svg'), light, 'utf8');
+  fs.writeFileSync(path.join(assetsDir, 'eraser-dark.svg'), dark, 'utf8');
+  fs.writeFileSync(path.join(assetsDir, 'eraser-light.svg'), light, 'utf8');
+  console.log('Done! Files written to dist/ and assets/');
+  // Verify
+  console.log('dist:', fs.readdirSync(distDir));
+  console.log('assets:', fs.readdirSync(assetsDir));
 }
 
-main().catch((err) => {
-  console.error("Fatal error during SVG generation:", err);
-  process.exit(1);
-});
+main().catch(e => { console.error(e); process.exit(1); });
