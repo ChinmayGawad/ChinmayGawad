@@ -137,7 +137,7 @@ function getLevel(count) {
   return 4;
 }
 
-// Generate SVG identical in design, mini jet sprite, organic wave sweep, and card layout to preview.html
+// Generate SVG fully compliant with GitHub Sanitizer and matching preview.html
 function generateSVG(data, theme = 'dark') {
   const isDark = theme === 'dark';
 
@@ -254,28 +254,9 @@ function generateSVG(data, theme = 'dark') {
   const jetMinX = gridStartX - 35;
   const jetMaxX = gridStartX + gridWidth + 35;
 
-  // Counter text steps matching dynamic count up in preview.html
-  const counterSteps = 10;
-  let counterKeyframesHTML = `@keyframes counter-wash-anim {\n`;
-  for (let i = 0; i <= counterSteps; i++) {
-    const pct = Math.round((i / counterSteps) * 42);
-    const count = Math.round((i / counterSteps) * totalDays);
-    counterKeyframesHTML += `  ${pct}% { content: "${count} / ${totalDays} days washed"; }\n`;
-  }
-  counterKeyframesHTML += `  43%, 49% { content: "${totalDays} / ${totalDays} days washed"; }\n`;
-  for (let i = 0; i <= counterSteps; i++) {
-    const pct = 50 + Math.round((i / counterSteps) * 42);
-    const count = totalDays - Math.round((i / counterSteps) * totalDays);
-    counterKeyframesHTML += `  ${pct}% { content: "${count} / ${totalDays} days erased"; }\n`;
-  }
-  counterKeyframesHTML += `  93%, 100% { content: "0 / ${totalDays} days erased"; }\n`;
-  counterKeyframesHTML += `}\n`;
-
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svgWidth} ${svgHeight}" width="100%" height="100%">
   <defs>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&amp;display=swap');
-
       * {
         box-sizing: border-box;
       }
@@ -292,6 +273,12 @@ function generateSVG(data, theme = 'dark') {
         font-size: 15px;
         font-weight: 600;
         fill: ${colors.titleText};
+      }
+
+      .footer-text {
+        font-family: monospace, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-size: 12px;
+        fill: ${colors.footerText};
       }
 
       /* Status Badge Toggle Animations */
@@ -363,13 +350,21 @@ function generateSVG(data, theme = 'dark') {
       .particle-1 { animation: particle-pop-1 1.2s ease-out infinite; }
       .particle-2 { animation: particle-pop-2 1.5s ease-out infinite; }
 
-      /* Counter text dynamic animation */
-      .counter-text::after {
-        content: "0 / ${totalDays} days erased";
-        animation: counter-wash-anim 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      /* Counter text visibility animation */
+      @keyframes text-wash-visibility {
+        0%, 44% { opacity: 1; }
+        48%, 94% { opacity: 0; }
+        98%, 100% { opacity: 1; }
+      }
+      @keyframes text-rebuild-visibility {
+        0%, 44% { opacity: 0; }
+        48%, 94% { opacity: 1; }
+        98%, 100% { opacity: 0; }
       }
 
-      ${counterKeyframesHTML}
+      .text-wash-state { animation: text-wash-visibility 8s ease-in-out infinite; }
+      .text-rebuild-state { animation: text-rebuild-visibility 8s ease-in-out infinite; }
+
       ${rowKeyframesHTML}
     </style>
 
@@ -450,8 +445,10 @@ ${emptyTilesHTML}  </g>
 
   <!-- FOOTER DIAGNOSTICS & LEGEND -->
   <g transform="translate(28, ${svgHeight - 24})">
-    <!-- Dynamic Counter Text -->
-    <text x="0" y="0" font-family="monospace, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="${colors.footerText}" class="counter-text"></text>
+    <!-- Counter Text: Washing State -->
+    <text x="0" y="0" class="footer-text text-wash-state">${totalActiveCount} / ${totalDays} days washed</text>
+    <!-- Counter Text: Rebuilding State -->
+    <text x="0" y="0" class="footer-text text-rebuild-state">0 / ${totalDays} days erased</text>
 
     <!-- Contribution Level Legend -->
     <g transform="translate(${svgWidth - 250}, -10)">

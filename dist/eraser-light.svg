@@ -1,8 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 240" width="100%" height="100%">
   <defs>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&amp;display=swap');
-
       * {
         box-sizing: border-box;
       }
@@ -19,6 +17,12 @@
         font-size: 15px;
         font-weight: 600;
         fill: #1f2328;
+      }
+
+      .footer-text {
+        font-family: monospace, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-size: 12px;
+        fill: #656d76;
       }
 
       /* Status Badge Toggle Animations */
@@ -90,38 +94,20 @@
       .particle-1 { animation: particle-pop-1 1.2s ease-out infinite; }
       .particle-2 { animation: particle-pop-2 1.5s ease-out infinite; }
 
-      /* Counter text dynamic animation */
-      .counter-text::after {
-        content: "0 / 364 days erased";
-        animation: counter-wash-anim 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      /* Counter text visibility animation */
+      @keyframes text-wash-visibility {
+        0%, 44% { opacity: 1; }
+        48%, 94% { opacity: 0; }
+        98%, 100% { opacity: 1; }
+      }
+      @keyframes text-rebuild-visibility {
+        0%, 44% { opacity: 0; }
+        48%, 94% { opacity: 1; }
+        98%, 100% { opacity: 0; }
       }
 
-      @keyframes counter-wash-anim {
-  0% { content: "0 / 364 days washed"; }
-  4% { content: "36 / 364 days washed"; }
-  8% { content: "73 / 364 days washed"; }
-  13% { content: "109 / 364 days washed"; }
-  17% { content: "146 / 364 days washed"; }
-  21% { content: "182 / 364 days washed"; }
-  25% { content: "218 / 364 days washed"; }
-  29% { content: "255 / 364 days washed"; }
-  34% { content: "291 / 364 days washed"; }
-  38% { content: "328 / 364 days washed"; }
-  42% { content: "364 / 364 days washed"; }
-  43%, 49% { content: "364 / 364 days washed"; }
-  50% { content: "364 / 364 days erased"; }
-  54% { content: "328 / 364 days erased"; }
-  58% { content: "291 / 364 days erased"; }
-  63% { content: "255 / 364 days erased"; }
-  67% { content: "218 / 364 days erased"; }
-  71% { content: "182 / 364 days erased"; }
-  75% { content: "146 / 364 days erased"; }
-  79% { content: "109 / 364 days erased"; }
-  84% { content: "73 / 364 days erased"; }
-  88% { content: "36 / 364 days erased"; }
-  92% { content: "0 / 364 days erased"; }
-  93%, 100% { content: "0 / 364 days erased"; }
-}
+      .text-wash-state { animation: text-wash-visibility 8s ease-in-out infinite; }
+      .text-rebuild-state { animation: text-rebuild-visibility 8s ease-in-out infinite; }
 
       
       @keyframes sweep-anim-row-0 {
