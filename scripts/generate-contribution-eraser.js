@@ -137,7 +137,7 @@ function getLevel(count) {
   return 4;
 }
 
-// Generate SVG fully compliant with GitHub Camo and matching preview.html
+// Generate SVG with working row-by-row organic wash clipPath sweep matching preview.html
 function generateSVG(data, theme = 'dark') {
   const isDark = theme === 'dark';
 
@@ -217,28 +217,28 @@ function generateSVG(data, theme = 'dark') {
     });
   });
 
-  // Generate per-row clip paths for organic sine-wave frontline sweep effect matching preview.html
+  // Per-row clip paths for organic sine-wave frontline sweep effect
   let clipPathsHTML = '';
   let rowKeyframesHTML = '';
+
+  const sweepDistance = gridWidth + 90;
 
   for (let r = 0; r < ROWS; r++) {
     const sineOffset = Math.sin(r * 0.9) * 14;
     const rowY = gridStartY + r * tileStep - 2;
     const rowH = tileStep + 4;
+    const startX = gridStartX - 30 + sineOffset;
 
     clipPathsHTML += `    <clipPath id="sweep-clip-row-${r}-${theme}">\n`;
-    clipPathsHTML += `      <rect class="sweep-rect-row-${r}" x="${gridStartX - 50}" y="${rowY}" width="${gridWidth + 100}" height="${rowH}" />\n`;
+    clipPathsHTML += `      <rect class="sweep-rect-row-${r}" x="${startX}" y="${rowY}" width="${gridWidth + 200}" height="${rowH}" />\n`;
     clipPathsHTML += `    </clipPath>\n`;
-
-    const startX = gridStartX - 50 + sineOffset;
-    const endX = gridStartX + gridWidth + 50 + sineOffset;
 
     rowKeyframesHTML += `
       @keyframes sweep-anim-row-${r} {
         0% { transform: translateX(0px); }
-        42% { transform: translateX(${endX - startX}px); }
-        48% { transform: translateX(${endX - startX}px); }
-        50% { transform: translateX(${endX - startX}px); }
+        42% { transform: translateX(${sweepDistance}px); }
+        48% { transform: translateX(${sweepDistance}px); }
+        50% { transform: translateX(${sweepDistance}px); }
         92% { transform: translateX(0px); }
         98% { transform: translateX(0px); }
         100% { transform: translateX(0px); }
@@ -251,12 +251,16 @@ function generateSVG(data, theme = 'dark') {
   }
 
   // Jet Y keyframes (sine-wave oscillation matching drawJet in preview.html)
-  const jetMinX = gridStartX - 35;
-  const jetMaxX = gridStartX + gridWidth + 35;
+  const jetMinX = gridStartX - 30;
+  const jetMaxX = gridStartX + gridWidth + 30;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svgWidth} ${svgHeight}" width="100%" height="100%">
   <defs>
     <style>
+      * {
+        box-sizing: border-box;
+      }
+
       .card-bg {
         fill: ${colors.cardBg};
         stroke: ${colors.border};
