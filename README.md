@@ -36,13 +36,13 @@
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
-<!-- TERMINAL ENCAPSULATED GITHUB CONTRIBUTION MATRIX LASER JET ERASER -->
+<!-- ORGANIC GITHUB CONTRIBUTION MATRIX WASH ANIMATION -->
 <div align="center">
-  <h3>⚡ Matrix Laser Jet Sweep Contribution Heatmap</h3>
+  <h3>🟢 Organic GitHub Contribution Grid Wash Heatmap</h3>
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ChinmayGawad/ChinmayGawad/eraser-output/eraser-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/ChinmayGawad/ChinmayGawad/eraser-output/eraser-light.svg">
-    <img alt="GitHub Matrix Laser Jet Sweep Heatmap" src="https://raw.githubusercontent.com/ChinmayGawad/ChinmayGawad/eraser-output/eraser-dark.svg" width="100%" />
+    <img alt="Organic GitHub Contribution Grid Wash Heatmap" src="https://raw.githubusercontent.com/ChinmayGawad/ChinmayGawad/eraser-output/eraser-dark.svg" width="100%" />
   </picture>
 </div>
 
