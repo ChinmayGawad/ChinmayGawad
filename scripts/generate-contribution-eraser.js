@@ -137,7 +137,7 @@ function getLevel(count) {
   return 4;
 }
 
-// Generate SVG with working row-by-row organic wash clipPath sweep matching preview.html
+// Generate valid SVG XML structure matching preview.html
 function generateSVG(data, theme = 'dark') {
   const isDark = theme === 'dark';
 
@@ -193,7 +193,6 @@ function generateSVG(data, theme = 'dark') {
   const weeks = (data.weeks || []).slice(-COLS);
 
   let emptyTilesHTML = '';
-  let activeTilesHTML = '';
   let totalActiveCount = 0;
   const totalDays = COLS * ROWS;
 
@@ -205,15 +204,10 @@ function generateSVG(data, theme = 'dark') {
       const cellY = gridStartY + r * tileStep;
       const lvl = getLevel(day.contributionCount);
 
+      if (lvl > 0) totalActiveCount++;
+
       // Base grid tile
       emptyTilesHTML += `      <rect x="${cellX}" y="${cellY}" width="${CELL_SIZE}" height="${CELL_SIZE}" rx="${RADIUS}" fill="${colors.gridEmpty}" stroke="${colors.gridEmptyBorder}" stroke-width="1" />\n`;
-
-      // Top layer active tile
-      if (lvl > 0) {
-        totalActiveCount++;
-        const color = colors.levels[lvl];
-        activeTilesHTML += `      <rect x="${cellX}" y="${cellY}" width="${CELL_SIZE}" height="${CELL_SIZE}" rx="${RADIUS}" fill="${color}" />\n`;
-      }
     });
   });
 
@@ -251,10 +245,10 @@ function generateSVG(data, theme = 'dark') {
   }
 
   // Jet Y keyframes (sine-wave oscillation matching drawJet in preview.html)
-  const jetMinX = gridStartX - 30;
-  const jetMaxX = gridStartX + gridWidth + 30;
+  const jetMinX = gridStartX - 35;
+  const jetMaxX = gridStartX + gridWidth + 35;
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svgWidth} ${svgHeight}" width="100%" height="100%">
+  const headerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svgWidth} ${svgHeight}" width="100%" height="100%">
   <defs>
     <style>
       * {
@@ -398,6 +392,7 @@ ${emptyTilesHTML}  </g>
   <!-- TOP LAYER: Real Active Contribution Tiles (Clipped row-by-row with organic sine offset) -->
   <g id="active-contribution-grid">
 `;
+
   // Render active tiles per row clipped by individual row sweep clip paths
   let activeRowsHTML = '';
   for (let r = 0; r < ROWS; r++) {
@@ -418,7 +413,8 @@ ${emptyTilesHTML}  </g>
     activeRowsHTML += `    </g>\n`;
   }
 
-  const footerHTML = `
+  const footerHTML = `  </g>
+
   <!-- MINI JET SPACESHIP CURSOR WITH ENGINE GLOW & PARTICLES -->
   <g class="jet-wrapper">
     <g class="jet-subwrapper">
@@ -456,7 +452,7 @@ ${emptyTilesHTML}  </g>
   </g>
 </svg>`;
 
-  return activeTilesHTML + activeRowsHTML + `  </g>\n` + footerHTML;
+  return headerHTML + activeRowsHTML + footerHTML;
 }
 
 // Main execution function
