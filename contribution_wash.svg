@@ -93,7 +93,7 @@
   <circle cx="34" cy="18" r="4.5" fill="#ffbd2e"/>
   <circle cx="48" cy="18" r="4.5" fill="#27c93f"/>
 
-  <text x="66" y="22" font-family="'Fira Code', 'Segoe UI', monospace" font-size="12" font-weight="600" fill="#8b949e">ChinmayGawad ~ 370 contributions in past year</text>
+  <text x="66" y="22" font-family="'Fira Code', 'Segoe UI', monospace" font-size="12" font-weight="600" fill="#8b949e">ChinmayGawad ~ 372 contributions in past year</text>
 
   <!-- Status Badge -->
   <g transform="translate(741, 9)">
@@ -465,9 +465,9 @@
     <rect class="cell" x="840" y="66" width="12" height="12" rx="2" fill="#39d353" style="animation-delay: 2.40s;"><title>2026-08-03: 42 contributions (Level 4)</title></rect>
     <rect class="cell" x="840" y="82" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 1.31s;"><title>2026-08-04: 5 contributions (Level 1)</title></rect>
     <rect class="cell" x="840" y="98" width="12" height="12" rx="2" fill="#0e4429" style="animation-delay: 0.35s;"><title>2026-08-05: 1 contribution (Level 1)</title></rect>
-    <rect class="cell" x="840" y="114" width="12" height="12" rx="2" fill="#26a641" style="animation-delay: 2.14s;"><title>2026-08-06: 13 contributions (Level 3)</title></rect>
+    <rect class="cell" x="840" y="114" width="12" height="12" rx="2" fill="#006d32" style="animation-delay: 2.14s;"><title>2026-08-06: 13 contributions (Level 2)</title></rect>
     <rect class="cell" x="840" y="130" width="12" height="12" rx="2" fill="#006d32" style="animation-delay: 1.75s;"><title>2026-08-07: 8 contributions (Level 2)</title></rect>
-    <rect class="cell" x="840" y="146" width="12" height="12" rx="2" fill="#39d353" style="animation-delay: 2.36s;"><title>2026-08-08: 24 contributions (Level 4)</title></rect>
+    <rect class="cell" x="840" y="146" width="12" height="12" rx="2" fill="#39d353" style="animation-delay: 2.36s;"><title>2026-08-08: 26 contributions (Level 4)</title></rect>
     
   </g>
 
@@ -587,7 +587,7 @@
     <circle class="p-in" cx="846" cy="88" r="2.5" fill="#39d353" style="animation-delay: 1.31s;"/>
     <circle class="p-out" cx="846" cy="104" r="2" fill="#0e4429" style="animation-delay: 0.35s;"/>
     <circle class="p-in" cx="846" cy="104" r="2.5" fill="#39d353" style="animation-delay: 0.35s;"/>
-    <circle class="p-out" cx="846" cy="120" r="2" fill="#26a641" style="animation-delay: 2.14s;"/>
+    <circle class="p-out" cx="846" cy="120" r="2" fill="#006d32" style="animation-delay: 2.14s;"/>
     <circle class="p-in" cx="846" cy="120" r="2.5" fill="#39d353" style="animation-delay: 2.14s;"/>
     <circle class="p-out" cx="846" cy="136" r="2" fill="#006d32" style="animation-delay: 1.75s;"/>
     <circle class="p-in" cx="846" cy="136" r="2.5" fill="#39d353" style="animation-delay: 1.75s;"/>

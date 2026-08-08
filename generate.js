@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const USERNAME = 'ChinmayGawad';
+const USERNAME = process.env.GH_USERNAME || 'ChinmayGawad';
 const COLS = 52;
 const ROWS = 7;
 const CELL_SIZE = 12;
