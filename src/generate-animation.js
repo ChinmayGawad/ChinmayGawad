@@ -74,14 +74,15 @@ async function main() {
   const height = Math.round(boundingBox.height);
   console.log(`[Card Dimensions] Width: ${width}px, Height: ${height}px`);
 
-  // Step 4: Configure Pure JS GIF Encoder
-  const encoder = new GIFEncoder(width, height);
+  // Step 4: Configure Pure JS GIF Encoder with Frame Optimization & NeuQuant
+  const encoder = new GIFEncoder(width, height, 'neuquant', true);
   encoder.start();
   encoder.setRepeat(0);   // 0 = loop forever
-  encoder.setDelay(80);   // 80ms frame delay for smooth, readable slow motion
+  encoder.setDelay(33);   // 33ms frame delay for silky smooth 30 FPS playback
+  encoder.setQuality(5);  // High color quality (1 = highest, 10 = default)
 
-  const TOTAL_FRAMES = 80;
-  console.log(`[Capturing] Capturing ${TOTAL_FRAMES} deterministic frames across full 100% Washing & Rebuilding cycles...`);
+  const TOTAL_FRAMES = 300;
+  console.log(`[Capturing] Capturing ${TOTAL_FRAMES} deterministic 30 FPS frames across 2 transactions (Washing Green & Rebuilding Cyber Blue)...`);
 
   for (let f = 0; f < TOTAL_FRAMES; f++) {
     const progressRatio = f / TOTAL_FRAMES;
@@ -98,7 +99,7 @@ async function main() {
     const png = PNG.sync.read(screenshotBuffer);
     encoder.addFrame(png.data);
 
-    if ((f + 1) % 10 === 0 || f === TOTAL_FRAMES - 1) {
+    if ((f + 1) % 20 === 0 || f === TOTAL_FRAMES - 1) {
       console.log(`[Capturing] Progress: ${f + 1}/${TOTAL_FRAMES} frames encoded.`);
     }
   }
