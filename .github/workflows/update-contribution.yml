@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: '0 */4 * * *'  # Automatically run every 4 hours
   workflow_dispatch:      # Enable manual run from GitHub Actions UI
+  push:
+    branches:
+      - main
 
 permissions:
   contents: write

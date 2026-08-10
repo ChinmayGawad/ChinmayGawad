@@ -41,7 +41,7 @@
   <h3>💚 Live Contribution Activity</h3>
 
   <p align="center">
-    <img src="./assets/contribution.gif" width="900">
+    <img src="https://raw.githubusercontent.com/ChinmayGawad/ChinmayGawad/main/assets/contribution.gif" width="100%" alt="Live Contribution Activity Animation" />
   </p>
 </div>
 
