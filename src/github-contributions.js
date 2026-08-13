@@ -67,51 +67,59 @@ async function fetchViaGraphQL(username, token) {
       }
     }`;
 
-  const response = await fetch('https://api.github.com/graphql', {
-    method: 'POST',
-    headers: {
-      'Authorization': `bearer ${token}`,
-      'Content-Type': 'application/json',
-      'User-Agent': 'Node-Fetch'
-    },
-    body: JSON.stringify({ query })
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-  if (!response.ok) {
-    throw new Error(`GraphQL API returned HTTP status ${response.status}`);
-  }
+  try {
+    const response = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
+      headers: {
+        'Authorization': `bearer ${token}`,
+        'Content-Type': 'application/json',
+        'User-Agent': 'GitHub-Contribution-Wash/1.0'
+      },
+      body: JSON.stringify({ query }),
+      signal: controller.signal
+    });
 
-  const json = await response.json();
-  if (json.errors) {
-    throw new Error(`GraphQL errors: ${JSON.stringify(json.errors)}`);
-  }
-
-  const weeks = json?.data?.user?.contributionsCollection?.contributionCalendar?.weeks;
-  if (!weeks || weeks.length === 0) {
-    throw new Error(`No contribution calendar weeks found for user '${username}'`);
-  }
-
-  const levelMap = {
-    'NONE': 0,
-    'FIRST_QUARTILE': 1,
-    'SECOND_QUARTILE': 2,
-    'THIRD_QUARTILE': 3,
-    'FOURTH_QUARTILE': 4
-  };
-
-  const rawDays = [];
-  const sliceWeeks = weeks.slice(-52);
-  for (const week of sliceWeeks) {
-    for (const day of week.contributionDays) {
-      rawDays.push({
-        date: day.date,
-        count: day.contributionCount,
-        level: levelMap[day.contributionLevel] ?? (day.contributionCount > 0 ? 1 : 0)
-      });
+    if (!response.ok) {
+      throw new Error(`GraphQL API returned HTTP status ${response.status}`);
     }
-  }
 
-  return normalizeContributionDays(rawDays);
+    const json = await response.json();
+    if (json.errors && json.errors.length > 0) {
+      throw new Error(`GraphQL errors: ${json.errors.map(e => e.message).join(', ')}`);
+    }
+
+    const weeks = json?.data?.user?.contributionsCollection?.contributionCalendar?.weeks;
+    if (!weeks || weeks.length === 0) {
+      throw new Error(`No contribution calendar weeks found for user '${username}'`);
+    }
+
+    const levelMap = {
+      'NONE': 0,
+      'FIRST_QUARTILE': 1,
+      'SECOND_QUARTILE': 2,
+      'THIRD_QUARTILE': 3,
+      'FOURTH_QUARTILE': 4
+    };
+
+    const rawDays = [];
+    const sliceWeeks = weeks.slice(-52);
+    for (const week of sliceWeeks) {
+      for (const day of week.contributionDays) {
+        rawDays.push({
+          date: day.date,
+          count: day.contributionCount,
+          level: levelMap[day.contributionLevel] ?? (day.contributionCount > 0 ? 1 : 0)
+        });
+      }
+    }
+
+    return normalizeContributionDays(rawDays);
+  } finally {
+    clearTimeout(timeoutId);
+  }
 }
 
 /**
@@ -119,70 +127,178 @@ async function fetchViaGraphQL(username, token) {
  */
 async function fetchViaProfileHTML(username) {
   const url = `https://github.com/users/${username}/contributions`;
-  const response = await fetch(url, {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-      'Accept': 'text/html,application/xhtml+xml'
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml'
+      },
+      signal: controller.signal
+    });
+
+    if (!response.ok) {
+      throw new Error(`GitHub profile HTML returned HTTP status ${response.status}`);
     }
-  });
 
-  if (!response.ok) {
-    throw new Error(`GitHub profile HTML returned HTTP status ${response.status}`);
-  }
+    const html = await response.text();
 
-  const html = await response.text();
-  const pattern = /data-date="(\d{4}-\d{2}-\d{2})"[^>]*data-level="(\d)"|data-level="(\d)"[^>]*data-date="(\d{4}-\d{2}-\d{2})"/g;
-
-  const matches = [...html.matchAll(pattern)];
-  if (!matches || matches.length === 0) {
-    throw new Error(`Could not parse contribution days from profile HTML for '${username}'`);
-  }
-
-  const dayMap = {};
-  for (const m of matches) {
-    const dateStr = m[1] || m[4];
-    const levelStr = m[2] || m[3];
-    if (dateStr && levelStr) {
-      dayMap[dateStr] = parseInt(levelStr, 10);
+    // Map element ID -> tooltip text (exact contribution count)
+    const tooltipMap = {};
+    const tooltipPattern = /for="([^"]+)"[^>]*>([^<]+)<\/tool-tip>/g;
+    for (const match of html.matchAll(tooltipPattern)) {
+      const elemId = match[1];
+      const text = match[2].trim();
+      let count = 0;
+      const countMatch = text.match(/^(\d+)\s+contribution/i);
+      if (countMatch) {
+        count = parseInt(countMatch[1], 10);
+      }
+      tooltipMap[elemId] = count;
     }
+
+    // Pattern for calendar cells
+    const cellPattern = /(?:data-date="(\d{4}-\d{2}-\d{2})"[^>]*data-level="(\d)"|data-level="(\d)"[^>]*data-date="(\d{4}-\d{2}-\d{2})")[^>]*id="([^"]+)"/g;
+    const matches = [...html.matchAll(cellPattern)];
+
+    const dayMap = {};
+
+    if (matches && matches.length > 0) {
+      for (const m of matches) {
+        const dateStr = m[1] || m[4];
+        const levelStr = m[2] || m[3];
+        const elemId = m[5];
+        if (dateStr && levelStr) {
+          const level = parseInt(levelStr, 10);
+          const count = tooltipMap[elemId] !== undefined ? tooltipMap[elemId] : (level * 3);
+          dayMap[dateStr] = { level, count };
+        }
+      }
+    } else {
+      const simplePattern = /data-date="(\d{4}-\d{2}-\d{2})"[^>]*data-level="(\d)"|data-level="(\d)"[^>]*data-date="(\d{4}-\d{2}-\d{2})"/g;
+      const simpleMatches = [...html.matchAll(simplePattern)];
+      if (!simpleMatches || simpleMatches.length === 0) {
+        throw new Error(`Could not parse contribution days from profile HTML for '${username}'`);
+      }
+      for (const m of simpleMatches) {
+        const dateStr = m[1] || m[4];
+        const levelStr = m[2] || m[3];
+        if (dateStr && levelStr) {
+          const level = parseInt(levelStr, 10);
+          dayMap[dateStr] = { level, count: level * 3 };
+        }
+      }
+    }
+
+    const todayStr = new Date().toISOString().split('T')[0];
+    const sortedDates = Object.keys(dayMap).filter(d => d <= todayStr).sort();
+    const rawDays = sortedDates.map(d => ({
+      date: d,
+      level: dayMap[d].level,
+      count: dayMap[d].count
+    }));
+
+    return normalizeContributionDays(rawDays);
+  } finally {
+    clearTimeout(timeoutId);
   }
-
-  const sortedDates = Object.keys(dayMap).sort();
-  const rawDays = sortedDates.map(d => ({
-    date: d,
-    level: dayMap[d],
-    count: dayMap[d] * 3
-  }));
-
-  return normalizeContributionDays(rawDays);
 }
 
 /**
  * Strategy 3: Fetch via public jogruber.de REST API
  */
 async function fetchViaPublicAPI(username) {
-  const response = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}`);
-  if (!response.ok) {
-    throw new Error(`Public API returned HTTP status ${response.status}`);
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+  try {
+    const response = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}`, {
+      signal: controller.signal
+    });
+    if (!response.ok) {
+      throw new Error(`Public API returned HTTP status ${response.status}`);
+    }
+
+    const data = await response.json();
+    if (!data || !data.contributions || data.contributions.length === 0) {
+      throw new Error(`No contribution data returned from public API for user '${username}'`);
+    }
+
+    const todayStr = new Date().toISOString().split('T')[0];
+    const sortedContributions = [...data.contributions]
+      .filter(item => item.date <= todayStr)
+      .sort((a, b) => a.date.localeCompare(b.date));
+
+    const rawDays = sortedContributions.map(item => ({
+      date: item.date,
+      count: item.count || 0,
+      level: item.level || 0
+    }));
+
+    return normalizeContributionDays(rawDays);
+  } finally {
+    clearTimeout(timeoutId);
   }
+}
 
-  const data = await response.json();
-  if (!data || !data.contributions || data.contributions.length === 0) {
-    throw new Error(`No contribution data returned from public API for user '${username}'`);
+/**
+ * Strategy 4: Fallback fetch via public GitHub user events API stream
+ */
+async function fetchViaUserEvents(username) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+  try {
+    const response = await fetch(`https://api.github.com/users/${username}/events/public`, {
+      headers: {
+        'User-Agent': 'GitHub-Contribution-Wash/1.0',
+        'Accept': 'application/vnd.github.v3+json'
+      },
+      signal: controller.signal
+    });
+
+    if (!response.ok) {
+      throw new Error(`GitHub events API returned HTTP status ${response.status}`);
+    }
+
+    const events = await response.json();
+    const eventCountsByDate = {};
+
+    if (Array.isArray(events)) {
+      for (const event of events) {
+        if (event.created_at) {
+          const dateStr = event.created_at.split('T')[0];
+          eventCountsByDate[dateStr] = (eventCountsByDate[dateStr] || 0) + 1;
+        }
+      }
+    }
+
+    const rawDays = [];
+    const today = new Date();
+    for (let i = 363; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(d.getDate() - i);
+      const dateStr = d.toISOString().split('T')[0];
+      const count = eventCountsByDate[dateStr] || 0;
+      let level = 0;
+      if (count > 0) level = 1;
+      if (count >= 3) level = 2;
+      if (count >= 6) level = 3;
+      if (count >= 10) level = 4;
+      rawDays.push({ date: dateStr, count, level });
+    }
+
+    return normalizeContributionDays(rawDays);
+  } finally {
+    clearTimeout(timeoutId);
   }
-
-  const rawDays = data.contributions.map(item => ({
-    date: item.date,
-    count: item.count || 0,
-    level: item.level || 0
-  }));
-
-  return normalizeContributionDays(rawDays);
 }
 
 /**
  * Main Data Fetcher
- * Tries GraphQL first if GITHUB_TOKEN is available, then profile HTML, then Public REST API.
+ * Tries GraphQL first if GITHUB_TOKEN is available, then profile HTML, then Public REST API, then User Events API.
  */
 async function getGitHubContributions(usernameOverride) {
   const username = usernameOverride || process.env.GITHUB_USERNAME || process.env.GH_USERNAME || 'ChinmayGawad';
@@ -216,6 +332,15 @@ async function getGitHubContributions(usernameOverride) {
     console.log(`[GitHub Contributions] Successfully fetched ${result.totalContributions} total contributions via Public API.`);
     return result;
   } catch (e) {
+    console.warn(`[GitHub Contributions] Public REST API fetch failed: ${e.message}. Trying GitHub public events stream...`);
+  }
+
+  try {
+    console.log(`[GitHub Contributions] Attempting public user events fetch...`);
+    const result = await fetchViaUserEvents(username);
+    console.log(`[GitHub Contributions] Successfully fetched ${result.totalContributions} total contributions via Events API.`);
+    return result;
+  } catch (e) {
     console.error(`[GitHub Contributions] ERROR: All contribution data fetch attempts failed for user '${username}': ${e.message}`);
     throw new Error(`Failed to retrieve GitHub contributions for user '${username}'. Please verify the username and internet connection.`);
   }
@@ -223,5 +348,10 @@ async function getGitHubContributions(usernameOverride) {
 
 module.exports = {
   getGitHubContributions,
-  normalizeContributionDays
+  normalizeContributionDays,
+  fetchViaGraphQL,
+  fetchViaProfileHTML,
+  fetchViaPublicAPI,
+  fetchViaUserEvents
 };
+

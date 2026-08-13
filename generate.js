@@ -24,106 +24,43 @@ const svgHeight = 620;
 
 const COLORS = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'];
 
-async function getRealContributions(username) {
-    const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
-    if (token) {
-        try {
-            const query = `
-            query {
-              user(login: "${username}") {
-                contributionsCollection {
-                  contributionCalendar {
-                    totalContributions
-                    weeks {
-                      contributionDays {
-                        date
-                        contributionCount
-                        color
-                      }
-                    }
-                  }
-                }
-              }
-            }`;
-            const response = await fetch('https://api.github.com/graphql', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `bearer ${token}`,
-                    'Content-Type': 'application/json',
-                    'User-Agent': 'Node-Fetch'
-                },
-                body: JSON.stringify({ query })
-            });
-            const json = await response.json();
-            const weeks = json?.data?.user?.contributionsCollection?.contributionCalendar?.weeks;
-            if (weeks && weeks.length > 0) {
-                console.log(`Fetched real contribution calendar via GraphQL API.`);
-                return weeks;
-            }
-        } catch (e) {
-            console.warn("GraphQL API fetch failed, falling back to public API:", e.message);
-        }
-    }
+const { getGitHubContributions } = require('./src/github-contributions');
 
-    try {
-        const response = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}`);
-        const data = await response.json();
-        if (data && data.contributions && data.contributions.length > 0) {
-            const todayStr = new Date().toISOString().split('T')[0];
-            const pastDays = data.contributions
-                .filter(x => x.date <= todayStr)
-                .sort((a, b) => a.date.localeCompare(b.date));
-                
-            const recent = pastDays.slice(-238); // 34 weeks * 7 days
-            const weeks = [];
-            for (let w = 0; w < COLS; w++) {
-                const contributionDays = [];
-                for (let d = 0; d < ROWS; d++) {
-                    const idx = w * 7 + d;
-                    const item = recent[idx] || { count: 0, level: 0, date: '' };
-                    contributionDays.push({
-                        date: item.date,
-                        contributionCount: item.count || 0,
-                        color: COLORS[Math.min(4, Math.max(0, item.level || 0))]
-                    });
-                }
-                weeks.push({ contributionDays });
-            }
-            console.log(`Fetched real contribution calendar via public API.`);
-            return weeks;
-        }
-    } catch (e) {
-        console.error("Public API fetch failed:", e.message);
-    }
-
-    return null;
-}
-
-function buildCells(weeks) {
-    let recent = weeks ? weeks.slice(-COLS) : [];
-    const padCount = COLS - recent.length;
-    const padded = Array.from({ length: Math.max(0, padCount) }, () => ({
-        contributionDays: Array.from({ length: ROWS }, () => ({
-            contributionCount: 0,
-            color: '#161b22',
-            date: null,
-        })),
-    })).concat(recent);
+function buildCells(grid) {
+    const recentCols = grid ? grid.slice(-COLS) : [];
+    const padCount = COLS - recentCols.length;
 
     const cells = [];
-    padded.forEach((week, col) => {
-        week.contributionDays.forEach((day, row) => {
+    for (let c = 0; c < padCount; c++) {
+        for (let r = 0; r < ROWS; r++) {
             cells.push({
-                col,
-                row,
-                x: GRID_X + col * STEP,
-                y: GRID_Y + row * STEP,
-                color: day.color || '#161b22',
-                count: day.contributionCount || 0,
-                date: day.date,
+                col: c,
+                row: r,
+                x: GRID_X + c * STEP,
+                y: GRID_Y + r * STEP,
+                color: COLORS[0],
+                count: 0,
+                date: null
+            });
+        }
+    }
+
+    recentCols.forEach((colData, colIdx) => {
+        const c = padCount + colIdx;
+        colData.forEach((day, r) => {
+            const level = Math.min(4, Math.max(0, day.level || 0));
+            cells.push({
+                col: c,
+                row: r,
+                x: GRID_X + c * STEP,
+                y: GRID_Y + r * STEP,
+                color: COLORS[level],
+                count: day.count || 0,
+                date: day.date
             });
         });
     });
+
     return cells;
 }
 
@@ -236,11 +173,11 @@ async function main() {
         console.warn("Could not read avatar_b64.txt:", e.message);
     }
 
-    const weeks = await getRealContributions(USERNAME);
-    const cells = buildCells(weeks);
+    const { grid, totalContributions: realTotal } = await getGitHubContributions(USERNAME);
+    const cells = buildCells(grid);
     const targets = pickTargets(cells);
     const { bullets, blasts } = buildBulletsAndBlasts(targets);
-    const totalContribs = cells.reduce((sum, c) => sum + (c.count || 0), 0);
+    const totalContribs = realTotal || cells.reduce((sum, c) => sum + (c.count || 0), 0);
 
     const cssRules = `
     @keyframes pulseBadge {

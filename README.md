@@ -121,7 +121,7 @@
     </tr>
   </table>
   <br/>
-  <img width="100%" src="https://streak-stats.demolab.com?user=ChinmayGawad&theme=tokyonight&background=0d1117&title=00FF66&currStreakLabel=00FF66&fire=00FF66&ring=00FF66&currStreakNum=00FF66&stats=00FF66&sideNums=00FF66&dates=8b949e&sideLabels=e6edf3&hide_border=true&v=5" alt="GitHub Streak Stats" />
+  <img width="100%" src="https://streak-stats.vercel.app/?user=ChinmayGawad&theme=tokyonight&background=0d1117&title=00FF66&currStreakLabel=00FF66&fire=00FF66&ring=00FF66&currStreakNum=00FF66&stats=00FF66&sideNums=00FF66&dates=8b949e&sideLabels=e6edf3&hide_border=true" alt="GitHub Streak Stats" />
 </div>
 
 <br/>
