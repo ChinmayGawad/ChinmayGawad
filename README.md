@@ -6,7 +6,7 @@
 <!-- TYPING SUBTITLE -->
 <div align="center">
   <a href="https://git.io/typing-svg">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=19&pause=1000&color=00FF66&center=true&vCenter=true&width=650&lines=System.init();Android+Developer+%7C+AI%2FML+Engineer;B.E.+Computer+Engineering+Student;Building+Scalable+%26+Intelligent+Systems" alt="Typing Subtitle" />
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=19&pause=1000&color=00FF66&center=true&vCenter=true&width=650&lines=System.init();Android+Developer+%7C+AI%2FML+Engineer;B.Tech+Computer+Engineering+Student;Building+Scalable+%26+Intelligent+Systems" alt="Typing Subtitle" />
   </a>
 </div>
 
