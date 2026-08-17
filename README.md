@@ -1,6 +1,6 @@
 <!-- VECTOR MATRIX ASCII HEADER -->
 <div align="center">
-  <img src="./assets/header-matrix.svg" width="100%" alt="Chinmay Gawad Matrix Header" />
+  <img src="./assets/header-matrix.svg?v=2" width="100%" alt="Chinmay Gawad Matrix Header" />
 </div>
 
 <!-- TYPING SUBTITLE -->
@@ -14,7 +14,7 @@
 
 <!-- VECTOR TERMINAL PROFILE CARD WITH EMBEDDED AVATAR -->
 <div align="center">
-  <img src="./assets/profile-scan.svg" width="100%" alt="Profile Scan Diagnostics Card" />
+  <img src="./assets/profile-scan.svg?v=2" width="100%" alt="Profile Scan Diagnostics Card" />
 </div>
 
 <br/>
@@ -41,7 +41,7 @@
   <h3>💚 Live Contribution Activity</h3>
 
   <p align="center">
-    <img src="https://raw.githubusercontent.com/ChinmayGawad/ChinmayGawad/main/assets/contribution.gif" width="100%" alt="Live Contribution Activity Animation" />
+    <img src="./assets/contribution.gif?v=2" width="100%" alt="Live Contribution Activity Animation" />
   </p>
 </div>
 
@@ -113,15 +113,15 @@
   <table border="0" width="100%">
     <tr>
       <td width="50%" align="center">
-        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api?username=ChinmayGawad&bg_color=0d1117&title_color=00FF66&text_color=e6edf3&icon_color=00FF66&border_color=00FF66&hide_border=true&show_icons=true&count_private=true&include_all_commits=true&show=reviews,prs_merged&v=3" alt="GitHub Stats" />
+        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api?username=ChinmayGawad&bg_color=0d1117&title_color=00FF66&text_color=e6edf3&icon_color=00FF66&border_color=00FF66&hide_border=true&show_icons=true&count_private=true&include_all_commits=true&show=reviews,prs_merged&v=7" alt="GitHub Stats" />
       </td>
       <td width="50%" align="center">
-        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/top-langs?username=ChinmayGawad&bg_color=0d1117&title_color=00FF66&text_color=e6edf3&icon_color=00FF66&border_color=00FF66&hide_border=true&hide=c,cpp,c%2B%2B,c++,C++,assembly,perl,html,css,makefile,smpl,yacc&langs_count=6&layout=compact&v=6" alt="Top Languages" />
+        <img width="100%" src="https://github-stats-extended-backend-inky.vercel.app/api/top-langs?username=ChinmayGawad&bg_color=0d1117&title_color=00FF66&text_color=e6edf3&icon_color=00FF66&border_color=00FF66&hide_border=true&hide=c,cpp,c%2B%2B,c++,C++,assembly,perl,html,css,makefile,smpl,yacc&langs_count=6&layout=compact&v=7" alt="Top Languages" />
       </td>
     </tr>
   </table>
   <br/>
-  <img width="100%" src="https://streak-stats.vercel.app/?user=ChinmayGawad&theme=tokyonight&background=0d1117&title=00FF66&currStreakLabel=00FF66&fire=00FF66&ring=00FF66&currStreakNum=00FF66&stats=00FF66&sideNums=00FF66&dates=8b949e&sideLabels=e6edf3&hide_border=true" alt="GitHub Streak Stats" />
+  <img width="100%" src="https://streak-stats.vercel.app/?user=ChinmayGawad&theme=tokyonight&background=0d1117&title=00FF66&currStreakLabel=00FF66&fire=00FF66&ring=00FF66&currStreakNum=00FF66&stats=00FF66&sideNums=00FF66&dates=8b949e&sideLabels=e6edf3&hide_border=true&v=7" alt="GitHub Streak Stats" />
 </div>
 
 <br/>

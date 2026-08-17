@@ -31,17 +31,19 @@ jobs:
       - name: Install Playwright Chromium with system dependencies
         run: npx playwright install --with-deps chromium
 
-      - name: Generate Contribution Animation
+      - name: Generate Contribution Animation and Heatmaps
         env:
           GITHUB_USERNAME: ${{ github.repository_owner }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run generate
+        run: |
+          npm run generate
+          node generate.js
 
       - name: Commit and Push if changed
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: auto-update contribution wash animation"
-          file_pattern: "assets/contribution.gif"
+          commit_message: "chore: auto-update contribution wash animation and SVGs"
+          file_pattern: "assets/* *.svg README.md"
           commit_user_name: "github-actions[bot]"
           commit_user_email: "github-actions[bot]@users.noreply.github.com"
           commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
