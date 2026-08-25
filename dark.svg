@@ -100,7 +100,7 @@
   <g transform="translate(24, 380)">
     <rect width="1132" height="216" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
     <text x="18" y="24" font-family="'Fira Code', monospace" font-size="11" font-weight="700" fill="#38BDF8" letter-spacing="1">CONTRIBUTION.MATRIX</text>
-    <text x="180" y="24" font-family="'Fira Code', monospace" font-size="11" font-weight="600" fill="#8b949e">(ChinmayGawad ~ 537 contributions in past year)</text>
+    <text x="180" y="24" font-family="'Fira Code', monospace" font-size="11" font-weight="600" fill="#8b949e">(ChinmayGawad ~ 547 contributions in past year)</text>
     <line x1="18" y1="32" x2="1114" y2="32" stroke="#30363d" stroke-width="1"/>
 
     <!-- Status Badge -->
@@ -373,7 +373,7 @@
 <circle cx="811" cy="476" r="8" fill="none" stroke="#00FF66" stroke-width="1.2" opacity="0.85"/>
 <circle cx="811" cy="476" r="2" fill="#00FF66"/>
 <rect x="805.00" y="485.00" width="12" height="12" rx="2" ry="2" fill="#26a641"><title>2026-08-24: 12 contributions</title></rect>
-<rect x="805.00" y="500.00" width="12" height="12" rx="2" ry="2" fill="#161b22"><title>2026-08-25: 0 contributions</title></rect>
+<rect x="805.00" y="500.00" width="12" height="12" rx="2" ry="2" fill="#26a641"><title>2026-08-25: 10 contributions</title></rect>
 
     </g>
 
